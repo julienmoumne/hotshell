@@ -1,0 +1,8 @@
+version: '2'
+services:
+  tomcat:
+    image: tomcat
+  registry:
+    image: registry
+  simple-http-server:
+    image: visualjeff/simple-http-server:0.0.1

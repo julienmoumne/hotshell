@@ -1,0 +1,8 @@
+
+ Failed Exec [Exception caught, Error: "/bin/bash -c 'cat /im/am/confident/this/file/does/not/exist'" failed with exit status 1 "cat: /im/am/confident/this/file/does/not/exist: No such file or directory"]
+
+ no items found
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? 

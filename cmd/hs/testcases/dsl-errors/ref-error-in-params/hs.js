@@ -1,0 +1,1 @@
+item({desc: callToUndefinedMethod()})

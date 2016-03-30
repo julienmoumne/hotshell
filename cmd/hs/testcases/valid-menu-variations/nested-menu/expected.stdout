@@ -1,0 +1,58 @@
+
+ Nested Menu
+
+ l ls *.js ls *.js
+ s Submenu >
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? s
+
+ Nested Menu
+ Submenu
+
+ submenu desc
+
+ l ls *.std* ls *.std*
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? l
+
+ /bin/bash -c 'ls *.std*'
+
+expected.stderr
+expected.stdout
+
+ Nested Menu
+ Submenu
+
+ submenu desc
+
+ l ls *.std* ls *.std*
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? spacebar
+
+ Nested Menu
+
+ l ls *.js ls *.js
+ s Submenu >
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? l
+
+ /bin/bash -c 'ls *.js'
+
+hs.js
+
+ Nested Menu
+
+ l ls *.js ls *.js
+ s Submenu >
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? 

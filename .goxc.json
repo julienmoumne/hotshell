@@ -1,0 +1,20 @@
+{
+  "ConfigVersion": "0.9",
+  "TasksExclude": [
+    "downloads-page"
+  ],
+  "BuildConstraints": "linux,!arm darwin,amd64",
+  "TaskSettings": {
+    "debs": {
+      "metadata": {
+        "maintainer": "Julien Moumné",
+        "maintainer-email": "julien@moumne.com",
+        "description": "Command-line productivity enhancer",
+        "long-description": "Hotshell is a command-line application to efficiently recall and share commands."
+      },
+      "other-mapped-files": {
+        "/": "debian/"
+      }
+    }
+  }
+}

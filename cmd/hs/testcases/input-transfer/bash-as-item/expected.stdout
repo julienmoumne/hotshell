@@ -1,0 +1,20 @@
+
+ bash as item
+
+ b bash bash -l
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? b
+
+ /bin/bash -c 'bash -l'
+
+hs.js
+
+ bash as item
+
+ b bash bash -l
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? 

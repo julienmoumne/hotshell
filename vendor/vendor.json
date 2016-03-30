@@ -1,0 +1,86 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"path": "github.com/fatih/color",
+			"revision": "533cd7fd8a85905f67a1753afb4deddc85ea174f",
+			"revisionTime": "2016-03-17T11:31:53+02:00"
+		},
+		{
+			"path": "github.com/jessevdk/go-flags",
+			"revision": "6b9493b3cb60367edd942144879646604089e3f7",
+			"revisionTime": "2016-02-27T10:34:14+01:00"
+		},
+		{
+			"path": "github.com/mattn/go-colorable",
+			"revision": "9cbef7c35391cca05f15f8181dc0b18bc9736dbb",
+			"revisionTime": "2016-02-20T16:59:35+09:00"
+		},
+		{
+			"path": "github.com/mattn/go-isatty",
+			"revision": "56b76bdf51f7708750eac80fa38b952bb9f32639",
+			"revisionTime": "2015-12-11T09:06:21+09:00"
+		},
+		{
+			"path": "github.com/pkg/term",
+			"revision": "9eb92a42e2b9dd9bc2bdb0a1d0f085c49233b6d4",
+			"revisionTime": "2016-02-26T14:51:57+11:00"
+		},
+		{
+			"path": "github.com/pkg/term/termios",
+			"revision": "9eb92a42e2b9dd9bc2bdb0a1d0f085c49233b6d4",
+			"revisionTime": "2016-02-26T14:51:57+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto/ast",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto/dbg",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto/file",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto/parser",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto/registry",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto/token",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/robertkrimen/otto/underscore",
+			"revision": "53221230c215611a90762720c9042ac782ef74ee",
+			"revisionTime": "2016-02-19T09:43:13+11:00"
+		},
+		{
+			"path": "github.com/sergi/go-diff/diffmatchpatch",
+			"revision": "ec7fdbb58eb3e300c8595ad5ac74a5aa50019cc7",
+			"revisionTime": "2015-10-21T21:14:53+02:00"
+		},
+		{
+			"path": "gopkg.in/check.v1",
+			"revision": "4f90aeace3a26ad7021961c297b22c42160c7b25",
+			"revisionTime": "2016-01-05T14:49:36-02:00"
+		}
+	]
+}

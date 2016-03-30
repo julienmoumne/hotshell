@@ -1,0 +1,11 @@
+{{define "item"}}
+{
+    desc: '{{.Desc | Sanitize}}',
+    cmd: '{{.Cmd}}',
+    items: [
+        {{range $item := .Items}}
+            {key: '{{$item.Key}}', item: {{template "item" $item}}},
+        {{end}}
+    ]
+}
+{{end}}

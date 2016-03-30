@@ -1,0 +1,101 @@
+/* TODO find a way to retrieve the colors from formatter/formatter.go */
+
+body {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.executed-cmd {
+    color: #3765a4;
+    margin-bottom: 25px;
+}
+
+.active-menu, .parent-menu, .prompt {
+    color: #c49f06;
+}
+
+.actions, .prompt, .items {
+    margin-top: 15px;
+}
+
+.key, .cmd {
+    color: #4e9a0c;
+}
+
+.item-desc, .cmd {
+     margin-left: 10px;
+ }
+
+.active-menu {
+    text-decoration: underline;
+}
+
+.time {
+    color: grey;
+}
+
+.menu, .executed-cmd {
+    margin-left: 10px;
+}
+
+.menu, .executed-cmd {
+    margin-bottom: 15px;
+}
+
+.stdout {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.blinking-cursor {
+  color: #2E3D48;
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}

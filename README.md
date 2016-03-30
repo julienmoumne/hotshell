@@ -215,4 +215,4 @@ alias hsdocker="hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/e
 hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html  
 ```
 
-## [Anonymised Analytics Powered by Piwik Cloud](https://hotshell.piwik.pro)
+[Anonymised Public Analytics by Piwik Cloud](https://hotshell.piwik.pro)

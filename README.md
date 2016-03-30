@@ -188,7 +188,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/hs.js
 ```bash
 hs --chdir -f ~/projects/web/hs.js
 ```
-  - Include menus defined in separate files, [example](examples#composite)
+  - Include menus defined in separate files, see [composite example](examples#composite)
   - Hotshell works well with commands that require input
 ```javascript
 item({cmd: 'ssh remote-server'})`, `item({cmd: 'sudo vim /etc/hosts'})

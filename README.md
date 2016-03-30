@@ -167,7 +167,7 @@ Hotshell proposes both a way to :
   - embody skills of team members
   - produce executable documentation
   
-As an example, checkout [Hotshell's hotshell](examples#hotshell-hotshell)
+As an example, checkout [Hotshell's hotshell](examples#hotshells-hotshell)
 
 ## Tips
 

@@ -27,7 +27,7 @@ and [2](https://github.com/pkg/term/issues/8) or alternative solutions.
 
 ### Precompiled packages
 
- - Linux : *Work In Progress*
+ - Linux : debian packages and tar.gz available at [releases](https://github.com/julienmoumne/hs/releases)
  - OSX : *Work In Progress*
 
 ### Install from source

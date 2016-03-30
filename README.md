@@ -171,7 +171,6 @@ As an example, checkout [Hotshell's hotshell](examples#hotshells-hotshell)
 
 ## Tips
 
-| | | 
 | --- | --- |
 | Implicitly load the current directory's hotshell (**./hs.js**), or if not found, the system-wide hotshell (**~/.hs/hs.js**) | `hs` |
 | Specify the path to the definition file | `hs -f ~/projects/web/hs.js` or `hs -f ~/projects/web` |

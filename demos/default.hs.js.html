@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hotshell demo - Hotshell</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+
+    <style>/* TODO find a way to retrieve the colors from formatter/formatter.go */
+
+body {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.executed-cmd {
+    color: #3765a4;
+    margin-bottom: 25px;
+}
+
+.active-menu, .parent-menu, .prompt {
+    color: #c49f06;
+}
+
+.actions, .prompt, .items {
+    margin-top: 15px;
+}
+
+.key, .cmd {
+    color: #4e9a0c;
+}
+
+.item-desc, .cmd {
+     margin-left: 10px;
+ }
+
+.active-menu {
+    text-decoration: underline;
+}
+
+.time {
+    color: grey;
+}
+
+.menu, .executed-cmd {
+    margin-left: 10px;
+}
+
+.menu, .executed-cmd {
+    margin-bottom: 15px;
+}
+
+.stdout {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.blinking-cursor {
+  color: #2E3D48;
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}</style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+
+var item = 
+{
+    desc: 'Hotshell',
+    cmd: '',
+    items: [
+        
+            {key: '', item: 
+{
+    desc: 'This is Hotshell\'s default menu, displayed when no definition file is provided.<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: '  Don\'t know what Hotshell is about ?<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'a', item: 
+{
+    desc: 'Hit \'a\' to get to know it',
+    cmd: '',
+    items: [
+        
+            {key: '', item: 
+{
+    desc: 'Hotshell is a command-line application to efficiently recall and share commands.<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: 'Menus are defined using a JavaScript configuration DSL. Example :<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: 'item({desc: \'demo\'}, function() {<br/>   // command items<br/>   item({key: \'r\', desc: \'restart apache\', cmd: \'sudo service apache2 restart\'})<br/>   item({key: \'s\', desc: \'synchronize time\', cmd: \'sudo /usr/sbin/ntpdate pool.ntp.org\'})<br/>   <br/>   // submenu to group log related commands<br/>   item({key: \'l\', desc: \'apache logs\'}, function() {<br/>     item({key: \'a\', desc: \'access.log\', cmd: \'less +F /var/log/apache2/access.log\'})<br/>     item({key: \'e\', desc: \'error.log\', cmd: \'less +F /var/log/apache2/error.log\'})<br/>   })<br/> })<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: 'This creates the following menu :<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'r', item: 
+{
+    desc: 'restart apache',
+    cmd: 'sudo service apache2 restart',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'synchronize time',
+    cmd: 'sudo /usr/sbin/ntpdate pool.ntp.org',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'l', item: 
+{
+    desc: 'apache logs',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'access.log',
+    cmd: 'less +F /var/log/apache2/access.log',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'e', item: 
+{
+    desc: 'error.log',
+    cmd: 'less +F /var/log/apache2/error.log',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: '<br/> Want to learn more ?<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'm', item: 
+{
+    desc: 'Hit \'m\' to open Hotshell\'s page',
+    cmd: 'sensible-browser https://github.com/julienmoumne/hs',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: '<br/> Hit the spacebar to go to the previous menu or ctrl+c to quit Hotshell',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: '<br/>   Having trouble with Hothell\'s command line options?<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'h', item: 
+{
+    desc: 'Hit \'h\' to display the help',
+    cmd: 'hs --help',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '', item: 
+{
+    desc: '<br/>   Want to see examples of commands?<br/>',
+    cmd: '',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'e', item: 
+{
+    desc: 'Hit \'e\'',
+    cmd: '',
+    items: [
+        
+            {key: 'w', item: 
+{
+    desc: 'weather & time',
+    cmd: '',
+    items: [
+        
+            {key: 'c', item: 
+{
+    desc: 'check the weather',
+    cmd: 'curl wttr.in',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'synchronize time',
+    cmd: 'sudo /usr/sbin/ntpdate pool.ntp.org',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 't', item: 
+{
+    desc: 'watch the time go by',
+    cmd: 'watch -n 1 date',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'SSH your most accessed servers',
+    cmd: '',
+    items: [
+        
+            {key: 'l', item: 
+{
+    desc: 'localhost',
+    cmd: 'ssh localhost',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'g', item: 
+{
+    desc: 'Grex Public Access UNIX',
+    cmd: 'ssh newuser@grex.org',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'f', item: 
+{
+    desc: 'edit your configuration files',
+    cmd: '',
+    items: [
+        
+            {key: 'b', item: 
+{
+    desc: 'vim ~/.bash_profile',
+    cmd: 'vim ~/.bash_profile',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'B', item: 
+{
+    desc: 'emacs ~/.bash_profile',
+    cmd: 'emacs ~/.bash_profile',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'h', item: 
+{
+    desc: 'vim /etc/hosts',
+    cmd: 'sudo vim /etc/hosts',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'H', item: 
+{
+    desc: 'emacs /etc/hosts',
+    cmd: 'sudo emacs /etc/hosts',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'n', item: 
+{
+    desc: 'network & system utils',
+    cmd: '',
+    items: [
+        
+            {key: 'f', item: 
+{
+    desc: 'find text in files',
+    cmd: 'echo -n "[location] [pattern] " && read l p && grep -rnws $l -e $p',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'o', item: 
+{
+    desc: 'check local port',
+    cmd: 'echo -n "[port] " && read p && cat < /dev/tcp/127.0.0.1/$p',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'u', item: 
+{
+    desc: 'system uptime',
+    cmd: 'uptime',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'c', item: 
+{
+    desc: 'most used commands',
+    cmd: 'echo "history" | bash -i 2>/dev/null | sed "s/^ *[0-9]* *//" | sort | uniq -c | sort -nr | head',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'p', item: 
+{
+    desc: 'public ip address & geolocation',
+    cmd: 'curl http://ipinfo.io',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'i', item: 
+{
+    desc: 'internet connection speed',
+    cmd: 'wget -O /dev/null http://releases.ubuntu.com/14.04.4/ubuntu-14.04.4-desktop-amd64.iso',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'g', item: 
+{
+    desc: 'ping linux.org (ctrl+c to stop)',
+    cmd: 'ping linux.org',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'serve current directory on port 8081',
+    cmd: 'python -m SimpleHTTPServer 8081',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'l', item: 
+{
+    desc: 'log files',
+    cmd: '',
+    items: [
+        
+            {key: 'l', item: 
+{
+    desc: 'last updated system log files',
+    cmd: 'ls -lt /var/log | head',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'a', item: 
+{
+    desc: 'less apache2/error',
+    cmd: 'less +F /var/log/apache2/error.log',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'less /var/log/auth.log',
+    cmd: 'less +F /var/log/auth.log',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'less /var/log/dpkg.log',
+    cmd: 'less +F /var/log/dpkg.log',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '2', item: 
+{
+    desc: 'less /var/log/kern.log',
+    cmd: 'less +F /var/log/kern.log',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '3', item: 
+{
+    desc: 'less /var/log/alternatives.log',
+    cmd: 'less +F /var/log/alternatives.log',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '4', item: 
+{
+    desc: 'less /var/log/apport.log',
+    cmd: 'less +F /var/log/apport.log',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+    ]
+}
+
+var filename = 'default.hs.js'
+
+</script>
+<script type="text/babel">var Item = React.createClass({
+  render: function() {
+    return <div className="item">
+        <span className='key'>{this.props.itemKey}</span>
+        <span className={this.props.itemKey == '' || this.props.item.desc == '' ? '' : 'item-desc'} dangerouslySetInnerHTML={{__html: this.props.item.desc}}></span>
+        <span className='cmd'>{this.props.item.cmd == '' && this.props.item.items.length > 0 ? '>' : this.props.item.cmd}</span>
+    </div>;
+  }
+});
+
+var Menu = React.createClass({
+  render: function() {
+    var items = this.props.item.items.map(function(el) {
+      	return <Item itemKey={el.key} item={el.item}/>
+    })
+
+    var trailLength = this.props.trail.length
+    var trail = this.props.trail.map(function(item, ix){
+        var isActive = ix == trailLength - 1
+        return <div className={isActive ? 'active-menu' : 'parent-menu'} key={item.key}>{item.desc}</div>
+    })
+
+    return (
+      <div className="menu">
+        {trail}
+        <div className="items">{items}</div>
+        <div className="actions"><span className="key">spacebar</span> back</div>
+        <div className="prompt">
+            ? {this.props.userChoice ? this.props.userChoice : <span className='blinking-cursor'>|</span>}
+        </div>
+      </div>
+    );
+  }
+});
+
+var MenuController = React.createClass({
+  getInitialState: function() {
+    return {activatedItems: [{item: this.props.item, trail: [this.props.item]}]};
+  },
+  handleUserChoice: function(userChoice) {
+
+    if (userChoice == '') return
+
+    var lastActivatedItem = this.state.activatedItems[this.state.activatedItems.length - 1]
+
+    var trail = lastActivatedItem.trail.slice()
+    var nextItem
+    if (userChoice == ' ') {
+        if (trail.length == 1) return
+        trail.pop()
+        nextItem = trail[trail.length - 1]
+        userChoice = 'spacebar'
+    } else {
+        nextItem = _.find(lastActivatedItem.item.items, function(el) {
+            return el.key == userChoice
+        })
+        if (nextItem == undefined) return
+        nextItem = nextItem.item
+        if (nextItem.cmd != '') {
+            this.state.activatedItems.push({item: nextItem})
+            nextItem = lastActivatedItem.item
+        } else {
+            trail.push(nextItem)
+        }
+    }
+
+    lastActivatedItem.userChoice = userChoice
+
+    this.state.activatedItems.push({item: nextItem, trail: trail})
+    this.setState({activatedItems: this.state.activatedItems})
+
+    window.scrollTo(0,document.body.scrollHeight);
+  },
+  componentDidMount(){
+      var self = this
+      document.body.onkeypress = function(e){
+        self.handleUserChoice(String.fromCharCode(e.which))
+      };
+  },
+  render: function() {
+
+    var items = this.state.activatedItems.map(function(el) {
+      	return el.item.cmd == '' ?
+      	    <Menu trail={el.trail} item={el.item} userChoice={el.userChoice}/> :
+      	    <div>
+      	        <div className='executed-cmd'>/bin/bash -c '{el.item.cmd}'</div>
+      	        <div className='stdout'>
+      	            (the output of the command would be displayed here)
+      	        </div>
+            </div>
+    })
+    var time = moment().format('HH:mm');
+    return (
+      <div className="menuController">
+        <div><span className="time">{time}</span> $ hs -f ./{filename}</div>
+        <br/>
+        {items}
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(
+  <MenuController item={item} />,
+  document.getElementById('container')
+);</script>
+</body>
+</html>

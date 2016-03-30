@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hotshell demo - vagrant</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
+
+    <style>/* TODO find a way to retrieve the colors from formatter/formatter.go */
+
+body {
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.executed-cmd {
+    color: #3765a4;
+    margin-bottom: 25px;
+}
+
+.active-menu, .parent-menu, .prompt {
+    color: #c49f06;
+}
+
+.actions, .prompt, .items {
+    margin-top: 15px;
+}
+
+.key, .cmd {
+    color: #4e9a0c;
+}
+
+.item-desc, .cmd {
+     margin-left: 10px;
+ }
+
+.active-menu {
+    text-decoration: underline;
+}
+
+.time {
+    color: grey;
+}
+
+.menu, .executed-cmd {
+    margin-left: 10px;
+}
+
+.menu, .executed-cmd {
+    margin-bottom: 15px;
+}
+
+.stdout {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.blinking-cursor {
+  color: #2E3D48;
+  -webkit-animation: 1s blink step-end infinite;
+  -moz-animation: 1s blink step-end infinite;
+  -ms-animation: 1s blink step-end infinite;
+  -o-animation: 1s blink step-end infinite;
+  animation: 1s blink step-end infinite;
+}
+
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-ms-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}</style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+
+var item = 
+{
+    desc: 'vagrant',
+    cmd: '',
+    items: [
+        
+            {key: 'u', item: 
+{
+    desc: 'up',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'all',
+    cmd: 'vagrant up',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'web',
+    cmd: 'vagrant up web',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'db',
+    cmd: 'vagrant up db',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'r', item: 
+{
+    desc: 'reload',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'all',
+    cmd: 'vagrant reload',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'web',
+    cmd: 'vagrant reload web',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'db',
+    cmd: 'vagrant reload db',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'd', item: 
+{
+    desc: 'destroy',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'all',
+    cmd: 'vagrant destroy',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'web',
+    cmd: 'vagrant destroy web',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'db',
+    cmd: 'vagrant destroy db',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'p', item: 
+{
+    desc: 'provision',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'all',
+    cmd: 'vagrant provision',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'web',
+    cmd: 'vagrant provision web',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'db',
+    cmd: 'vagrant provision db',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'h', item: 
+{
+    desc: 'halt',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'all',
+    cmd: 'vagrant halt',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'web',
+    cmd: 'vagrant halt web',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'db',
+    cmd: 'vagrant halt db',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'ssh',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'all',
+    cmd: 'vagrant ssh',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'web',
+    cmd: 'vagrant ssh web',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'db',
+    cmd: 'vagrant ssh db',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+    ]
+}
+
+var filename = 'vagrant.hs.js'
+
+</script>
+<script type="text/babel">var Item = React.createClass({
+  render: function() {
+    return <div className="item">
+        <span className='key'>{this.props.itemKey}</span>
+        <span className={this.props.itemKey == '' || this.props.item.desc == '' ? '' : 'item-desc'} dangerouslySetInnerHTML={{__html: this.props.item.desc}}></span>
+        <span className='cmd'>{this.props.item.cmd == '' && this.props.item.items.length > 0 ? '>' : this.props.item.cmd}</span>
+    </div>;
+  }
+});
+
+var Menu = React.createClass({
+  render: function() {
+    var items = this.props.item.items.map(function(el) {
+      	return <Item itemKey={el.key} item={el.item}/>
+    })
+
+    var trailLength = this.props.trail.length
+    var trail = this.props.trail.map(function(item, ix){
+        var isActive = ix == trailLength - 1
+        return <div className={isActive ? 'active-menu' : 'parent-menu'} key={item.key}>{item.desc}</div>
+    })
+
+    return (
+      <div className="menu">
+        {trail}
+        <div className="items">{items}</div>
+        <div className="actions"><span className="key">spacebar</span> back</div>
+        <div className="prompt">
+            ? {this.props.userChoice ? this.props.userChoice : <span className='blinking-cursor'>|</span>}
+        </div>
+      </div>
+    );
+  }
+});
+
+var MenuController = React.createClass({
+  getInitialState: function() {
+    return {activatedItems: [{item: this.props.item, trail: [this.props.item]}]};
+  },
+  handleUserChoice: function(userChoice) {
+
+    if (userChoice == '') return
+
+    var lastActivatedItem = this.state.activatedItems[this.state.activatedItems.length - 1]
+
+    var trail = lastActivatedItem.trail.slice()
+    var nextItem
+    if (userChoice == ' ') {
+        if (trail.length == 1) return
+        trail.pop()
+        nextItem = trail[trail.length - 1]
+        userChoice = 'spacebar'
+    } else {
+        nextItem = _.find(lastActivatedItem.item.items, function(el) {
+            return el.key == userChoice
+        })
+        if (nextItem == undefined) return
+        nextItem = nextItem.item
+        if (nextItem.cmd != '') {
+            this.state.activatedItems.push({item: nextItem})
+            nextItem = lastActivatedItem.item
+        } else {
+            trail.push(nextItem)
+        }
+    }
+
+    lastActivatedItem.userChoice = userChoice
+
+    this.state.activatedItems.push({item: nextItem, trail: trail})
+    this.setState({activatedItems: this.state.activatedItems})
+
+    window.scrollTo(0,document.body.scrollHeight);
+  },
+  componentDidMount(){
+      var self = this
+      document.body.onkeypress = function(e){
+        self.handleUserChoice(String.fromCharCode(e.which))
+      };
+  },
+  render: function() {
+
+    var items = this.state.activatedItems.map(function(el) {
+      	return el.item.cmd == '' ?
+      	    <Menu trail={el.trail} item={el.item} userChoice={el.userChoice}/> :
+      	    <div>
+      	        <div className='executed-cmd'>/bin/bash -c '{el.item.cmd}'</div>
+      	        <div className='stdout'>
+      	            (the output of the command would be displayed here)
+      	        </div>
+            </div>
+    })
+    var time = moment().format('HH:mm');
+    return (
+      <div className="menuController">
+        <div><span className="time">{time}</span> $ hs -f ./{filename}</div>
+        <br/>
+        {items}
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(
+  <MenuController item={item} />,
+  document.getElementById('container')
+);</script>
+</body>
+</html>

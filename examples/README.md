@@ -1,7 +1,7 @@
 # Examples of menus
 
   - [Hotshell's hotshell](#hotshells-hotshell)
-  - [Hotshell's default menu](#hotshell-default-menu)
+  - [Hotshell's default menu](#hotshells-default-menu)
   - [Docker, Docker Compose & Docker Machine](#docker-docker-compose-docker-machine)
   - [Vagrant](#vagrant)
   - [Topten](#topten)

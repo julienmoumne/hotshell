@@ -191,7 +191,8 @@ hs --chdir -f ~/projects/web/hs.js
   - Include menus defined in separate files, see [composite example](examples#composite)
   - Hotshell works well with commands that require input
 ```javascript
-item({cmd: 'ssh remote-server'})`, `item({cmd: 'sudo vim /etc/hosts'})
+item({cmd: 'ssh remote-server'})
+item({cmd: 'sudo vim /etc/hosts'})
 ```
   - The DSL defined by Hotshell uses some JavaScript tricks, learn more about it : http://alexyoung.org/2009/10/22/javascript-dsl/
   - There is a good number of command examples in the default hotshell

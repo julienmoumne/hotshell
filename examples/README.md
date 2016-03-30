@@ -15,7 +15,7 @@ Used to develop, build and test Hotshell.
   - [source](../hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/hs.js
 ```
 
 ## Hotshell's default menu
@@ -26,7 +26,7 @@ This menu is loaded when no definition file is found.
   - [source](./default/default.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/default/default.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/default/default.hs.js
 ```
 
 ## Docker, Docker Compose & Docker Machine
@@ -42,14 +42,14 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/default/d
   - try it :
 ```bash
 # docker
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/docker/docker.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker.hs.js
 
 # docker-machine
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/docker/docker-machine.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker-machine.hs.js
 
 # docker-compose
 cd $DOCKER_COMPOSE_PROJECT
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/docker/docker-compose.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker-compose.hs.js
 ```
 
 ## Vagrant
@@ -59,7 +59,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/docker/do
   - try it :
 ```bash
 cd $VAGRANT_PROJECT
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/vagrant/vagrant.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/vagrant/vagrant.hs.js
 ```
 
 ## Topten
@@ -70,7 +70,7 @@ Dynamically creates a menu with the 10 most used commands.
   - [source](./topten/topten.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/topten/topten.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/topten/topten.hs.js
 ```
 
 ## Composite
@@ -80,5 +80,5 @@ Showcases the ability to include menus defined in separate files.
   - [source](./composite/composite.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/0.1.0/examples/composite/composite.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/composite/composite.hs.js
 ```

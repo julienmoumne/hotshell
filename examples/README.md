@@ -2,7 +2,7 @@
 
   - [Hotshell's hotshell](#hotshells-hotshell)
   - [Hotshell's default menu](#hotshells-default-menu)
-  - [Docker, Docker Compose & Docker Machine](#docker-docker-compose-docker-machine)
+  - [Docker, Docker Compose & Docker Machine](#docker-docker-compose--docker-machine)
   - [Vagrant](#vagrant)
   - [Topten](#topten)
   - [Composite](#composite)

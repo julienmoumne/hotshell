@@ -146,7 +146,6 @@ item({desc: 'useful system commands'}, function() {
   item({key: 'o', desc: 'check local port', cmd: 'echo -n "[port] " && read p && cat < /dev/tcp/127.0.0.1/$p'})
   // other useful commands..
 })
-
 ```
 
 ### Sharing commands with your team
@@ -171,18 +170,45 @@ As an example, checkout [Hotshell's hotshell](examples#hotshells-hotshell)
 
 ## Tips
 
-| | | 
-| --- | --- |
-| Implicitly load the current directory's hotshell (**./hs.js**), or if not found, the system-wide hotshell (**~/.hs/hs.js**) | `hs` |
-| Specify the path to the definition file | `hs -f ~/projects/web/hs.js` or `hs -f ~/projects/web` |
-| Load a menu remotely | `hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/hs.js` |
-| Set the working directory to the location of the menu definition | `hs --chdir -f ~/projects/web/hs.js` |
-| Include menus defined in separate files | [Example](examples#composite) |
-| Hotshell works well with commands that require input | `item({cmd: 'ssh remote-server'})`, `item({cmd: 'sudo vim /etc/hosts'})` |
-| The DSL defined by Hotshell uses some JavaScript tricks, learn more about it | http://alexyoung.org/2009/10/22/javascript-dsl/ |
-| There is a good number of command examples in the default hotshell | `hs --default` |
-| When running out of characters for defining hot keys, use capital letters | `item({key: 'S', cmd: 'ssh remote-server'})` |
-| Use aliases | `alias hsdocker="hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker.hs.js"` |
-| Generate an interactive HTML demo of your menus | `hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html`, [example](https://julienmoumne.github.com/hs/demos/hs.js.html) | 
+  - Implicitly load the current directory's hotshell (**./hs.js**), or if not found, the system-wide hotshell (**~/.hs/hs.js**)
+```bash
+hs
+```
+  - Specify the path to the definition file
+```bash
+hs -f ~/projects/web/hs.js
+# or
+hs -f ~/projects/web
+```
+  - Load a menu remotely
+```bash
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/hs.js
+```
+  - Set the working directory to the location of the menu definition
+```bash
+hs --chdir -f ~/projects/web/hs.js
+```
+  - Include menus defined in separate files, [example](examples#composite)
+  - Hotshell works well with commands that require input
+```javascript
+item({cmd: 'ssh remote-server'})`, `item({cmd: 'sudo vim /etc/hosts'})
+```
+  - The DSL defined by Hotshell uses some JavaScript tricks, learn more about it : http://alexyoung.org/2009/10/22/javascript-dsl/
+  - There is a good number of command examples in the default hotshell
+```bash
+hs --default
+```
+  - When running out of characters for defining hot keys, use capital letters
+```javascript
+item({key: 'S', cmd: 'ssh remote-server'})
+```
+  - Use aliases
+```bash
+alias hsdocker="hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker.hs.js"
+```
+  - Generate an interactive HTML demo of your menus, [example](https://julienmoumne.github.com/hs/demos/hs.js.html)
+```bash
+hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html  
+```
 
 ## [Anonymised Analytics Powered by Piwik Cloud](https://hotshell.piwik.pro)

@@ -10,8 +10,8 @@ For a demo of what this project is about, please check [julienmoumne.github.com/
 
   - [Hotshell Installation](#hotshell-installation)
   - [Menu Definitions](#menu-definitions)
-  - [Project Motives](#project-motives)
   - [Tips](#tips)
+  - [Project Motives](#project-motives)
 
 ## Hotshell Installation
 
@@ -122,6 +122,8 @@ the stdout if the command returned a non-zero exit code.
 
 In case of failure, stderr is displayed in the menu without stopping the interpretation of the DSL.
 
+## [Tips](./tips.md)
+
 ## Project Motives
 
 ### Being more productive using the shell
@@ -165,5 +167,3 @@ Hotshell proposes both a way to :
   - produce executable documentation
   
 As an example, checkout [Hotshell's hotshell](examples#hotshells-hotshell)
-
-## [Tips](./tips.md)

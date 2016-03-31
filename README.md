@@ -81,7 +81,7 @@ See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.h
  
 ### Examples
 
-Check out some fully-featured [examples](/examples).
+Check out some fully-featured [examples](./examples).
 
 The project can greatly benefit from additional examples of menus.
 Examples can be contributed to the project by creating a pull request.

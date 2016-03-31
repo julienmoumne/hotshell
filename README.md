@@ -40,13 +40,16 @@ Menus are defined using a JavaScript DSL.
 
 ### Building blocks
 
-Menus are first defined with a top-level *menu item*
+> Menus are first defined with a top-level *menu item*
+
 ```javascript
 item({desc: 'top level menu'}, function() {
     
 })
 ```
-*Command items* associate bash commands to hot keys
+
+> *Command items* associate bash commands to hot keys
+
 ```javascript
 item({desc: 'top level menu'}, function() {
     
@@ -58,7 +61,9 @@ item({desc: 'top level menu'}, function() {
   item({key: 'e', desc: 'error logs', cmd: 'less +F /var/log/apache2/error.log'})
 })
 ```
-*Submenus and Description items* can be used to add structure
+
+> *Submenus and Description items* can be used to add structure
+
 ```javascript
 item({desc: 'top level menu'}, function() {
     
@@ -77,7 +82,8 @@ item({desc: 'top level menu'}, function() {
   })      
 })
 ```
-See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.html) of the resulting menu.
+
+> See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.html) of the resulting menu.
  
 ### Examples
 
@@ -98,17 +104,22 @@ defining menus.
 
 Examples :
 
-  - retrieve environment variables
+  > retrieve environment variables
+  
 ```javascript
 httpPort = exec('echo $HTTP_PORT')
 item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + httpPort})
 ```
-  - conditionally set-up items
+
+  > conditionally set-up items
+  
 ```javascript
 linux = exec('uname').indexOf('Linux') > -1
 item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew update'})
 ```
-  - dynamically create menus
+
+  > dynamically create menus
+  
 ```javascript
 recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')
 _.each(recentlyUpdatedLogs, function(el, ix) {

@@ -72,7 +72,7 @@ item({key: 'S', cmd: 'ssh remote-server'})
 
 > Include menus defined in separate files
 
-see [composite example](examples#composite)
+See [includes example](examples#includes)
 
 > There is a good number of command examples
 

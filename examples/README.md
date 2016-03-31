@@ -5,7 +5,7 @@
   - [Docker, Docker Compose & Docker Machine](#docker-docker-compose--docker-machine)
   - [Vagrant](#vagrant)
   - [Topten](#topten)
-  - [Composite](#composite)
+  - [Includes](#includes)
 
 ## Hotshell's hotshell
 
@@ -73,12 +73,12 @@ Dynamically creates a menu with the 10 most used commands.
 hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/topten/topten.hs.js
 ```
 
-## Composite
+## Includes
 
 Showcases the ability to include menus defined in separate files.
 
-  - [source](./composite/composite.hs.js)
+  - [source](./includes/includes.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/composite/composite.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hs/master/examples/includes/includes.hs.js
 ```

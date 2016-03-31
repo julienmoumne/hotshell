@@ -25,7 +25,7 @@ and [2](https://github.com/pkg/term/issues/8) or alternative solutions.
  - Linux : see [releases](https://github.com/julienmoumne/hs/releases)
  - OSX :
 ```bash
-brew install https://raw.githubusercontent.com/julienmoumne/homebrew/b8ebeb6fc43686c8f42a86c6e3cd30d0bf694967/Library/Formula/hs.rb
+brew install https://raw.githubusercontent.com/julienmoumne/homebrew/b8ebeb6/Library/Formula/hs.rb
 ```
 
 ### Install from source

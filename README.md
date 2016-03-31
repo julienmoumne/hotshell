@@ -173,7 +173,7 @@ As an example, checkout [Hotshell's hotshell](examples#hotshells-hotshell)
 
 ## Tips
 
-  - Implicitly load the current directory's hotshell (**./hs.js**), or if not found, the system-wide hotshell (**~/.hs/hs.js**)
+  - Implicitly load the current directory's hotshell, `./hs.js`, or if not found, the system-wide hotshell `~/.hs/hs.js`
 ```bash
 hs
 ```

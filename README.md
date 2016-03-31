@@ -83,7 +83,7 @@ item({desc: 'top level menu'}, function() {
 })
 ```
 
-> See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.html) of the resulting menu.
+See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.html) of the resulting menu.
  
 ### Examples
 

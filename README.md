@@ -196,6 +196,8 @@ hs --chdir -f ~/projects/web/hs.js
 ```javascript
 item({cmd: 'ssh remote-server'})
 item({cmd: 'sudo vim /etc/hosts'})
+# prompts for a location and a pattern and triggers a grep search
+item({desc: 'find text in files', cmd: 'echo -n "[location] [pattern] " && read l p && grep -rnws $l -e $p'})
 ```
   - The DSL defined by Hotshell uses some JavaScript tricks, learn more about it : http://alexyoung.org/2009/10/22/javascript-dsl/
   - There is a good number of command examples in the default hotshell

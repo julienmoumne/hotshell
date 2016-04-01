@@ -133,16 +133,12 @@ item({desc: 'useful system commands'}, function() {
 
 ### Sharing commands with your team
 
-When working in teams we usually go through common steps such as compiling,
-testing, restarting servers, cleaning directories, looking at log files, installing dependencies, ..
+When working in teams we usually go through common steps such as compiling and running tests.
 
 Some of these commands may be available on your IDE, some may not. Team members may not always have the 
 same IDEs.
 
 Most of the time though, IDE task configurations are not committed into the VCS and are therefore not shared.
-
-We can discover productivity tricks in documentation, more often than not, we learn them
-while pair programming.
 
 Hotshell proposes both a way to :
 

@@ -142,7 +142,7 @@ Most of the time though, IDE task configurations are not committed into the VCS 
 
 Hotshell proposes both a way to :
 
-  - embody command-line skills of people
+  - spread command-line skills in teams
   - produce executable documentation
   
 As an example, checkout [Hotshell's hotshell](examples#hotshells-hotshell)

@@ -2,7 +2,7 @@
 
   - [Command-line usage](#command-line-usage)
   - [Menu and item definition](#menu-and-item-definition)
-  - [exec](#exec)
+  - [Exec](#exec)
 
 ## Command-line usage
 

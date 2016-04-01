@@ -1,0 +1,6 @@
+language: go
+
+script: >
+ go get -u github.com/jteeuwen/go-bindata/... &&
+ go generate ./... &&
+ go test $(go list ./... | grep -v /vendor/)

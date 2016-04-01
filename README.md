@@ -102,7 +102,7 @@ for available JavaScript functions.
 A custom function, `exec`, is provided to interact with the system when
 defining menus. See some [examples](./tips.md#exec).
 
-*exec* executes the specified command using `bash -c` and returns
+`string = exec(string)` executes the specified command using `bash -c` and returns
 the stdout if the command returned a non-zero exit code.
 
 In case of failure, stderr is displayed in the menu without stopping the interpretation of the DSL.

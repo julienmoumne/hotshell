@@ -4,7 +4,7 @@ Hotshell is a command-line application to efficiently recall and share commands 
 
 ![demo](doc/demo.png)
 
-For a demo of what this project is about, please check [julienmoumne.github.com/hs](https://julienmoumne.github.com/hs)
+Check out the [demo](https://julienmoumne.github.com/hs) for a quick introduction. 
 
 # Table of Contents
 
@@ -100,9 +100,7 @@ See [Otto](https://github.com/robertkrimen/otto) and
 for available JavaScript functions.
 
 A custom function, `exec`, is provided to interact with the system when
-defining menus.
-
-See some [examples](./tips.md#exec)
+defining menus. See some [examples](./tips.md#exec).
 
 *exec* executes the specified command using `bash -c` and returns
 the stdout if the command returned a non-zero exit code.

@@ -4,4 +4,10 @@ go:
   - 1.5
   - 1.6
 
-script: go test $(go list ./... | grep -v /vendor/)
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get golang.org/x/tools/cmd/cover
+
+script: ^
+ go test $(go list ./... | grep -v /vendor/) -v -covermode=count -coverprofile=coverage.out
+ $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci

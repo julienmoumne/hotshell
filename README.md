@@ -10,7 +10,7 @@ For a demo of what this project is about, please check [julienmoumne.github.com/
 
   - [Hotshell Installation](#hotshell-installation)
   - [Menu Definitions](#menu-definitions)
-  - [Tips](#tips)
+  - [Tips](./tips.md)
   - [Project Motives](#project-motives)
 
 ## Hotshell Installation
@@ -102,38 +102,12 @@ for available JavaScript functions.
 A custom function, `exec`, is provided to interact with the system when
 defining menus.
 
-Examples :
-
-  > retrieve environment variables
-  
-```javascript
-httpPort = exec('echo $HTTP_PORT')
-item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + httpPort})
-```
-
-  > conditionally set-up items
-  
-```javascript
-linux = exec('uname').indexOf('Linux') > -1
-item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew update'})
-```
-
-  > dynamically create menus
-  
-```javascript
-recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')
-_.each(recentlyUpdatedLogs, function(el, ix) {
-  item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})
-})
-```
-![Generated Items - Logs](doc/generated-items-logs.png)
+See some [examples](./tips.md#exec)
 
 *exec* executes the specified command using `bash -c` and returns
 the stdout if the command returned a non-zero exit code.
 
 In case of failure, stderr is displayed in the menu without stopping the interpretation of the DSL.
-
-## [Tips](./tips.md)
 
 ## Project Motives
 

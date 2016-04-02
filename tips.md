@@ -72,7 +72,7 @@ item({
   desc: 'find text in files',
   cmd: 'echo -n "[location] [pattern] " ' + // prompt for location and pattern
          '&& read l p ' + // read location and pattern into variables 'l' and 'p'
-         '&& grep -rnws $l -e $p' // use variables 'l' and 'p' to in command
+         '&& grep -rnws $l -e $p' // use variables 'l' and 'p' in the command
 })
 ```
 

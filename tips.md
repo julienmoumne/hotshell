@@ -56,15 +56,23 @@ hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html
 
 ## Menu and item definition
   
-> Prompt for inputs to be provided as command arguments
+> Commands can receive inputs from the user with bash builtin [read](http://wiki.bash-hackers.org/commands/builtin/read) 
 
 ```javascript
+// prompts for a port number and check if it is opened locally
+item({
+  desc: 'check local port',
+  cmd: 'echo -n "[port] " ' + // prompt for port number
+         '&& read p ' + // read port number and assign it to variable 'p'
+         '&& cat < /dev/tcp/127.0.0.1/$p' // use variable 'p' in the command
+})
+
 // prompts for a location and a pattern and triggers a grep search
 item({
   desc: 'find text in files',
-  cmd: 'echo -n "[location] [pattern] " ' + // prompt for inputs
-         '&& read l p ' + // read inputs
-         '&& grep -rnws $l -e $p' // provide inputs as command arguments
+  cmd: 'echo -n "[location] [pattern] " ' + // prompt for location and pattern
+         '&& read l p ' + // read location and pattern into variables 'l' and 'p'
+         '&& grep -rnws $l -e $p' // use variables 'l' and 'p' to in command
 })
 ```
 

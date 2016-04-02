@@ -76,7 +76,7 @@ item({
 })
 ```
 
-> Access other interactive applications
+> Enter other interactive applications
 
 ```javascript
 item({cmd: 'ssh remote-server'})

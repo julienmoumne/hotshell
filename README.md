@@ -12,8 +12,9 @@ Check out the [demo](https://julienmoumne.github.com/hs) for a quick introductio
 
   - [Hotshell Installation](#hotshell-installation)
   - [Menu Definitions](#menu-definitions)
-  - [Tips](./tips.md)
   - [Project Motives](#project-motives)
+  
+Additional resources : [tips](./tips.md), [examples](./examples).
 
 ## Hotshell Installation
 
@@ -87,12 +88,9 @@ item({desc: 'top level menu'}, function() {
 
 See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.html) of the resulting menu.
  
-### Examples
+### Tips & Examples
 
-Check out some fully-featured [examples](./examples).
-
-The project can greatly benefit from additional examples of menus.
-Examples can be contributed to the project by creating a pull request.
+Check out the [tips](./tips.md) and some fully-featured [examples](./examples).
 
 ### JavaScript Runtime
 

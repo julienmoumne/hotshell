@@ -95,9 +95,11 @@ See [includes example](examples#includes)
 
 > There is a good number of command examples
 
-In the default hotshell `hs --default` and in the [examples directory](./examples).
+in the default hotshell `hs --default` and in the [examples directory](./examples).
 
-> The DSL defined by Hotshell uses some JavaScript tricks, learn more about it : http://alexyoung.org/2009/10/22/javascript-dsl/
+> The DSL defined by Hotshell uses some JavaScript tricks
+
+see [Fear and Loathing in JavaScript DSLs](http://alexyoung.org/2009/10/22/javascript-dsl/)
 
 ## Exec
 

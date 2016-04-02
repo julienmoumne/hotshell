@@ -90,7 +90,7 @@ See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.h
  
 ### Tips & Examples
 
-Check out the [tips](./tips.md) and some fully-featured [examples](./examples).
+Check out [tips](./tips.md) and fully-featured [examples](./examples).
 
 ### JavaScript Runtime
 

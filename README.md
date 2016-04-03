@@ -1,6 +1,4 @@
-# Hotshell [![Build Status](https://travis-ci.org/julienmoumne/hs.svg?branch=master)](https://travis-ci.org/julienmoumne/hs)
-
-> **Interactive single keystroke menus for the shell**
+# Hotshell [![Build Status](https://travis-ci.org/julienmoumne/hs.svg?branch=master)](https://travis-ci.org/julienmoumne/hs) <br/> Interactive single keystroke menus for the shell
 
 Hotshell is a command-line application to efficiently recall and share commands :
 

@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/julienmoumne/hs.svg?branch=master)](https://travis-ci.org/julienmoumne/hs)
-
 Hotshell is a command-line application to efficiently recall and share commands :
 
 ![demo](doc/demo.png)
 
-Check out the [demo](https://julienmoumne.github.com/hs) for a quick introduction. 
+Check out the [demo](https://julienmoumne.github.com/hs) for a quick introduction.
+ 
+[![Build Status](https://travis-ci.org/julienmoumne/hs.svg?branch=master)](https://travis-ci.org/julienmoumne/hs)
 
 # Table of Contents
 

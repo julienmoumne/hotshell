@@ -1,3 +1,7 @@
+# Hotshell
+
+> Interactive single keystroke menus for the shell
+
 Hotshell is a command-line application to efficiently recall and share commands :
 
 ![demo](doc/demo.png)

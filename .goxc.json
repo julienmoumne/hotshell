@@ -9,7 +9,7 @@
       "metadata": {
         "maintainer": "Julien Moumné",
         "maintainer-email": "julien@moumne.com",
-        "description": "Command-line productivity enhancer",
+        "description": "Interactive single keystroke menus for the shell",
         "long-description": "Hotshell is a command-line application to efficiently recall and share commands."
       },
       "other-mapped-files": {

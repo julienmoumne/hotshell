@@ -31,7 +31,7 @@ func CreateOptionsParser() (*flags.Parser, *options) {
 
 	parser.Name = "hs"
 	parser.Usage = "[-f <arg>...] [options]"
-	parser.ShortDescription = "Command-line productivity enhancer"
+	parser.ShortDescription = "Interactive single keystroke menus for the shell"
 	parser.LongDescription = "Hotshell is a command-line application to efficiently recall and share commands."
 
 	return parser, &options

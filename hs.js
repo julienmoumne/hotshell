@@ -16,7 +16,7 @@ item({desc: 'hotshell-web'}, function() {
 
         function demo(src, out) {
             return 'hs --chdir --generate-demo ' +
-                '-f $GOPATH/src/github.com/julienmoumne/hs/' + src +
+                '-f $GOPATH/src/github.com/julienmoumne/hotshell/' + src +
                 '> demos/'+ out +'.html'
         }
     })

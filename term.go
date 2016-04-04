@@ -45,7 +45,7 @@ func (t *term) restore() {
 	fmt.Printf("An error occurred while restoring your terminal default values : %s\n", err)
 	fmt.Println("Your terminal may behave differently than usual.")
 	fmt.Println("If it is the case, you can close and start it again.")
-	fmt.Println("Please file a bug report at https://github.com/julienmoumne/hotshell/issues")
+	fmt.Println("Please file a bug report at https://github.com/julienmoumne/hotshell/issues/new")
 }
 
 func (t *term) readUserChoice() (item.Key, error) {

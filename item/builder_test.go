@@ -2,8 +2,8 @@ package item_test
 
 import (
 	"errors"
-	"github.com/julienmoumne/hs/interpreter"
-	"github.com/julienmoumne/hs/item"
+	"github.com/julienmoumne/hotshell/interpreter"
+	"github.com/julienmoumne/hotshell/item"
 	. "gopkg.in/check.v1"
 	"testing"
 )

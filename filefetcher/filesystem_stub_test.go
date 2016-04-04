@@ -2,7 +2,7 @@ package filefetcher_test
 
 import (
 	"errors"
-	"github.com/julienmoumne/hs/filefetcher"
+	"github.com/julienmoumne/hotshell/filefetcher"
 	"os"
 	"time"
 )

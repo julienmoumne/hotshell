@@ -2,7 +2,7 @@ package item_test
 
 import (
 	"bytes"
-	"github.com/julienmoumne/hs/item"
+	"github.com/julienmoumne/hotshell/item"
 	. "gopkg.in/check.v1"
 	"testing"
 )

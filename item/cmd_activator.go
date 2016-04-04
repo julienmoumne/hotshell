@@ -2,7 +2,7 @@ package item
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hs/formatter"
+	"github.com/julienmoumne/hotshell/formatter"
 	"io"
 	"os"
 	"os/exec"

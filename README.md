@@ -1,4 +1,4 @@
-# Hotshell [![Build Status](https://travis-ci.org/julienmoumne/hs.svg?branch=master)](https://travis-ci.org/julienmoumne/hs)
+# Hotshell [![Build Status](https://travis-ci.org/julienmoumne/hotshell.svg?branch=master)](https://travis-ci.org/julienmoumne/hotshell)
 
 > Interactive single keystroke menus for the shell
 
@@ -6,7 +6,7 @@ Hotshell is a command-line application to efficiently recall and share commands 
 
 ![demo](doc/demo.png)
 
-Check out the [demo](https://julienmoumne.github.com/hs) for a quick introduction.
+Check out the [demo](https://julienmoumne.github.com/hotshell) for a quick introduction.
 
 # Table of Contents
 
@@ -25,7 +25,7 @@ and [2](https://github.com/pkg/term/issues/8) or alternative solutions.
 
 ### Precompiled packages
 
- - Linux : see [releases](https://github.com/julienmoumne/hs/releases)
+ - Linux : see [releases](https://github.com/julienmoumne/hotshell/releases)
  - OSX :
 ```bash
 brew install https://raw.githubusercontent.com/julienmoumne/homebrew/b8ebeb6/Library/Formula/hs.rb
@@ -34,7 +34,7 @@ brew install https://raw.githubusercontent.com/julienmoumne/homebrew/b8ebeb6/Lib
 ### Install from source
 
 ```bash
-go get github.com/julienmoumne/hs/cmd/hs
+go get github.com/julienmoumne/hotshell/cmd/hs
 ```
 
 ## Menu Definitions
@@ -86,7 +86,7 @@ item({desc: 'top level menu'}, function() {
 })
 ```
 
-See a [simulated demo](https://julienmoumne.github.com/hs/demos/tutorial.hs.js.html) of the resulting menu.
+See a [simulated demo](https://julienmoumne.github.com/hotshell/demos/tutorial.hs.js.html) of the resulting menu.
  
 ### Tips & Examples
 

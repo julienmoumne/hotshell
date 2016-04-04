@@ -1,10 +1,10 @@
-//go:generate go-bindata -nometadata -pkg hs examples/default/default.hs.js VERSION
-package hs
+//go:generate go-bindata -nometadata -pkg hotshell examples/default/default.hs.js VERSION
+package hotshell
 
 import (
 	"fmt"
 	"github.com/jessevdk/go-flags"
-	"github.com/julienmoumne/hs/filefetcher"
+	"github.com/julienmoumne/hotshell/filefetcher"
 	"os"
 	"os/user"
 )

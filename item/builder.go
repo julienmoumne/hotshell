@@ -3,7 +3,7 @@ package item
 import (
 	"errors"
 	"fmt"
-	"github.com/julienmoumne/hs/interpreter"
+	"github.com/julienmoumne/hotshell/interpreter"
 	_ "github.com/robertkrimen/otto/underscore"
 )
 

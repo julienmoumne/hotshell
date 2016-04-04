@@ -1,10 +1,10 @@
-package hs
+package hotshell
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hs/demo"
-	"github.com/julienmoumne/hs/interpreter"
-	"github.com/julienmoumne/hs/item"
+	"github.com/julienmoumne/hotshell/demo"
+	"github.com/julienmoumne/hotshell/interpreter"
+	"github.com/julienmoumne/hotshell/item"
 	"os"
 	"path/filepath"
 )

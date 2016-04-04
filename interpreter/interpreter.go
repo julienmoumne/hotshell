@@ -3,7 +3,7 @@ package interpreter
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hs/formatter"
+	"github.com/julienmoumne/hotshell/formatter"
 	"github.com/robertkrimen/otto"
 	_ "github.com/robertkrimen/otto/underscore"
 	"os/exec"

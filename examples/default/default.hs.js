@@ -29,7 +29,7 @@ item({desc: 'Hotshell'}, function() {
         eval(innerDemo)
 
         item({desc: "\n Want to learn more ?\n"})
-        item({key: 'm', desc: "Hit 'm' to open Hotshell's page", cmd: browser + ' https://github.com/julienmoumne/hs'})
+        item({key: 'm', desc: "Hit 'm' to open Hotshell's page", cmd: browser + ' https://github.com/julienmoumne/hotshell'})
 
         item({desc: "\n Hit the spacebar to go to the previous menu or ctrl+c to quit Hotshell"})
     })

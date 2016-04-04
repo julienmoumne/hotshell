@@ -23,7 +23,7 @@ hs -f ~/projects/web
 > Load a menu remotely
 
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js
 ```
 
 > Set the working directory to the location of the menu definition
@@ -39,16 +39,16 @@ hs --chdir -f ~/projects/web/hs.js
 alias hsh="hs -f ~/.hs/hs.js"
 
 # generic hotshells, docker :
-alias hsd="hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker.hs.js"
+alias hsd="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/docker/docker.hs.js"
 # docker compose
-alias hsdc="hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker-compose.hs.js"
+alias hsdc="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/docker/docker-compose.hs.js"
 # docker machine
-alias hsdm="hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/docker/docker-machine.hs.js"
+alias hsdm="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/docker/docker-machine.hs.js"
 # vagrant
-alias hsv="hs -f https://raw.githubusercontent.com/julienmoumne/hs/v0.1.0/examples/vagrant/vagrant.hs.js"
+alias hsv="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/vagrant/vagrant.hs.js"
 ```
 
-> Generate an interactive HTML demo of your menus, [example](https://julienmoumne.github.com/hs/demos/hs.js.html)
+> Generate an interactive HTML demo of your menus, [example](https://julienmoumne.github.com/hotshell/demos/hs.js.html)
 
 ```bash
 hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html  

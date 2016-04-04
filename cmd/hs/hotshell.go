@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hs"
+	"github.com/julienmoumne/hotshell"
 	"github.com/robertkrimen/otto"
 	"os"
 )
 
 func main() {
 
-	err := (&hs.Bootstrap{}).Boot()
+	err := (&hotshell.Bootstrap{}).Boot()
 
 	handleError(err)
 }

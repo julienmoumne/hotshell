@@ -1,9 +1,9 @@
-package hs
+package hotshell
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hs/formatter"
-	"github.com/julienmoumne/hs/item"
+	"github.com/julienmoumne/hotshell/formatter"
+	"github.com/julienmoumne/hotshell/item"
 	"os"
 	"os/signal"
 )

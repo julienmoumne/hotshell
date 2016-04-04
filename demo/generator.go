@@ -2,7 +2,7 @@
 package demo
 
 import (
-	"github.com/julienmoumne/hs/item"
+	"github.com/julienmoumne/hotshell/item"
 	"os"
 	"strings"
 	"text/template"

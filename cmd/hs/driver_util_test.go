@@ -2,7 +2,7 @@ package main
 
 import (
 	"bytes"
-	"github.com/julienmoumne/hs"
+	"github.com/julienmoumne/hotshell"
 	"github.com/pkg/term/termios"
 	"io"
 	"os"
@@ -80,7 +80,7 @@ func (d *driver) setupPty() error {
 		return err
 	}
 
-	hs.Tty = d.pts.Name()
+	hotshell.Tty = d.pts.Name()
 	os.Stdin = d.pts
 
 	return err

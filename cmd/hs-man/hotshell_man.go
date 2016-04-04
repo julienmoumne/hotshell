@@ -3,12 +3,12 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/julienmoumne/hs"
+	"github.com/julienmoumne/hotshell"
 )
 
 func main() {
 
-	parser, _ := hs.CreateOptionsParser()
+	parser, _ := hotshell.CreateOptionsParser()
 	var buf bytes.Buffer
 	parser.WriteManPage(&buf)
 	fmt.Printf(buf.String())

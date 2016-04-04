@@ -1,7 +1,7 @@
 package filefetcher_test
 
 import (
-	"github.com/julienmoumne/hs/filefetcher"
+	"github.com/julienmoumne/hotshell/filefetcher"
 	. "gopkg.in/check.v1"
 	"os"
 	"testing"

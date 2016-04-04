@@ -1,7 +1,7 @@
 package interpreter_test
 
 import (
-	"github.com/julienmoumne/hs/interpreter"
+	"github.com/julienmoumne/hotshell/interpreter"
 	. "gopkg.in/check.v1"
 	"testing"
 )

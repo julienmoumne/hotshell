@@ -6,7 +6,7 @@ Hotshell is a command-line application to efficiently recall and share commands 
 
 ![demo](doc/demo.png)
 
-Check out the [definition](https://raw.githubusercontent.com/julienmoumne/hotshell/gh-pages/_includes/demo.hs.js)
+Check out the [definition](https://github.com/julienmoumne/hotshell/blob/gh-pages/_includes/demo.hs.js)
 and the [simulated demo](https://julienmoumne.github.com/hotshell/demos/demo.hs.js.html)
 of this menu.
 

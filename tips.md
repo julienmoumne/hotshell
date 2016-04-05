@@ -83,6 +83,27 @@ item({cmd: 'ssh remote-server'})
 item({cmd: 'sudo vim /etc/hosts'})
 ```
 
+> Writing scripts using Hotshell is possible (it's currently not as convenient as it could be)
+ 
+```javascript
+item({key: 'g', desc: 'generate gh-pages' + '\n  ', cmd: script(
+    'set -eu',
+    'git checkout gh-pages',
+    'git merge master -m "Merge branch \'master\' into gh-pages"',
+    'npm run build:prod',
+    'git add -A',
+    'git commit -m "publish rx-training-games"',
+    'git push',
+    'git checkout master'
+)})
+
+function script () {
+    src = '';
+    _.each(arguments, function (el, ix) { src += '   ' + el + '\n' })
+    return src
+}
+```
+
 > When running out of characters for defining hot keys, use capital letters
 
 ```javascript

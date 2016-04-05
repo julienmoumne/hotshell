@@ -83,7 +83,7 @@ item({cmd: 'ssh remote-server'})
 item({cmd: 'sudo vim /etc/hosts'})
 ```
 
-> Writing simple scripts using Hotshell is a possibility
+> Writing commands spanning multiple lines is a possibility
  
 ```javascript
 item({key: 'g', desc: 'generate gh-pages' + '\n  ', cmd: script(

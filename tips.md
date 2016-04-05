@@ -86,15 +86,16 @@ item({cmd: 'sudo vim /etc/hosts'})
 > Writing simple scripts is a possibility
  
 ```javascript
-item({key: 'g', desc: 'generate gh-pages' + '\n  ', cmd: script(
+item({key: 't', desc: 'test brew formula' + '\n  ', cmd: script(
     'set -eu',
-    'git checkout gh-pages',
-    'git merge master -m "Merge branch \'master\' into gh-pages"',
-    'npm run build:prod',
-    'git add -A',
-    'git commit -m "publish gh-pages"',
-    'git push',
-    'git checkout master'
+    'echo -n "[git hash] "',
+    'read githash',
+    'formula=https://raw.githubusercontent.com/julienmoumne/homebrew/$githash/Library/Formula/hs.rb',
+    'brew remove hs || true',
+    'brew cleanup -s',
+    'brew install $formula',
+    'brew test $formula',
+    'hs'
 )})
 
 function script () {

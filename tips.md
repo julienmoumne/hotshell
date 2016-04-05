@@ -92,7 +92,7 @@ item({key: 'g', desc: 'generate gh-pages' + '\n  ', cmd: script(
     'git merge master -m "Merge branch \'master\' into gh-pages"',
     'npm run build:prod',
     'git add -A',
-    'git commit -m "publish rx-training-games"',
+    'git commit -m "publish gh-pages"',
     'git push',
     'git checkout master'
 )})

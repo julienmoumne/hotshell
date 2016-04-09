@@ -60,14 +60,14 @@ hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html
 
 ```javascript
 // prompts for a port number and check if it is opened locally
-item({desc: 'check local port', cmd:
+item({key: 'p', desc: 'check local port', cmd:
     'echo -n "[port] " && ' + // prompt for port number
     'read p && ' + // read port number and assign it to variable 'p'
     'cat < /dev/tcp/127.0.0.1/$p' // use variable 'p' in the command
 })
 
 // prompts for a location and a pattern and triggers a grep search
-item({desc: 'find text in files', cmd:
+item({key: 'f', desc: 'find text in files', cmd:
     'echo -n "[location] [pattern] " && ' + // prompt for location and pattern
     'read l p && ' + // read location and pattern into variables 'l' and 'p'
     'grep -rnws $l -e $p' // use variables 'l' and 'p' in the command
@@ -77,8 +77,8 @@ item({desc: 'find text in files', cmd:
 > Enter other interactive applications
 
 ```javascript
-item({cmd: 'ssh remote-server'})
-item({cmd: 'sudo vim /etc/hosts'})
+item({key: 's', cmd: 'ssh remote-server'})
+item({key: 'h', cmd: 'sudo vim /etc/hosts'})
 ```
 
 > Writing simple scripts is a possibility

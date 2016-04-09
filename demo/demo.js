@@ -3,7 +3,7 @@ var Item = React.createClass({
     return <div className="item">
         <span className='key'>{this.props.itemKey}</span>
         <span className={this.props.itemKey == '' || this.props.item.desc == '' ? '' : 'item-desc'} dangerouslySetInnerHTML={{__html: this.props.item.desc}}></span>
-        <span className='cmd'>{this.props.item.cmd == '' && this.props.item.items.length > 0 ? '>' : this.props.item.cmd}</span>
+        <span className='cmd' dangerouslySetInnerHTML={{__html: this.props.item.cmd == '' && this.props.item.items.length > 0 ? '>' : this.props.item.cmd}}></span>
     </div>;
   }
 });
@@ -83,7 +83,7 @@ var MenuController = React.createClass({
       	return el.item.cmd == '' ?
       	    <Menu trail={el.trail} item={el.item} userChoice={el.userChoice}/> :
       	    <div>
-      	        <div className='executed-cmd'>/bin/bash -c '{el.item.cmd}'</div>
+      	        <div className='executed-cmd' dangerouslySetInnerHTML={{__html: '/bin/bash -c ' + el.item.cmd}}></div>
       	        <div className='stdout'>
       	            (the output of the command would be displayed here)
       	        </div>

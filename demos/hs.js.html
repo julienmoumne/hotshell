@@ -409,16 +409,6 @@ var item =
         
             {key: '0', item: 
 {
-    desc: 'examples/composite/composite.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/composite/composite.hs.js',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '1', item: 
-{
     desc: 'examples/default/default.hs.js',
     cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/default/default.hs.js',
     items: [
@@ -427,7 +417,7 @@ var item =
 }
 },
         
-            {key: '2', item: 
+            {key: '1', item: 
 {
     desc: 'examples/docker/docker-compose.hs.js',
     cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/docker/docker-compose.hs.js',
@@ -437,7 +427,7 @@ var item =
 }
 },
         
-            {key: '3', item: 
+            {key: '2', item: 
 {
     desc: 'examples/docker/docker.hs.js',
     cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/docker/docker.hs.js',
@@ -447,10 +437,20 @@ var item =
 }
 },
         
-            {key: '4', item: 
+            {key: '3', item: 
 {
     desc: 'examples/docker/docker-machine.hs.js',
     cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/docker/docker-machine.hs.js',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '4', item: 
+{
+    desc: 'examples/includes/includes.hs.js',
+    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/includes/includes.hs.js',
     items: [
         
     ]
@@ -521,6 +521,26 @@ var item =
 }
 },
         
+            {key: 'b', item: 
+{
+    desc: 'brew',
+    cmd: '',
+    items: [
+        
+            {key: 't', item: 
+{
+    desc: 'test<br/>  ',
+    cmd: 'set -eu<br/>   echo -n "[git hash] "<br/>   read githash<br/>   formula=https://raw.githubusercontent.com/julienmoumne/homebrew/$githash/Library/Formula/hs.rb<br/>   brew remove hs || true<br/>   brew cleanup -s<br/>   brew install $formula<br/>   brew test $formula<br/>   hs',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
     ]
 }
 
@@ -532,7 +552,7 @@ var filename = 'hs.js'
     return <div className="item">
         <span className='key'>{this.props.itemKey}</span>
         <span className={this.props.itemKey == '' || this.props.item.desc == '' ? '' : 'item-desc'} dangerouslySetInnerHTML={{__html: this.props.item.desc}}></span>
-        <span className='cmd'>{this.props.item.cmd == '' && this.props.item.items.length > 0 ? '>' : this.props.item.cmd}</span>
+        <span className='cmd' dangerouslySetInnerHTML={{__html: this.props.item.cmd == '' && this.props.item.items.length > 0 ? '>' : this.props.item.cmd}}></span>
     </div>;
   }
 });
@@ -612,7 +632,7 @@ var MenuController = React.createClass({
       	return el.item.cmd == '' ?
       	    <Menu trail={el.trail} item={el.item} userChoice={el.userChoice}/> :
       	    <div>
-      	        <div className='executed-cmd'>/bin/bash -c '{el.item.cmd}'</div>
+      	        <div className='executed-cmd' dangerouslySetInnerHTML={{__html: '/bin/bash -c ' + el.item.cmd}}></div>
       	        <div className='stdout'>
       	            (the output of the command would be displayed here)
       	        </div>

@@ -116,13 +116,11 @@ In case of failure, stderr is displayed in the menu without stopping the interpr
 As developers and system admins we sometimes spend too much time finding and typing commands on the shell.
 
 We rely on a variety of methods to recall commands : 
-search engines, reverse-search-history, previous-history, aliases, auto-completion, scripts, ..
+search engines, reverse-search-history, aliases, auto-completion, ..
 
 While they are effective, they require superfluous lookups and keystrokes.
 
-I have found myself searching too many times how to lookup patterns in files or checking if a port is open.
-
-Hotshell can be used to define a system wide menu containing such commands :
+Hotshell can be used to define a system wide menu containing often and not so often used commands :
 
 ```javascript
 // file ~/.hs/hs.js  

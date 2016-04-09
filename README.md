@@ -120,7 +120,7 @@ search engines, reverse-search-history, aliases, auto-completion, ..
 
 While they are effective, they require superfluous lookups and keystrokes.
 
-Hotshell can be used to define a system wide menu containing often and not so often used commands :
+Hotshell can be used to define menus containing often and not so often used commands :
 
 ```javascript
 // file ~/.hs/hs.js  

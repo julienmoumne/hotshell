@@ -10,14 +10,13 @@ item({desc: 'hotshell website'}, function() {
 
         item({key: 'g', desc: 'generate\n  ', cmd: script(
             'set -e',
-            'export DOCKER_MACHINE_NAME=dev',
             generateDemo('_includes/demo.hs.js', 'demo.hs.js'),
             generateDemo('demos/tutorial.hs.js', 'tutorial.hs.js'),
             generateDemo(fromHotshell('hs.js'), 'hs.js'),
             generateDemo(fromHotshell('examples/default/default.hs.js'), 'default.hs.js'),
             generateDemo(fromHotshell('examples/docker/docker.hs.js'), 'docker.hs.js'),
             generateDemo(fromHotshell('examples/docker/docker-compose.hs.js'), 'docker-compose.hs.js'),
-            generateDemo(fromHotshell('examples/docker/docker-machine.hs.js'), 'docker-machine.hs.js'),
+            'DOCKER_MACHINE_NAME=dev ' + generateDemo(fromHotshell('examples/docker/docker-machine.hs.js'), 'docker-machine.hs.js'),
             generateDemo(fromHotshell('examples/vagrant/vagrant.hs.js'), 'vagrant.hs.js'),
             generateDemo(fromHotshell('examples/topten/topten.hs.js'), 'topten.hs.js')
         )})

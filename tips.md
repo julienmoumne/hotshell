@@ -175,13 +175,15 @@ see [Fear and Loathing in JavaScript DSLs](http://alexyoung.org/2009/10/22/javas
   
 ```javascript
 httpPort = exec('echo $HTTP_PORT'); if (httpPort == '') throw 'please set $HTTP_PORT'
+
 item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + httpPort})
 ```
 
-> Conditionally set-up items
+> Conditionally set-up items based on the result of system commands
   
 ```javascript
 linux = exec('uname').indexOf('Linux') > -1
+
 item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew update'})
 ```
 
@@ -189,6 +191,7 @@ item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew updat
   
 ```javascript
 recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')
+
 _(recentlyUpdatedLogs).each(function(el, ix) {
   item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})
 })

@@ -6,7 +6,7 @@ item({desc: 'network'}, function() {
 
  item({key: 'w', desc: 'wlan0'}, function() {
    interface(delegate, 'wlan0')
-   // specific commands can be added here when needed
+   // specific commands can be added when needed
    item({key: 'l', desc: 'list access points', cmd: 'iwlist scan'})
  })
 })

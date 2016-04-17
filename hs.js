@@ -18,7 +18,8 @@ item({desc: 'hotshell website'}, function() {
             generateDemo(fromHotshell('examples/docker/docker-compose.hs.js'), 'docker-compose.hs.js'),
             'DOCKER_MACHINE_NAME=dev ' + generateDemo(fromHotshell('examples/docker/docker-machine.hs.js'), 'docker-machine.hs.js'),
             generateDemo(fromHotshell('examples/vagrant/vagrant.hs.js'), 'vagrant.hs.js'),
-            generateDemo(fromHotshell('examples/topten/topten.hs.js'), 'topten.hs.js')
+            generateDemo(fromHotshell('examples/topten/topten.hs.js'), 'topten.hs.js'),
+            generateDemo(fromHotshell('examples/network/network.hs.js'), 'network.hs.js')
         )})
 
         item({key: 'o', desc: 'open demos', cmd: 'find demos  -name "*.html" -exec ' + browser + ' {} \\;'})

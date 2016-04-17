@@ -436,7 +436,7 @@ var item =
             {key: 'f', item: 
 {
     desc: 'find text in files',
-    cmd: 'echo -n "[location] [pattern] " && read l p && grep -rnws $l -e $p',
+    cmd: 'echo -n "[location] [pattern] "; read l p; grep -rnws $l -e $p',
     items: [
         
     ]
@@ -446,7 +446,7 @@ var item =
             {key: 'o', item: 
 {
     desc: 'check local port',
-    cmd: 'echo -n "[port] " && read p && cat < /dev/tcp/127.0.0.1/$p',
+    cmd: 'echo -n "[port] "; read p; cat < /dev/tcp/127.0.0.1/$p',
     items: [
         
     ]

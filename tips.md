@@ -95,18 +95,16 @@ displays
 > Commands can receive inputs from the user with bash builtin [read](http://wiki.bash-hackers.org/commands/builtin/read) 
 
 ```javascript
-// prompts for a port number and check if it is opened locally
 item({key: 'p', desc: 'check local port', cmd:
     'echo -n "[port] "; ' + // prompt for port number
     'read p; ' + // read port number and assign it to variable 'p'
-    'cat < /dev/tcp/127.0.0.1/$p' // use variable 'p' in the command
+    'cat < /dev/tcp/127.0.0.1/$p' // check if port 'p' is opened locally
 })
 
-// prompts for a location and a pattern and triggers a grep search
 item({key: 'f', desc: 'find text in files', cmd:
     'echo -n "[location] [pattern] "; ' + // prompt for location and pattern
     'read l p; ' + // read location and pattern into variables 'l' and 'p'
-    'grep -rnws $l -e $p' // use variables 'l' and 'p' in the command
+    'grep -rnws $l -e $p' // search for pattern 'p' traversing files rooted at 'l'
 })
 ```
 

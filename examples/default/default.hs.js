@@ -59,8 +59,8 @@ item({desc: 'Hotshell'}, function() {
         })
 
         item({key: 'n', desc: 'network & system utils'}, function() {
-            item({key: 'f', desc: 'find text in files', cmd: 'echo -n "[location] [pattern] " && read l p && grep -rnws $l -e $p'})
-            item({key: 'o', desc: 'check local port', cmd: 'echo -n "[port] " && read p && cat < /dev/tcp/127.0.0.1/$p'})
+            item({key: 'f', desc: 'find text in files', cmd: 'echo -n "[location] [pattern] "; read l p; grep -rnws $l -e $p'})
+            item({key: 'o', desc: 'check local port', cmd: 'echo -n "[port] "; read p; cat < /dev/tcp/127.0.0.1/$p'})
             item({key: 'u', desc: 'system uptime', cmd: 'uptime'})
             item({
                 key: 'c',

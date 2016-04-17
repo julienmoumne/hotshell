@@ -125,8 +125,8 @@ Hotshell can be used to define menus containing often and not so often used comm
 ```javascript
 // file ~/.hs/hs.js  
 item({desc: 'useful system commands'}, function() {
-  item({key: 'f', desc: 'find text in files', cmd: 'echo -n "[location] [pattern] " && read l p && grep -rnws $l -e $p'})
-  item({key: 'o', desc: 'check local port', cmd: 'echo -n "[port] " && read p && cat < /dev/tcp/127.0.0.1/$p'})
+  item({key: 'f', desc: 'find text in files', cmd: 'echo -n "[location] [pattern] "; read l p; grep -rnws $l -e $p'})
+  item({key: 'o', desc: 'check local port', cmd: 'echo -n "[port] "; read p; cat < /dev/tcp/127.0.0.1/$p'})
   // other useful commands..
 })
 ```

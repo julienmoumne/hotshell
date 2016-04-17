@@ -197,7 +197,6 @@ _(recentlyUpdatedLogs).each(function(el, ix) {
 })
 ```
 ![Generated Items - Logs](doc/generated-items-logs.png)
-
 > 'console.log()' can be used to help debugging
 
 ```javascript

@@ -122,9 +122,10 @@ item({key: 'g', desc: 'group of related commands'}, function() {
 
 See [includes example](examples#includes)
 
-> There is a good number of command examples
+> There is a good number of command examples in
 
-in the default hotshell `hs --default` and in the [examples directory](./examples).
+ - the default hotshell `hs --default`
+ - the [examples directory](./examples)
 
 > The DSL defined by Hotshell uses some JavaScript tricks
 

@@ -5,6 +5,7 @@
   - [Docker, Docker Compose & Docker Machine](#docker-docker-compose--docker-machine)
   - [Vagrant](#vagrant)
   - [Topten](#topten)
+  - [Network](#network)
   - [Includes](#includes)
 
 ## Hotshell's hotshell
@@ -71,6 +72,17 @@ Dynamically creates a menu with the 10 most used commands.
   - try it :
 ```bash
 hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/topten/topten.hs.js
+```
+
+## Network
+
+A menu to manage 'eth0' and 'wlan0'. Showcases the ability to factor out groups of commands.
+
+  - [demo](https://julienmoumne.github.com/hotshell/demos/network.hs.js.html)
+  - [source](./network/network.hs.js)
+  - try it :
+```bash
+hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/network/network.hs.js
 ```
 
 ## Includes

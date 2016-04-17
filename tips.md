@@ -152,6 +152,10 @@ item({key: 'g', desc: 'group of related commands'}, function() {
 })
 ```
 
+> Factor groups of commands
+
+See [network example](examples#network)
+
 > Include menus defined in separate files
 
 See [includes example](examples#includes)

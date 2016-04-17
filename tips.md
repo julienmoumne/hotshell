@@ -103,10 +103,19 @@ function script () {
 }
 ```
 
-> When running out of characters for defining hot keys, use capital letters
+> When running out of characters for defining hot keys
 
 ```javascript
+// use capital letters
 item({key: 'S', cmd: 'ssh remote-server'})
+
+// or group commands in submenus
+item({key: 'g', desc: 'group of related commands'}, function() {
+
+  // the complete alphabet is available
+  item({key: 'a', cmd: 'echo a'})
+  item({key: 'b', cmd: 'echo b'})
+})
 ```
 
 > Include menus defined in separate files

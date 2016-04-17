@@ -67,7 +67,7 @@ item({desc: 'debug'}, function() {
 // 'items' contains the whole definition
 console.log(JSON.stringify(items, null, ' '))
 ```
-produces
+displays
 ```javascript
 [
  {

@@ -55,6 +55,42 @@ hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html
 ```
 
 ## Menu and item definition
+
+> Output the definition object to help debugging :
+
+```javascript
+item({desc: 'debug'}, function() {
+  item({key: 'r', desc: 'restart apache', cmd: 'sudo service apache2 restart'})
+  item({key: 'a', desc: 'access.log', cmd: 'less +F /var/log/apache2/access.log'})
+}) 
+
+// 'items' contains the whole definition
+console.log(JSON.stringify(items, null, ' '))
+```
+produces
+```javascript
+[
+ {
+  "cmd": null,
+  "desc": "debug",
+  "items": [
+   {
+    "cmd": "sudo service apache2 restart",
+    "desc": "restart apache",
+    "items": [],
+    "key": "r"
+   },
+   {
+    "cmd": "less +F /var/log/apache2/access.log",
+    "desc": "access.log",
+    "items": [],
+    "key": "a"
+   }
+  ],
+  "key": null
+ }
+]
+```
   
 > Commands can receive inputs from the user with bash builtin [read](http://wiki.bash-hackers.org/commands/builtin/read) 
 
@@ -133,21 +169,27 @@ see [Fear and Loathing in JavaScript DSLs](http://alexyoung.org/2009/10/22/javas
 
 ## Exec
 
-  > Retrieve environment variables
+> 'console.log()' can be used to help debugging
+
+```javascript
+console.log(exec('echo $(date)'))
+```
+
+> Retrieve environment variables
   
 ```javascript
 httpPort = exec('echo $HTTP_PORT'); if (httpPort == '') throw 'please set $HTTP_PORT'
 item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + httpPort})
 ```
 
-  > Conditionally set-up items
+> Conditionally set-up items
   
 ```javascript
 linux = exec('uname').indexOf('Linux') > -1
 item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew update'})
 ```
 
-  > Dynamically create menus
+> Dynamically create menus
   
 ```javascript
 recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')

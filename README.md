@@ -133,7 +133,7 @@ item({desc: 'useful system commands'}, function() {
 })
 ```
 
-### Sharing commands with your team
+### Sharing commands
 
 When working in teams we usually go through common steps such as compiling and running tests.
 

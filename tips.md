@@ -171,12 +171,6 @@ see [Fear and Loathing in JavaScript DSLs](http://alexyoung.org/2009/10/22/javas
 
 ## Exec
 
-> 'console.log()' can be used to help debugging
-
-```javascript
-console.log(exec('echo $(date)'))
-```
-
 > Retrieve environment variables
   
 ```javascript
@@ -200,3 +194,9 @@ _(recentlyUpdatedLogs).each(function(el, ix) {
 })
 ```
 ![Generated Items - Logs](doc/generated-items-logs.png)
+
+> 'console.log()' can be used to help debugging
+
+```javascript
+console.log(exec('echo $(date)'))
+```

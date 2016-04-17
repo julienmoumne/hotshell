@@ -98,7 +98,7 @@ item({key: 't', desc: 'test brew formula' + '\n  ', cmd: script(
 
 function script () {
     src = '';
-    _.each(arguments, function (el, ix) { src += '   ' + el + '\n' })
+    _(arguments).each(function (el, ix) { src += '   ' + el + '\n' })
     return src
 }
 ```
@@ -151,7 +151,7 @@ item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew updat
   
 ```javascript
 recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')
-_.each(recentlyUpdatedLogs, function(el, ix) {
+_(recentlyUpdatedLogs).each(function(el, ix) {
   item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})
 })
 ```

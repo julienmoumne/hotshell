@@ -28,10 +28,10 @@ item({desc: 'hotshell-dev'}, function() {
         item({key: 'i', desc: 'interactively run end to end tests'}, function() {
 
             testDir = hsCmdDir + '/testcases/'
-            _.each(exec('ls -d ' + testDir + '*/').split('\n'), function(subdir, ix) {
+            _(exec('ls -d ' + testDir + '*/').split('\n')).each(function(subdir, ix) {
                 item({key: ix, desc: subdir}, function() {
 
-                    _.each(exec('ls ' + desc).split('\n'), function(testName, ix) {
+                    _(exec('ls ' + desc).split('\n')).each(function(testName, ix) {
                         item({key: ix, desc: testName, cmd: buildAndRun + ' -f ' + desc + testName})
                     })
                 })
@@ -49,7 +49,7 @@ item({desc: 'hotshell-dev'}, function() {
 
             if (exec('if [ -d "'+faileTestsDir+'" ]; then echo true; fi') == '') return
              
-            _.each(exec('find ' + faileTestsDir + ' -name *.html').split('\n'), function(el, ix) {
+            _(exec('find ' + faileTestsDir + ' -name *.html').split('\n')).each(function(el, ix) {
                 item({key: ix, desc: 'failed test ' + ix, cmd: browser + ' ' + el})
             })
         })
@@ -57,7 +57,7 @@ item({desc: 'hotshell-dev'}, function() {
 
     item({key: 'e', desc: 'examples'}, function() {
 
-        _.each(exec('ls examples/**/*.js').split('\n'), function(el, ix) {
+        _(exec('ls examples/**/*.js').split('\n')).each(function(el, ix) {
             item({key: ix, desc: el, cmd: buildAndRun + ' --chdir -f ' + el})
         })
     })
@@ -85,6 +85,6 @@ item({desc: 'hotshell-dev'}, function() {
 
 function script () {
     src = '';
-    _.each(arguments, function (el, ix) { src += '   ' + el + '\n' })
+    _(arguments).each(function (el, ix) { src += '   ' + el + '\n' })
     return src
 }

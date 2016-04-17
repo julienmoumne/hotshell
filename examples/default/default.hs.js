@@ -81,7 +81,7 @@ item({desc: 'Hotshell'}, function() {
 
             item({key: 'l', desc: 'last updated system log files', cmd: 'ls -lt /var/log | head'})
             item({key: 'a', desc: 'less apache2/error', cmd: 'less +F /var/log/apache2/error.log'})
-            _.each(exec('ls -dt /var/log/*.* | head -n 5').split('\n'), function(el, ix) {
+            _(exec('ls -dt /var/log/*.* | head -n 5').split('\n')).each(function(el, ix) {
                 item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})
             })
         })

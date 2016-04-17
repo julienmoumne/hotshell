@@ -22,7 +22,7 @@ item({desc: 'docker-compose'}, function() {
 
                 }
                 item({key: 'a', desc: 'all', cmd: createCmd()})
-                _.each(services, function(el, ix){
+                _(services).each(function(el, ix){
                     item({key: ix, desc: el, cmd: createCmd(el)})
                 })
             }

@@ -12,7 +12,7 @@ item({desc: 'vagrant'}, function() {
     function vmActions(key, desc, action) {
         item({key: key, desc: desc, action: action}, function() {
             item({key: 'a', desc: 'all', cmd: action})
-            _.each(vagrantVms, function(el, ix){
+            _(vagrantVms).each(function(el, ix){
                 item({key: ix, desc: el, cmd: action + ' ' + el})
             })
         })

@@ -40,8 +40,9 @@ item({desc: 'docker'}, function() {
                         item({key: 'a', desc: 'all', cmd: createCmd('$(docker ps -a -q)')})
                         item({key: 'r', desc: 'all running', cmd: createCmd('$(docker ps -q)')})
                     }
-                                                                              
-                    _.each(_.isUndefined(delegate.running) ? allContainers : runningContainers, function(el, ix){
+
+                    containers = _.isUndefined(delegate.running) ? allContainers : runningContainers
+                    _(containers).each(function(el, ix){
                         item({
                             key: ix,
                             desc: containerLabels[el],

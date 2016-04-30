@@ -48,7 +48,7 @@ alias hsdm="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0
 alias hsv="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/vagrant/vagrant.hs.js"
 ```
 
-> Generate an interactive HTML demo of your menus, [example](https://julienmoumne.github.com/hotshell/demos/hs.js.html)
+> Generate an interactive HTML demo of your menus, [example](http://julienmoumne.github.com/hotshell/demos/hs.js.html)
 
 ```bash
 hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html  

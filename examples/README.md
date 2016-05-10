@@ -12,7 +12,7 @@
 
 Used to develop, build and test Hotshell.
 
-  - [demo](http://julienmoumne.github.com/hotshell/demos/hs.js.html)
+  - [demo](http://julienmoumne.github.io/hotshell/demos/hs.js.html)
   - [source](../hs.js)
   - try it :
 ```bash
@@ -23,7 +23,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js
 
 This menu is loaded when no definition file is found.
 
-  - [demo](http://julienmoumne.github.com/hotshell/demos/default.hs.js.html)
+  - [demo](http://julienmoumne.github.io/hotshell/demos/default.hs.js.html)
   - [source](./default/default.hs.js)
   - try it :
 ```bash
@@ -33,9 +33,9 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/de
 ## Docker, Docker Compose & Docker Machine
 
   - demos
-    * [docker](http://julienmoumne.github.com/hotshell/demos/docker.hs.js.html)
-    * [docker-compose](http://julienmoumne.github.com/hotshell/demos/docker-compose.hs.js.html)
-    * [docker-machine](http://julienmoumne.github.com/hotshell/demos/docker-machine.hs.js.html)
+    * [docker](http://julienmoumne.github.io/hotshell/demos/docker.hs.js.html)
+    * [docker-compose](http://julienmoumne.github.io/hotshell/demos/docker-compose.hs.js.html)
+    * [docker-machine](http://julienmoumne.github.io/hotshell/demos/docker-machine.hs.js.html)
   - sources
     * [docker](./docker/docker.hs.js)
     * [docker-compose](./docker/docker-compose.hs.js)
@@ -55,7 +55,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/do
 
 ## Vagrant
 
-  - [demo](http://julienmoumne.github.com/hotshell/demos/vagrant.hs.js.html)
+  - [demo](http://julienmoumne.github.io/hotshell/demos/vagrant.hs.js.html)
   - [source](./vagrant/vagrant.hs.js)
   - try it :
 ```bash
@@ -67,7 +67,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/va
 
 Dynamically creates a menu with the 10 most used commands.
 
-  - [demo](http://julienmoumne.github.com/hotshell/demos/topten.hs.js.html)
+  - [demo](http://julienmoumne.github.io/hotshell/demos/topten.hs.js.html)
   - [source](./topten/topten.hs.js)
   - try it :
 ```bash
@@ -78,7 +78,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/to
 
 A menu to manage 'eth0' and 'wlan0'. Showcases the ability to factor out groups of commands.
 
-  - [demo](http://julienmoumne.github.com/hotshell/demos/network.hs.js.html)
+  - [demo](http://julienmoumne.github.io/hotshell/demos/network.hs.js.html)
   - [source](./network/network.hs.js)
   - try it :
 ```bash

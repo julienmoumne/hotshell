@@ -1,11 +1,10 @@
 Vagrant.configure("2") do |config|
 
-  config.vm.box_url = "https://vagrantcloud.com/ubuntu/boxes/trusty64/versions/14.04/providers/virtualbox.box"
   config.vm.box = "ubuntu/trusty64"
-
-  config.vm.define "web" do |web|
+  config.vm.provider "virtualbox" do |vb|
+    vb.customize ["modifyvm", :id, "--groups", "/hotshell-vagrant-example"]
   end
 
-  config.vm.define "db" do |db|
-  end
+  config.vm.define "web"
+  config.vm.define "db"
 end

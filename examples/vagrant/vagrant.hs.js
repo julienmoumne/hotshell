@@ -2,20 +2,25 @@ item({desc: 'vagrant'}, function() {
 
     vagrantVms = exec('vagrant status | sed -n "s;\\([^ ]*\\).*(.*;\\1;p"').split('\n')
 
-    vmActions('u', 'up', 'vagrant up')
-    vmActions('r', 'reload', 'vagrant reload')
-    vmActions('d', 'destroy', 'vagrant destroy')
-    vmActions('p', 'provision', 'vagrant provision')
-    vmActions('h', 'halt', 'vagrant halt')
-    vmActions('s', 'ssh', 'vagrant ssh')
+    forAllVMs({key: 'u', desc: 'up', cmd: 'vagrant up'})
+    forAllVMs({key: 'r', desc: 'reload', cmd: 'vagrant reload'})
+    forAllVMs({key: 'd', desc: 'destroy', cmd: 'vagrant destroy'})
+    forAllVMs({key: 'p', desc: 'provision', cmd: 'vagrant provision'})
+    forAllVMs({key: 'h', desc: 'halt', cmd: 'vagrant halt'})
+    forAllVMs({key: 's', desc: 'ssh', cmd: 'vagrant ssh', individual: true})
+    
     item({key: 'b', desc: 'box update', cmd: 'vagrant box update'})
 
-    function vmActions(key, desc, action) {
-        item({key: key, desc: desc, action: action}, function() {
-            item({key: 'a', desc: 'all', cmd: action})
+    function forAllVMs(config) {
+        item(config, function() {
+            
+            if (_.isUndefined(delegate.individual))
+                item({key: 'a', desc: 'all', cmd: cmd})
+            
             _(vagrantVms).each(function(el, ix){
-                item({key: ix, desc: el, cmd: action + ' ' + el})
+                item({key: ix, desc: el, cmd: cmd + ' ' + el})
             })
+            delete cmd
         })
     }
 })

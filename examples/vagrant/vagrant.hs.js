@@ -8,6 +8,7 @@ item({desc: 'vagrant'}, function() {
     vmActions('p', 'provision', 'vagrant provision')
     vmActions('h', 'halt', 'vagrant halt')
     vmActions('s', 'ssh', 'vagrant ssh')
+    item({key: 'b', desc: 'box update', cmd: 'vagrant box update'})
 
     function vmActions(key, desc, action) {
         item({key: key, desc: desc, action: action}, function() {

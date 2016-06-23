@@ -1,4 +1,4 @@
-item({desc: 'topten'}, function() {
+item({desc: 'topten'}, function () {
 
     topTen =
         'echo "history" | bash -i 2>/dev/null | sed "s/^ *[0-9]* *//" | ' +

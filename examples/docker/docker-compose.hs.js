@@ -1,4 +1,4 @@
-item({desc: 'docker-compose'}, function() {         
+item({desc: 'docker-compose'}, function () {         
   
     services = exec('docker-compose config --services | sort').split('\n')
   
@@ -14,7 +14,7 @@ item({desc: 'docker-compose'}, function() {
     item({key: 'c', desc: 'validate & display config', cmd: 'docker-compose config'})        
         
     function forAllServices (config) {
-        item(config, function() {
+        item(config, function () {
                 function createCmd(el) {
                     el = _.isUndefined(el) ? '' : ' ' + el
                     post = _.isUndefined(delegate.ps) ? '' : ' && docker-compose ps' + el

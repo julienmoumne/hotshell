@@ -48,7 +48,7 @@ Menus are defined using a JavaScript DSL.
 > Menus are first defined with a top-level *menu item*
 
 ```javascript
-item({desc: 'top level menu'}, function() {
+item({desc: 'top level menu'}, function () {
     
 })
 ```
@@ -56,7 +56,7 @@ item({desc: 'top level menu'}, function() {
 > *Command items* associate bash commands to hot keys
 
 ```javascript
-item({desc: 'top level menu'}, function() {
+item({desc: 'top level menu'}, function () {
     
   item({key: 's', cmd: 'sudo service apache2 status'})      
   item({key: 'r', cmd: 'sudo service apache2 restart'})      
@@ -70,18 +70,18 @@ item({desc: 'top level menu'}, function() {
 > *Submenus and Description items* can be used to add structure
 
 ```javascript
-item({desc: 'top level menu'}, function() {
+item({desc: 'top level menu'}, function () {
     
   item({desc: 'this is a description item, you can use it to describe the menu\n'})
   
   // a submenu to manage apache's daemon
-  item({key: 'm', desc: 'apache management'}, function() {
+  item({key: 'm', desc: 'apache management'}, function () {
     item({key: 'r', cmd: 'sudo service apache2 restart'})      
     item({key: 'h', cmd: 'sudo service apache2 stop'})
   })
   
   // a submenu to access apache's logs
-  item({key: 'l', desc: 'apache logs'}, function() {
+  item({key: 'l', desc: 'apache logs'}, function () {
     item({key: 'a', desc: 'access', cmd: 'less +F /var/log/apache2/access.log'})
     item({key: 'e', desc: 'error', cmd: 'less +F /var/log/apache2/error.log'})
   })      
@@ -126,7 +126,7 @@ Hotshell can be used to define menus containing often and not so often used comm
 
 ```javascript
 // file ~/.hs/hs.js  
-item({desc: 'useful system commands'}, function() {
+item({desc: 'useful system commands'}, function () {
   item({key: 'f', desc: 'find text in files', cmd: 'echo -n "[location] [pattern] "; read l p; grep -rnws $l -e $p'})
   item({key: 'o', desc: 'check local port', cmd: 'echo -n "[port] "; read p; cat < /dev/tcp/127.0.0.1/$p'})
   // other useful commands..

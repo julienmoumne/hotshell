@@ -1,11 +1,11 @@
-item({desc: 'docker'}, function() {  
+item({desc: 'docker'}, function () {  
     
-    item({key: 'p', desc: 'ps'}, function() {
+    item({key: 'p', desc: 'ps'}, function () {
         item({key: 'a', desc: 'ps all', cmd: 'docker ps -a'})
         item({key: 'r', desc: 'ps running', cmd: 'docker ps '})
     })
     
-    item({key: 'c', desc: 'containers'}, function() {
+    item({key: 'c', desc: 'containers'}, function () {
         
         allContainers = adjustList(exec('docker ps -a --format={{.ID}}'))
         runningContainers = adjustList(exec('docker ps --format={{.ID}}'))
@@ -28,7 +28,7 @@ item({desc: 'docker'}, function() {
         } 
             
         function forAllContainers (config) {        
-            item(config, function() {                          
+            item(config, function () {                          
                     function createCmd(el) {
                         el = ' ' + el
                         _args = _.isUndefined(delegate.args) ? '' : ' ' + args
@@ -54,12 +54,12 @@ item({desc: 'docker'}, function() {
         } 
     })        
                     
-    item({key: 'i', desc: 'images'}, function() {
+    item({key: 'i', desc: 'images'}, function () {
         item({key: 'l', desc: 'list', cmd: 'docker images'})
         item({key: 'd', desc: 'remove all', cmd: 'docker rmi $(docker images -q)'})
     })
                         
-    item({key: 'v', desc: 'volumes'}, function() {
+    item({key: 'v', desc: 'volumes'}, function () {
         item({key: 'l', desc: 'list', cmd: 'docker volume ls'})
         item({key: 'd', desc: 'remove all', cmd: 'docker volume rm $(docker volume ls -q)'})
     })

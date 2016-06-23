@@ -1,4 +1,4 @@
-item({desc: 'hotshell-dev'}, function() {
+item({desc: 'hotshell-dev'}, function () {
 
     linux = exec('uname').indexOf('Linux') > -1
     browser = linux ? 'sensible-browser' : 'open'
@@ -14,7 +14,7 @@ item({desc: 'hotshell-dev'}, function() {
     item({key: 'v', desc: 'vet', cmd: 'go vet ' + allButVendor})
     item({key: 'f', desc: 'fmt', cmd: 'go fmt ' + allButVendor})
 
-    item({key: 'p', desc: 'packaging'}, function() {
+    item({key: 'p', desc: 'packaging'}, function () {
 
         man = 'debian/usr/share/man/man1/hs.1.gz'
         item({key: 'g', desc: 'generate man', cmd: install + ' && hs-man | gzip > ' + man})
@@ -22,14 +22,14 @@ item({desc: 'hotshell-dev'}, function() {
         item({key: 'p', desc: 'package', cmd: "goxc -pv $(cat VERSION) -wd " + hsCmdDir})
     })
 
-    item({key: 't', desc: 'tests'}, function() {
+    item({key: 't', desc: 'tests'}, function () {
 
         item({key: 't', desc: 'test', cmd: runTests})
-        item({key: 'i', desc: 'interactively run end to end tests'}, function() {
+        item({key: 'i', desc: 'interactively run end to end tests'}, function () {
 
             testDir = hsCmdDir + '/testcases/'
             _(exec('ls -d ' + testDir + '*/').split('\n')).each(function(subdir, ix) {
-                item({key: ix, desc: subdir}, function() {
+                item({key: ix, desc: subdir}, function () {
 
                     _(exec('ls ' + desc).split('\n')).each(function(testName, ix) {
                         item({key: ix, desc: testName, cmd: buildAndRun + ' -f ' + desc + testName})
@@ -38,7 +38,7 @@ item({desc: 'hotshell-dev'}, function() {
             })
         })
 
-        item({key: 'f', desc: 'failed end to end tests'}, function() {                    
+        item({key: 'f', desc: 'failed end to end tests'}, function () {                    
 
             item({desc: '(reload menu to update failed tests list)\n'})
 
@@ -55,20 +55,20 @@ item({desc: 'hotshell-dev'}, function() {
         })
     })
 
-    item({key: 'e', desc: 'examples'}, function() {
+    item({key: 'e', desc: 'examples'}, function () {
 
         _(exec('ls examples/**/*.js').split('\n')).each(function(el, ix) {
             item({key: ix, desc: el, cmd: buildAndRun + ' --chdir -f ' + el})
         })
     })
     
-    item({key: 'd', desc: 'dev env setup'}, function() {
+    item({key: 'd', desc: 'dev env setup'}, function () {
         item({key: 'b', cmd: 'go get -u github.com/jteeuwen/go-bindata/...'})
         item({key: 'v', cmd: 'go get -u github.com/kardianos/govendor'})
         item({key: 'x', cmd: 'go get -u github.com/laher/goxc'})
     })
 
-    item({key: 'b', desc: 'brew'}, function() {
+    item({key: 'b', desc: 'brew'}, function () {
         item({key: 't', desc: 'test' + '\n  ', cmd: script(
             'set -eu',
             'echo -n "[git hash] "',

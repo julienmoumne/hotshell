@@ -1,4 +1,4 @@
-item({desc: 'Reference Error in closure'}, function() {
+item({desc: 'Reference Error in closure'}, function () {
 
     callToUndefinedMethod()
 })

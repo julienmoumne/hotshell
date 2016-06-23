@@ -1,4 +1,4 @@
-item({desc: 'Failed Exec'}, function() {
+item({desc: 'Failed Exec'}, function () {
 
-	exec('cat /im/am/confident/this/file/does/not/exist')
+    exec('cat /im/am/confident/this/file/does/not/exist')
 })

@@ -59,7 +59,7 @@ hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html
 > Output the definition object to help debugging :
 
 ```javascript
-item({desc: 'debug'}, function() {
+item({desc: 'debug'}, function () {
   item({key: 'r', desc: 'restart apache', cmd: 'sudo service apache2 restart'})
   item({key: 'a', desc: 'access.log', cmd: 'less +F /var/log/apache2/access.log'})
 }) 
@@ -144,7 +144,7 @@ function script () {
 item({key: 'S', cmd: 'ssh remote-server'})
 
 // or group commands in submenus
-item({key: 'g', desc: 'group of related commands'}, function() {
+item({key: 'g', desc: 'group of related commands'}, function () {
 
   // the complete alphabet is available
   item({key: 'a', cmd: 'echo a'})

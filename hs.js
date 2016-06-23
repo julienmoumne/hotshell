@@ -1,12 +1,12 @@
 item({desc: 'hotshell-dev'}, function () {
 
     linux = exec('uname').indexOf('Linux') > -1
-    browser = linux ? 'sensible-browser' : 'open'
+    browser = linux ? 'sensible-browser' : 'open'
     generate = 'go generate ./...'
     install = generate + ' && go install ./...'
     hsCmdDir = './cmd/hs'
     buildAndRun = generate + ' && go build ' + hsCmdDir + ' && ./hs'
-    allButVendor =  '$(go list ./... | grep -v /vendor/)'
+    allButVendor = '$(go list ./... | grep -v /vendor/)'
     runTests = generate + ' && go test ' + allButVendor + ' -timeout 10s'
 
     item({key: 'i', desc: 'install', cmd: install})
@@ -38,7 +38,7 @@ item({desc: 'hotshell-dev'}, function () {
             })
         })
 
-        item({key: 'f', desc: 'failed end to end tests'}, function () {                    
+        item({key: 'f', desc: 'failed end to end tests'}, function () {
 
             item({desc: '(reload menu to update failed tests list)\n'})
 
@@ -47,9 +47,9 @@ item({desc: 'hotshell-dev'}, function () {
             item({key: 'r', desc: 'run tests', cmd: runTests})
             item({key: 'o', desc: 'open failed tests directory', cmd: browser + ' ' + faileTestsDir})
 
-            if (exec('if [ -d "'+faileTestsDir+'" ]; then echo true; fi') == '') return
-             
-            _(exec('find ' + faileTestsDir + ' -name *.html').split('\n')).each(function(el, ix) {
+            if (exec('if [ -d "' + faileTestsDir + '" ]; then echo true; fi') == '') return
+
+            _(exec('find ' + faileTestsDir + ' -name *.html').split('\n')).each(function (el, ix) {
                 item({key: ix, desc: 'failed test ' + ix, cmd: browser + ' ' + el})
             })
         })
@@ -57,11 +57,11 @@ item({desc: 'hotshell-dev'}, function () {
 
     item({key: 'e', desc: 'examples'}, function () {
 
-        _(exec('ls examples/**/*.js').split('\n')).each(function(el, ix) {
+        _(exec('ls examples/**/*.js').split('\n')).each(function (el, ix) {
             item({key: ix, desc: el, cmd: buildAndRun + ' --chdir -f ' + el})
         })
     })
-    
+
     item({key: 'd', desc: 'dev env setup'}, function () {
         item({key: 'b', cmd: 'go get -u github.com/jteeuwen/go-bindata/...'})
         item({key: 'v', cmd: 'go get -u github.com/kardianos/govendor'})
@@ -69,21 +69,21 @@ item({desc: 'hotshell-dev'}, function () {
     })
 
     item({key: 'b', desc: 'brew'}, function () {
-        item({key: 't', desc: 'test' + '\n  ', cmd: script(
-            'set -eu',
-            'echo -n "[git hash] "',
-            'read githash',
-            'formula=https://raw.githubusercontent.com/julienmoumne/homebrew/$githash/Library/Formula/hs.rb',
-            'brew remove hs || true',
-            'brew cleanup -s',
-            'brew install $formula',
-            'brew test $formula',
-            'hs'
+        item({ key: 't', desc: 'test' + '\n  ', cmd: script(
+                'set -eu',
+                'echo -n "[git hash] "',
+                'read githash',
+                'formula=https://raw.githubusercontent.com/julienmoumne/homebrew/$githash/Library/Formula/hs.rb',
+                'brew remove hs || true',
+                'brew cleanup -s',
+                'brew install $formula',
+                'brew test $formula',
+                'hs'
         )})
     })
 })
 
-function script () {
+function script() {
     src = '';
     _(arguments).each(function (el, ix) { src += '   ' + el + '\n' })
     return src

@@ -1,7 +1,8 @@
-machine = exec('echo $DOCKER_MACHINE_NAME'); if (machine == '') throw 'please set $DOCKER_MACHINE_NAME'
+machine = exec('echo $DOCKER_MACHINE_NAME')
+if (machine == '') throw 'please set $DOCKER_MACHINE_NAME'
 
 item({desc: 'docker-machine'}, function () {
-          
+
     item({desc: 'active machine is "' + machine + '"\n'})
 
     item({key: 'd', desc: 'display env', cmd: 'docker-machine env ' + machine})

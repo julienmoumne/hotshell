@@ -1,7 +1,7 @@
-item({desc: 'docker-compose'}, function () {         
-  
+item({desc: 'docker-compose'}, function () {
+
     services = exec('docker-compose config --services | sort').split('\n')
-  
+
     forAllServices({key: 'u', desc: 'up -d', ps: true})
     forAllServices({key: 'r', desc: 'restart', ps: true})
     forAllServices({key: 's', desc: 'stop', ps: true})
@@ -10,10 +10,10 @@ item({desc: 'docker-compose'}, function () {
     forAllServices({key: 'p', desc: 'ps'})
     forAllServices({key: 'b', desc: 'build'})
     forAllServices({key: 'd', desc: 'rm', ps: true})
-    
-    item({key: 'c', desc: 'validate & display config', cmd: 'docker-compose config'})        
-        
-    function forAllServices (config) {
+
+    item({key: 'c', desc: 'validate & display config', cmd: 'docker-compose config'})
+
+    function forAllServices(config) {
         item(config, function () {
                 function createCmd(el) {
                     el = _.isUndefined(el) ? '' : ' ' + el
@@ -21,11 +21,12 @@ item({desc: 'docker-compose'}, function () {
                     return 'docker-compose ' + desc + el + post
 
                 }
+
                 item({key: 'a', desc: 'all', cmd: createCmd()})
-                _(services).each(function(el, ix){
+                _(services).each(function (el, ix) {
                     item({key: ix, desc: el, cmd: createCmd(el)})
                 })
             }
         )
-    }    
+    }
 })

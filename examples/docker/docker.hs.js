@@ -1,18 +1,18 @@
-item({desc: 'docker'}, function () {  
-    
+item({desc: 'docker'}, function () {
+
     item({key: 'p', desc: 'ps'}, function () {
         item({key: 'a', desc: 'ps all', cmd: 'docker ps -a'})
         item({key: 'r', desc: 'ps running', cmd: 'docker ps '})
     })
-    
+
     item({key: 'c', desc: 'containers'}, function () {
-        
+
         allContainers = adjustList(exec('docker ps -a --format={{.ID}}'))
         runningContainers = adjustList(exec('docker ps --format={{.ID}}'))
-        containerLabels = _.object(_.map(allContainers, function(el) {
+        containerLabels = _.object(_.map(allContainers, function (el) {
             return [el, exec('docker inspect --format="{{.Name}} ({{.Config.Image}})" ' + el)]
         }));
-    
+
         forAllContainers({key: 'i', desc: 'inspect'})
         forAllContainers({key: 's', desc: 'start', inspect: true})
         forAllContainers({key: 'e', desc: 'exec -it', running: true, individual: true, args: 'bash'})
@@ -21,8 +21,8 @@ item({desc: 'docker'}, function () {
         forAllContainers({key: 'r', desc: 'restart', inspect: true})
         forAllContainers({key: 'l', desc: 'logs -f', individual: true, running: true})
         forAllContainers({key: 't', desc: 'top', individual: true})
-        forAllContainers({key: 'd', desc: 'rm -f'})        
-                                
+        forAllContainers({key: 'd', desc: 'rm -f'})
+
         function adjustList(list) {
             return list == '' ? [] : list.split('\n')
         } 
@@ -51,19 +51,19 @@ item({desc: 'docker'}, function () {
                     })
                 }
             )
-        } 
-    })        
-                    
+        }
+    })
+
     item({key: 'i', desc: 'images'}, function () {
         item({key: 'l', desc: 'list', cmd: 'docker images'})
         item({key: 'd', desc: 'remove all', cmd: 'docker rmi $(docker images -q)'})
     })
-                        
+
     item({key: 'v', desc: 'volumes'}, function () {
         item({key: 'l', desc: 'list', cmd: 'docker volume ls'})
         item({key: 'd', desc: 'remove all', cmd: 'docker volume rm $(docker volume ls -q)'})
     })
 
-    item({key: 'n', desc: 'networks', cmd: 'docker network ls'})            
+    item({key: 'n', desc: 'networks', cmd: 'docker network ls'})
     item({key: 's', desc: 'stats', cmd: 'docker stats'})
 })

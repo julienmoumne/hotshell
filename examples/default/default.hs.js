@@ -1,7 +1,7 @@
 item({desc: 'Hotshell'}, function () {
 
     linux = exec('uname').indexOf('Linux') > -1
-    browser = linux ? 'sensible-browser' : 'open'
+    browser = linux ? 'sensible-browser' : 'open'
 
     item({desc: "This is Hotshell's default menu, displayed when no definition file is provided.\n"});
 
@@ -11,15 +11,15 @@ item({desc: 'Hotshell'}, function () {
         item({desc: "Hotshell is a command-line application to efficiently recall and share commands.\n"});
 
         innerDemo =
-        "   // command items\n" +
-        "   item({key: 'r', desc: 'restart apache', cmd: 'sudo service apache2 restart'})\n" +
-        "   item({key: 's', desc: 'synchronize time', cmd: 'sudo /usr/sbin/ntpdate pool.ntp.org'})\n" +
-        "   \n" +
-        "   // submenu to group log related commands\n" +
-        "   item({key: 'l', desc: 'apache logs'}, function () {\n" +
-        "     item({key: 'a', desc: 'access.log', cmd: 'less +F /var/log/apache2/access.log'})\n" +
-        "     item({key: 'e', desc: 'error.log', cmd: 'less +F /var/log/apache2/error.log'})\n" +
-        "   })\n"
+            "   // command items\n" +
+            "   item({key: 'r', desc: 'restart apache', cmd: 'sudo service apache2 restart'})\n" +
+            "   item({key: 's', desc: 'synchronize time', cmd: 'sudo /usr/sbin/ntpdate pool.ntp.org'})\n" +
+            "   \n" +
+            "   // submenu to group log related commands\n" +
+            "   item({key: 'l', desc: 'apache logs'}, function () {\n" +
+            "     item({key: 'a', desc: 'access.log', cmd: 'less +F /var/log/apache2/access.log'})\n" +
+            "     item({key: 'e', desc: 'error.log', cmd: 'less +F /var/log/apache2/error.log'})\n" +
+            "   })\n"
 
         demo = "item({desc: 'demo'}, function () {\n" + innerDemo + " })\n"
 
@@ -41,10 +41,10 @@ item({desc: 'Hotshell'}, function () {
     item({key: 'e', desc: "Hit 'e'"}, function () {
 
         item({key: 'w', desc: 'weather & time'}, function () {
-    	    item({key: 'c', desc: 'check the weather', cmd: 'curl wttr.in'})
-    	    item({key: 's', desc: 'synchronize time', cmd: 'sudo /usr/sbin/ntpdate pool.ntp.org'})
-    	    item({key: 't', desc: 'watch the time go by', cmd: 'watch -n 1 date'})
-	    })
+            item({key: 'c', desc: 'check the weather', cmd: 'curl wttr.in'})
+            item({key: 's', desc: 'synchronize time', cmd: 'sudo /usr/sbin/ntpdate pool.ntp.org'})
+            item({key: 't', desc: 'watch the time go by', cmd: 'watch -n 1 date'})
+        })
 
         item({key: 's', desc: 'SSH your most accessed servers'}, function () {
             item({key: 'l', desc: 'localhost', cmd: 'ssh localhost'})
@@ -81,7 +81,7 @@ item({desc: 'Hotshell'}, function () {
 
             item({key: 'l', desc: 'last updated system log files', cmd: 'ls -lt /var/log | head'})
             item({key: 'a', desc: 'less apache2/error', cmd: 'less +F /var/log/apache2/error.log'})
-            _(exec('ls -dt /var/log/*.* | head -n 5').split('\n')).each(function(el, ix) {
+            _(exec('ls -dt /var/log/*.* | head -n 5').split('\n')).each(function (el, ix) {
                 item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})
             })
         })

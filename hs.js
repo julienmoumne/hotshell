@@ -66,6 +66,7 @@ item({desc: 'hotshell-dev'}, function () {
         item({key: 'b', cmd: 'go get -u github.com/jteeuwen/go-bindata/...'})
         item({key: 'v', cmd: 'go get -u github.com/kardianos/govendor'})
         item({key: 'x', cmd: 'go get -u github.com/laher/goxc'})
+        item({key: 'g', cmd: 'gem install github_changelog_generator'})
     })
 
     item({key: 'b', desc: 'brew'}, function () {
@@ -81,6 +82,8 @@ item({desc: 'hotshell-dev'}, function () {
                 'hs'
         )})
     })
+
+    item({key: 'g', desc: 'generate changelog', cmd: 'github_changelog_generator'})
 })
 
 function script() {

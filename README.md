@@ -10,15 +10,16 @@ Check out the [definition](https://github.com/julienmoumne/hotshell/blob/gh-page
 and the [simulated demo](http://julienmoumne.github.io/hotshell/demos/demo.hs.js.html)
 of this menu.
 
-# Table of Contents
+# Content
 
-  - [Hotshell Installation](#hotshell-installation)
-  - [Menu Definitions](#menu-definitions)
+  - [Installation](#installation)
+  - [How to define menus](#how-to-define-menus)
+  - [Examples](./examples)
+  - [Tips](./tips.md)
   - [Project Motives](#project-motives)
-  
-Additional resources : [tips](./tips.md), [examples](./examples).
+  - [Changelog](CHANGELOG.md)
 
-## Hotshell Installation
+## Installation
 
 Hotshell is currently supported on Linux and OSX.
 
@@ -39,7 +40,7 @@ brew install https://raw.githubusercontent.com/julienmoumne/homebrew/5d3e85c/Lib
 go get github.com/julienmoumne/hotshell/cmd/hs
 ```
 
-## Menu Definitions
+## How to define menus
  
 Menus are defined using a JavaScript DSL.
 

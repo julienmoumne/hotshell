@@ -69,25 +69,5 @@ item({desc: 'hotshell-dev'}, function () {
         item({key: 'g', cmd: 'sudo gem install github_changelog_generator'})
     })
 
-    item({key: 'b', desc: 'brew'}, function () {
-        item({ key: 't', desc: 'test' + '\n  ', cmd: script(
-                'set -eu',
-                'echo -n "[git hash] "',
-                'read githash',
-                'formula=https://raw.githubusercontent.com/julienmoumne/homebrew/$githash/Library/Formula/hs.rb',
-                'brew remove hs || true',
-                'brew cleanup -s',
-                'brew install $formula',
-                'brew test $formula',
-                'hs'
-        )})
-    })
-
     item({key: 'g', desc: 'generate changelog', cmd: 'github_changelog_generator'})
 })
-
-function script() {
-    src = '';
-    _(arguments).each(function (el, ix) { src += '   ' + el + '\n' })
-    return src
-}

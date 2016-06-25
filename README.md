@@ -31,7 +31,7 @@ and [2](https://github.com/pkg/term/issues/8) or alternative solutions.
  - Linux : see [releases](https://github.com/julienmoumne/hotshell/releases)
  - OSX :
 ```bash
-brew install https://raw.githubusercontent.com/julienmoumne/homebrew/5d3e85c/Library/Formula/hs.rb
+brew install julienmoumne/hotshell/hs
 ```
 
 ### Install from source

@@ -2,6 +2,7 @@
  Runtime Error in nested closure
 
  nested closure [Exception caught, Error: Runtime Error]
+ n not skipped echo not skipped
 
  spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
 

@@ -42,7 +42,7 @@ go get github.com/julienmoumne/hotshell/cmd/hs
 
 ## How to define menus
  
-Menus are defined using a [JavaScript DSL](moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
+Menus are defined using a [JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
 
 ### Building blocks
 

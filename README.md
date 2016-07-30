@@ -42,7 +42,7 @@ go get github.com/julienmoumne/hotshell/cmd/hs
 
 ## How to define menus
  
-Menus are defined using a JavaScript DSL.
+Menus are defined using a [JavaScript DSL](moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
 
 ### Building blocks
 
@@ -149,3 +149,19 @@ Hotshell proposes both a way to :
   - produce executable documentation
   
 As an example, checkout [Hotshell's hotshell](examples#hotshells-hotshell)
+
+# Todo
+
+ - quelle nouvelle version?
+ - generate demos to see if there is any change
+ - tester les demos
+ - créer un ticket pour expliquer le contexte avec tag improvement
+ - mettre un "see changelog" in release desc
+ - faire un script de publish?
+ - ne pas utiliser des script(), plusôt un script.sh externe
+ - séparer les commits -> utiliser des github issues si changement importants à afficher dans la changelog
+ - spécifier les déprécations?
+ - ticket pour le mode "stack" : "Improve syntax when specifying reusable items and menus"
+    - dans la description, montrer exemple et après, citer l'article DSL
+ - update gh-pages
+

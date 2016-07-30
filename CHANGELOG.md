@@ -6,7 +6,7 @@
 
 **Implemented enhancements:**
 
-- Improve syntax when specifying reusable items and menus [\#6](https://github.com/julienmoumne/hotshell/issues/6)
+- \[API Change\] Improve syntax when specifying reusable items and menus [\#6](https://github.com/julienmoumne/hotshell/issues/6)
 - Automated changelog using skywinder/github-changelog-generator [\#5](https://github.com/julienmoumne/hotshell/issues/5)
 - New example : How to factor group of commands [\#3](https://github.com/julienmoumne/hotshell/issues/3)
 - Automated installation on OSX using Howebrew [\#2](https://github.com/julienmoumne/hotshell/issues/2)

@@ -165,9 +165,9 @@ See [includes example](examples#includes)
  - the default hotshell `hs --default`
  - the [examples directory](./examples)
 
-> The DSL defined by Hotshell uses some JavaScript tricks
+> Need to understand how the DSL is interpreted?
 
-see [Fear and Loathing in JavaScript DSLs](http://alexyoung.org/2009/10/22/javascript-dsl/)
+see [Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl)
 
 ## Exec
 

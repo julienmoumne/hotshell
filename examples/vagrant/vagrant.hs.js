@@ -1,6 +1,6 @@
 item({desc: 'vagrant'}, function () {
 
-    vagrantVms = exec('vagrant status | sed -n "s;\\([^ ]*\\).*(.*;\\1;p"').split('\n')
+    var vagrantVms = exec('vagrant status | sed -n "s;\\([^ ]*\\).*(.*;\\1;p"').split('\n')
 
     forAllVMs({key: 'u', desc: 'up', cmd: 'vagrant up'})
     forAllVMs({key: 'r', desc: 'reload', cmd: 'vagrant reload'})
@@ -12,15 +12,14 @@ item({desc: 'vagrant'}, function () {
     item({key: 'b', desc: 'box update', cmd: 'vagrant box update'})
 
     function forAllVMs(config) {
-        item(config, function () {
+        item(_(config).omit('cmd'), function () {
 
-            if (_.isUndefined(delegate.individual))
-                item({key: 'a', desc: 'all', cmd: cmd})
+            if (_(config.individual).isUndefined())
+                item({key: 'a', desc: 'all', cmd: config.cmd})
 
             _(vagrantVms).each(function (el, ix) {
-                item({key: ix, desc: el, cmd: cmd + ' ' + el})
+                item({key: ix, desc: el, cmd: config.cmd + ' ' + el})
             })
-            delete cmd
         })
     }
 })

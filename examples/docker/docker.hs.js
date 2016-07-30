@@ -31,17 +31,17 @@ item({desc: 'docker'}, function () {
             item(config, function () {                          
                     function createCmd(el) {
                         el = ' ' + el
-                        _args = _.isUndefined(delegate.args) ? '' : ' ' + args
-                        post = _.isUndefined(delegate.inspect) ? '' : ' && docker inspect --format="{{.Name}} {{.State.Status}}"' + el
-                        return 'docker ' + desc + el + _args + post
+                        _args = _(config.args).isUndefined() ? '' : ' ' + config.args
+                        post = _(config.inspect).isUndefined() ? '' : ' && docker inspect --format="{{.Name}} {{.State.Status}}"' + el
+                        return 'docker ' + config.desc + el + _args + post
                     }
                     
-                    if (_.isUndefined(delegate.individual)) {
+                    if (_(config.individual).isUndefined()) {
                         item({key: 'a', desc: 'all', cmd: createCmd('$(docker ps -a -q)')})
                         item({key: 'r', desc: 'all running', cmd: createCmd('$(docker ps -q)')})
                     }
 
-                    containers = _.isUndefined(delegate.running) ? allContainers : runningContainers
+                    containers = _(config.running).isUndefined() ? allContainers : runningContainers
                     _(containers).each(function(el, ix){
                         item({
                             key: ix,

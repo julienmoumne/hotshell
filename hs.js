@@ -31,8 +31,8 @@ item({desc: 'hotshell-dev'}, function () {
             _(exec('ls -d ' + testDir + '*/').split('\n')).each(function(subdir, ix) {
                 item({key: ix, desc: subdir}, function () {
 
-                    _(exec('ls ' + desc).split('\n')).each(function(testName, ix) {
-                        item({key: ix, desc: testName, cmd: buildAndRun + ' -f ' + desc + testName})
+                    _(exec('ls ' + subdir).split('\n')).each(function(testName, ix) {
+                        item({key: ix, desc: testName, cmd: buildAndRun + ' -f ' + subdir + testName})
                     })
                 })
             })

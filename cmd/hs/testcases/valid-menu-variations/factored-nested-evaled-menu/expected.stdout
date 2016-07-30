@@ -1,0 +1,47 @@
+
+ Factored Menu
+
+ k ls *.js ls *.js
+ l less >
+ s factored submenu >
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? s
+
+ Factored Menu
+ factored submenu
+
+ submenu desc
+
+ e echo >
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? e
+
+ Factored Menu
+ factored submenu
+ echo
+
+ 0 echo hello
+ 1 echo world
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? 0
+
+ /bin/bash -c 'echo hello'
+
+hello
+
+ Factored Menu
+ factored submenu
+ echo
+
+ 0 echo hello
+ 1 echo world
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? 

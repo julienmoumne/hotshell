@@ -16,10 +16,9 @@ item({desc: 'docker-compose'}, function () {
     function forAllServices(config) {
         item(config, function () {
                 function createCmd(el) {
-                    el = _.isUndefined(el) ? '' : ' ' + el
-                    post = _.isUndefined(delegate.ps) ? '' : ' && docker-compose ps' + el
-                    return 'docker-compose ' + desc + el + post
-
+                    el = _(el).isUndefined() ? '' : ' ' + el
+                    post = _(config.ps).isUndefined() ? '' : ' && docker-compose ps' + el
+                    return 'docker-compose ' + config.desc + el + post
                 }
 
                 item({key: 'a', desc: 'all', cmd: createCmd()})

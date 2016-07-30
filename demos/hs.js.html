@@ -341,8 +341,8 @@ var item =
         
             {key: '1', item: 
 {
-    desc: 'nested-menu',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/valid-menu-variations/nested-menu',
+    desc: 'factored-nested-evaled-menu',
+    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/valid-menu-variations/factored-nested-evaled-menu',
     items: [
         
     ]
@@ -527,25 +527,25 @@ var item =
 }
 },
         
-    ]
-}
-},
-        
-            {key: 'b', item: 
+            {key: 'g', item: 
 {
-    desc: 'brew',
-    cmd: '',
-    items: [
-        
-            {key: 't', item: 
-{
-    desc: 'test<br/>  ',
-    cmd: 'set -eu<br/>   echo -n "[git hash] "<br/>   read githash<br/>   formula=https://raw.githubusercontent.com/julienmoumne/homebrew/$githash/Library/Formula/hs.rb<br/>   brew remove hs || true<br/>   brew cleanup -s<br/>   brew install $formula<br/>   brew test $formula<br/>   hs',
+    desc: '',
+    cmd: 'sudo gem install github_changelog_generator',
     items: [
         
     ]
 }
 },
+        
+    ]
+}
+},
+        
+            {key: 'g', item: 
+{
+    desc: 'generate changelog',
+    cmd: 'github_changelog_generator',
+    items: [
         
     ]
 }

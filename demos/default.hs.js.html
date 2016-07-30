@@ -169,7 +169,7 @@ var item =
         
             {key: '', item: 
 {
-    desc: 'item({desc: \'demo\'}, function() {<br/>   // command items<br/>   item({key: \'r\', desc: \'restart apache\', cmd: \'sudo service apache2 restart\'})<br/>   item({key: \'s\', desc: \'synchronize time\', cmd: \'sudo /usr/sbin/ntpdate pool.ntp.org\'})<br/>   <br/>   // submenu to group log related commands<br/>   item({key: \'l\', desc: \'apache logs\'}, function() {<br/>     item({key: \'a\', desc: \'access.log\', cmd: \'less +F /var/log/apache2/access.log\'})<br/>     item({key: \'e\', desc: \'error.log\', cmd: \'less +F /var/log/apache2/error.log\'})<br/>   })<br/> })<br/>',
+    desc: 'item({desc: \'demo\'}, function () {<br/>   // command items<br/>   item({key: \'r\', desc: \'restart apache\', cmd: \'sudo service apache2 restart\'})<br/>   item({key: \'s\', desc: \'synchronize time\', cmd: \'sudo /usr/sbin/ntpdate pool.ntp.org\'})<br/>   <br/>   // submenu to group log related commands<br/>   item({key: \'l\', desc: \'apache logs\'}, function () {<br/>     item({key: \'a\', desc: \'access.log\', cmd: \'less +F /var/log/apache2/access.log\'})<br/>     item({key: \'e\', desc: \'error.log\', cmd: \'less +F /var/log/apache2/error.log\'})<br/>   })<br/> })<br/>',
     cmd: '',
     items: [
         
@@ -565,8 +565,8 @@ var item =
         
             {key: '2', item: 
 {
-    desc: 'less /var/log/dpkg.log',
-    cmd: 'less +F /var/log/dpkg.log',
+    desc: 'less /var/log/syslog.1',
+    cmd: 'less +F /var/log/syslog.1',
     items: [
         
     ]
@@ -575,8 +575,8 @@ var item =
         
             {key: '3', item: 
 {
-    desc: 'less /var/log/alternatives.log',
-    cmd: 'less +F /var/log/alternatives.log',
+    desc: 'less /var/log/mysql.log',
+    cmd: 'less +F /var/log/mysql.log',
     items: [
         
     ]
@@ -585,8 +585,8 @@ var item =
         
             {key: '4', item: 
 {
-    desc: 'less /var/log/apport.log',
-    cmd: 'less +F /var/log/apport.log',
+    desc: 'less /var/log/kern.log.1',
+    cmd: 'less +F /var/log/kern.log.1',
     items: [
         
     ]

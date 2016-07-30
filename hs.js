@@ -4,7 +4,8 @@ item({desc: 'hotshell website'}, function () {
     browser = linux ? 'sensible-browser' : 'open'
     hotshellDir = '$GOPATH/src/github.com/julienmoumne/hotshell'
 
-    item({key: 's', cmd: 'jekyll serve'})
+    item({key: 's', cmd: 'bundle exec jekyll serve --trace'})
+    item({key: 'u', desc: 'update GitHub Pages gem', cmd: 'bundle update'})
 
     item({key: 'd', desc: 'demos'}, function () {
 

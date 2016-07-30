@@ -6,6 +6,6 @@ Commands are inlaid in interactive single keystroke menus :
 
 Try it on the [simulated demo](demos/demo.hs.js.html).
 
-Menus are defined using a JavaScript configuration DSL :
+Menus are defined using a [JavaScript configuration DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl):
 
 {% highlight javascript %}{% include demo.hs.js %}{% endhighlight %}

@@ -42,7 +42,7 @@ go get github.com/julienmoumne/hotshell/cmd/hs
 
 ## How to define menus
  
-Menus are defined using a [JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
+Menus are defined using a JavaScript DSL.
 
 ### Building blocks
 
@@ -111,6 +111,9 @@ the stdout if the command returned a non-zero exit code.
 In case of failure, stderr is displayed in the menu without stopping the interpretation of the DSL.
 
 See some [examples](./tips.md#exec).
+
+For more information on how the DSL is interpreted see
+[Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
 
 ## Project Motives
 

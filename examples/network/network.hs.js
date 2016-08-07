@@ -9,12 +9,12 @@ item({desc: 'network'}, function () {
         // specific commands can be added when needed
         item({key: 'l', desc: 'list access points', cmd: 'iwlist scan'})
     })
-})
 
-function interface(id) {
-    ifconfig = 'ifconfig ' + id
-    sudo = 'sudo ' + ifconfig
-    item({key: 'i', desc: 'info', cmd: ifconfig})
-    item({key: 'u', desc: 'up', cmd: sudo + ' up'})
-    item({key: 'd', desc: 'down', cmd: sudo + ' down'})
-}
+    function interface(id) {
+        var ifconfig = 'ifconfig ' + id
+        var sudo = 'sudo ' + ifconfig
+        item({key: 'i', desc: 'info', cmd: ifconfig})
+        item({key: 'u', desc: 'up', cmd: sudo + ' up'})
+        item({key: 'd', desc: 'down', cmd: sudo + ' down'})
+    }
+})

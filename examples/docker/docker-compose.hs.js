@@ -1,6 +1,6 @@
 item({desc: 'docker-compose'}, function () {
 
-    services = exec('docker-compose config --services | sort').split('\n')
+    var services = exec('docker-compose config --services | sort').split('\n')
 
     forAllServices({key: 'u', desc: 'up -d', ps: true})
     forAllServices({key: 'r', desc: 'restart', ps: true})
@@ -17,7 +17,7 @@ item({desc: 'docker-compose'}, function () {
         item(config, function () {
                 function createCmd(el) {
                     el = _(el).isUndefined() ? '' : ' ' + el
-                    post = _(config.ps).isUndefined() ? '' : ' && docker-compose ps' + el
+                    var post = _(config.ps).isUndefined() ? '' : ' && docker-compose ps' + el
                     return 'docker-compose ' + config.desc + el + post
                 }
 

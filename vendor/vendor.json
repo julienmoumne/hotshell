@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "tjwGqMJO78mjSnRDp/UoM97AV+g=",
+			"path": "github.com/ddliu/motto",
+			"revision": "8933bbc2c051c5a0d2c5cac5b89ab36aa1123453",
+			"revisionTime": "2016-03-21T02:10:15Z"
+		},
+		{
 			"path": "github.com/fatih/color",
 			"revision": "533cd7fd8a85905f67a1753afb4deddc85ea174f",
 			"revisionTime": "2016-03-17T11:31:53+02:00"
@@ -82,5 +88,6 @@
 			"revision": "4f90aeace3a26ad7021961c297b22c42160c7b25",
 			"revisionTime": "2016-01-05T14:49:36-02:00"
 		}
-	]
+	],
+	"rootPath": "github.com/julienmoumne/hotshell"
 }

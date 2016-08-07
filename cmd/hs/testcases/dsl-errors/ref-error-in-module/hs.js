@@ -1,0 +1,1 @@
+require('./module/submenu.hs.js')

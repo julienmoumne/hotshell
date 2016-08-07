@@ -121,8 +121,8 @@ func (o *options) loadUserProvidedFile() error {
 
 func (o *options) fetchFile(path string) error {
 	ff := filefetcher.Filefetcher{
-		Fs:                      filefetcher.NativeFS{},
-		WebClient:               filefetcher.NewWebClient(),
+		Fs:                filefetcher.NativeFS{},
+		WebClient:         filefetcher.NewWebClient(),
 		DefaultHSFilename: DEF_HS_FILENAME,
 	}
 	content, filename, err := ff.FetchFile(path)

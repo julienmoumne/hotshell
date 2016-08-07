@@ -1,2 +1,3 @@
 ReferenceError: 'callToUndefinedMethod' is not defined
-    at testcases/dsl-errors/ref-error-in-params/hs.js:1:13
+    at <anonymous>:2:13
+    at <unknown>

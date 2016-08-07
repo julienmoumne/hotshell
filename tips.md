@@ -20,7 +20,7 @@ hs -f ~/projects/web/hs.js
 hs -f ~/projects/web
 ```
 
-> Load a menu remotely
+> Load a menu remotely (does not work when using [modules](examples#modules))
 
 ```bash
 hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js
@@ -156,9 +156,13 @@ item({key: 'g', desc: 'group of related commands'}, function () {
 
 See [network example](examples#network)
 
-> Include menus defined in separate files
+> Modularize menu definitions
 
-See [includes example](examples#includes)
+See [modules example](examples#modules)
+
+> Nest Hotshells
+
+See [nested hotshells](examples#nested-hotshells)
 
 > There is a good number of command examples in
 
@@ -174,7 +178,7 @@ see [Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/buildin
 > Retrieve environment variables
   
 ```javascript
-httpPort = exec('echo $HTTP_PORT'); if (httpPort == '') throw 'please set $HTTP_PORT'
+var httpPort = exec('echo $HTTP_PORT'); if (httpPort == '') throw 'please set $HTTP_PORT'
 
 item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + httpPort})
 ```
@@ -182,7 +186,7 @@ item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + 
 > Conditionally set-up items based on the result of system commands
   
 ```javascript
-linux = exec('uname').indexOf('Linux') > -1
+var linux = exec('uname').indexOf('Linux') > -1
 
 item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew update'})
 ```
@@ -190,7 +194,7 @@ item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew updat
 > Dynamically create menus
   
 ```javascript
-recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')
+var recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')
 
 _(recentlyUpdatedLogs).each(function(el, ix) {
   item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})

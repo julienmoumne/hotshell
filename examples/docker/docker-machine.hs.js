@@ -1,4 +1,4 @@
-machine = exec('echo $DOCKER_MACHINE_NAME')
+var machine = exec('echo $DOCKER_MACHINE_NAME')
 if (machine == '') throw 'please set $DOCKER_MACHINE_NAME'
 
 item({desc: 'docker-machine'}, function () {

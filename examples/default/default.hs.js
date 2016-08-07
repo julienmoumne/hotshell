@@ -1,7 +1,7 @@
 item({desc: 'Hotshell'}, function () {
 
-    linux = exec('uname').indexOf('Linux') > -1
-    browser = linux ? 'sensible-browser' : 'open'
+    var linux = exec('uname').indexOf('Linux') > -1
+    var browser = linux ? 'sensible-browser' : 'open'
 
     item({desc: "This is Hotshell's default menu, displayed when no definition file is provided.\n"});
 
@@ -10,7 +10,7 @@ item({desc: 'Hotshell'}, function () {
 
         item({desc: "Hotshell is a command-line application to efficiently recall and share commands.\n"});
 
-        innerDemo =
+        var innerDemo =
             "   // command items\n" +
             "   item({key: 'r', desc: 'restart apache', cmd: 'sudo service apache2 restart'})\n" +
             "   item({key: 's', desc: 'synchronize time', cmd: 'sudo /usr/sbin/ntpdate pool.ntp.org'})\n" +
@@ -21,7 +21,7 @@ item({desc: 'Hotshell'}, function () {
             "     item({key: 'e', desc: 'error.log', cmd: 'less +F /var/log/apache2/error.log'})\n" +
             "   })\n"
 
-        demo = "item({desc: 'demo'}, function () {\n" + innerDemo + " })\n"
+        var demo = "item({desc: 'demo'}, function () {\n" + innerDemo + " })\n"
 
         item({desc: "Menus are defined using a JavaScript configuration DSL. Example :\n"});
         item({desc: demo})

@@ -3,6 +3,7 @@ package interpreter
 
 import (
 	"fmt"
+	"github.com/ddliu/motto"
 	"github.com/julienmoumne/hotshell/formatter"
 	"github.com/robertkrimen/otto"
 	_ "github.com/robertkrimen/otto/underscore"
@@ -14,11 +15,11 @@ import (
 type Interpreter struct {
 	Filename string
 	Dsl      []byte
-	vm       *otto.Otto
+	vm       *motto.Motto
 }
 
 func (i *Interpreter) Interpret() ([]Ast, error) {
-	i.vm = otto.New()
+	i.vm = motto.New()
 
 	if err := i.registerNatives(); err != nil {
 		return nil, err
@@ -57,17 +58,18 @@ func (i *Interpreter) exec() error {
 		return err
 	}
 
-	return i.compileAndRun(i.Filename, i.Dsl)
+	_, err = motto.CreateLoaderFromSource(string(i.Dsl), "")(i.vm)
+	return err
 }
 
 func (i *Interpreter) compileAndRun(filename string, content []byte) error {
-	script, err := i.vm.Compile(filename, content)
+	script, err := i.vm.Otto.Compile(filename, content)
 
 	if err != nil {
 		return err
 	}
 
-	_, err = i.vm.Run(script)
+	_, err = i.vm.Otto.Run(script)
 
 	return err
 }

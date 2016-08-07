@@ -7,9 +7,9 @@ item({desc: 'docker'}, function () {
 
     item({key: 'c', desc: 'containers'}, function () {
 
-        allContainers = adjustList(exec('docker ps -a --format={{.ID}}'))
-        runningContainers = adjustList(exec('docker ps --format={{.ID}}'))
-        containerLabels = _.object(_.map(allContainers, function (el) {
+        var allContainers = adjustList(exec('docker ps -a --format={{.ID}}'))
+        var runningContainers = adjustList(exec('docker ps --format={{.ID}}'))
+        var containerLabels = _.object(_.map(allContainers, function (el) {
             return [el, exec('docker inspect --format="{{.Name}} ({{.Config.Image}})" ' + el)]
         }));
 
@@ -31,8 +31,8 @@ item({desc: 'docker'}, function () {
             item(config, function () {                          
                     function createCmd(el) {
                         el = ' ' + el
-                        _args = _(config.args).isUndefined() ? '' : ' ' + config.args
-                        post = _(config.inspect).isUndefined() ? '' : ' && docker inspect --format="{{.Name}} {{.State.Status}}"' + el
+                        var _args = _(config.args).isUndefined() ? '' : ' ' + config.args
+                        var post = _(config.inspect).isUndefined() ? '' : ' && docker inspect --format="{{.Name}} {{.State.Status}}"' + el
                         return 'docker ' + config.desc + el + _args + post
                     }
                     
@@ -41,7 +41,7 @@ item({desc: 'docker'}, function () {
                         item({key: 'r', desc: 'all running', cmd: createCmd('$(docker ps -q)')})
                     }
 
-                    containers = _(config.running).isUndefined() ? allContainers : runningContainers
+                    var containers = _(config.running).isUndefined() ? allContainers : runningContainers
                     _(containers).each(function(el, ix){
                         item({
                             key: ix,

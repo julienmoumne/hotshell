@@ -1,12 +1,13 @@
 # Examples of menus
 
-  - [Hotshell's hotshell](#hotshells-hotshell)
-  - [Hotshell's default menu](#hotshells-default-menu)
-  - [Docker, Docker Compose & Docker Machine](#docker-docker-compose--docker-machine)
-  - [Vagrant](#vagrant)
-  - [Topten](#topten)
-  - [Network](#network)
-  - [Includes](#includes)
+  - [Hotshell's hotshell](#hotshells-hotshell) - develop, build and test Hotshell
+  - [Hotshell's default menu](#hotshells-default-menu) - loaded when no definition file is found
+  - [Docker, Docker Compose & Docker Machine](#docker-docker-compose--docker-machine) - useful commands when working with Docker
+  - [Vagrant](#vagrant) - useful commands when working with Vagrant
+  - [Topten](#topten) - 10 most used commands
+  - [Network](#network) - factor out groups of commands
+  - [Modules](#modules) - modularize menu definitions
+  - [Nested Hotshells](#nested-hotshells) - call Hotshell within Hotshell
 
 ## Hotshell's hotshell
 
@@ -32,6 +33,8 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/de
 
 ## Docker, Docker Compose & Docker Machine
 
+Menus with useful Docker commands.
+
   - demos
     * [docker](http://julienmoumne.github.io/hotshell/demos/docker.hs.js.html)
     * [docker-compose](http://julienmoumne.github.io/hotshell/demos/docker-compose.hs.js.html)
@@ -54,6 +57,8 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/do
 ```
 
 ## Vagrant
+
+Menus with useful Vagrant commands.
 
   - [demo](http://julienmoumne.github.io/hotshell/demos/vagrant.hs.js.html)
   - [source](./vagrant/vagrant.hs.js)
@@ -85,12 +90,18 @@ A menu to manage 'eth0' and 'wlan0'. Showcases the ability to factor out groups 
 hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/network/network.hs.js
 ```
 
-## Includes
+## Modules
 
-Showcases the ability to include menus defined in separate files.
+Showcases the ability to modularize menu definitions.
 
-  - [source](./includes/includes.hs.js)
+  - [source](./modules)
+
+## Nested Hotshells
+
+Showcases the ability to call Hotshell within Hotshell.
+
+  - [source](./nested/nested.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/includes/includes.hs.js
+hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/nested/nested.hs.js
 ```

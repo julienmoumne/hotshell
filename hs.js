@@ -32,7 +32,7 @@ item({desc: 'hotshell-dev'}, function () {
                 item({key: ix, desc: subdir}, function () {
 
                     _(exec('ls ' + subdir).split('\n')).each(function(testName, ix) {
-                        item({key: ix, desc: testName, cmd: buildAndRun + ' -f ' + subdir + testName})
+                        item({key: ix, desc: testName, cmd: buildAndRun + ' --chdir -f ' + subdir + testName})
                     })
                 })
             })

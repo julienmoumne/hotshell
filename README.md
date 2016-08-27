@@ -10,7 +10,7 @@ Check out the [definition](https://github.com/julienmoumne/hotshell/blob/gh-page
 and the [simulated demo](http://julienmoumne.github.io/hotshell/demos/demo.hs.js.html)
 of this menu.
 
-*Quick tip : Name your definition file `hs.js` and `hs` will pick it up without having to specify a filename.*
+Quick tip : Name your definition file `hs.js` and `hs` will pick it up without having to specify a filename.
 
 # Content
 

@@ -1,8 +1,7 @@
 package interpreter
 
-import "strconv"
-
 const BREADCRUMB_TYPE_KEY = "breadcrumbType"
+const BREADCRUMB_TYPE_DEFAULT = "horizontal"
 
 type Conf struct {
 	BreadcrumbType  string
@@ -22,28 +21,29 @@ type confBuilder struct {
 }
 
 func (builder *confBuilder) build() Conf {
+	
 	conf := Conf{}
 	conf.BreadcrumbType = builder.getBreadcrumbType()
 	return conf
 }
 
 func (builder *confBuilder) getBreadcrumbType() string {
-	return builder.getScalar(BREADCRUMB_TYPE_KEY)
+	
+	value := builder.getScalar(BREADCRUMB_TYPE_KEY)
+	if value != "horizontal" && value != "vertical" {
+		return BREADCRUMB_TYPE_DEFAULT
+	}
+	return value
 }
 
 func (builder *confBuilder) getScalar(key string) string {
+	
 	value := builder.value[key]
 	if value == nil {
 		return ""
 	}
-	if intValue, isInt := value.(int); isInt {
-		return strconv.Itoa(intValue)
+	if stringValue, isString := value.(string); isString {
+		return stringValue
 	}
-	if intValue, isInt := value.(int64); isInt {
-		return strconv.FormatInt(intValue, 10)
-	}
-	if floatValue, isFloat := value.(float64); isFloat {
-		return strconv.FormatFloat(floatValue, 'f', 0, 64)
-	}
-	return builder.value[key].(string)
+	return ""
 }

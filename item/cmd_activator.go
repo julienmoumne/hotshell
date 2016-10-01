@@ -3,17 +3,20 @@ package item
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/formatter"
+	"github.com/julienmoumne/hotshell/interpreter"
 	"io"
 	"os"
 	"os/exec"
 )
 
 type CmdActivator struct {
+	conf interpreter.Conf
 	item *Item
 	Out  io.Writer
 }
 
-func (c *CmdActivator) Activate(item *Item) *Item {
+func (c *CmdActivator) Activate(conf interpreter.Conf, item *Item) *Item {
+	c.conf = conf
 	c.item = item
 	command := exec.Command("bash", "-c", c.item.Cmd)
 

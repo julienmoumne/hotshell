@@ -18,32 +18,47 @@ type Interpreter struct {
 	vm       *motto.Motto
 }
 
-func (i *Interpreter) Interpret() ([]Ast, error) {
+func (i *Interpreter) Interpret() (Conf, []Ast, error) {
 	i.vm = motto.New()
 
 	if err := i.registerNatives(); err != nil {
-		return nil, err
+		return Conf{}, nil, err
 	}
 
 	if err := i.exec(); err != nil {
-		return nil, err
+		return Conf{}, nil, err
 	}
 
-	return i.buildAst()
+	return i.buildResult()
 }
 
-func (i *Interpreter) buildAst() ([]Ast, error) {
+func (i *Interpreter) buildResult() (Conf, []Ast, error) {
+	
+	// Options
+	
+	options, err := i.vm.Get("options")
+	if err != nil {
+		return Conf{}, nil, err
+	}
+
+	opts, err := options.Export()
+	if err != nil {
+		return Conf{}, nil, err
+	}
+	
+	// AST
+	
 	value, err := i.vm.Get("items")
 	if err != nil {
-		return nil, err
+		return Conf{}, nil, err
 	}
 
 	val, err := value.Export()
 	if err != nil {
-		return nil, err
+		return Conf{}, nil, err
 	}
 
-	return NewAst(val), nil
+	return NewConf(opts), NewAst(val), nil
 }
 
 func (i *Interpreter) exec() error {

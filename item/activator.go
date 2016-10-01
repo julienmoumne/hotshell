@@ -1,17 +1,20 @@
 package item
 
-import "os"
+import (
+  "github.com/julienmoumne/hotshell/interpreter"
+  "os"
+)
 
 type activator interface {
-	Activate(item *Item) *Item
+	Activate(conf interpreter.Conf, item *Item) *Item
 }
 
-func Activate(item *Item) *Item {
+func Activate(conf interpreter.Conf, item *Item) *Item {
 	var activator activator
 	if item.IsCmd() {
 		activator = &CmdActivator{Out: os.Stdout}
 	} else {
 		activator = &MenuActivator{Out: os.Stdout}
 	}
-	return activator.Activate(item)
+	return activator.Activate( conf, item )
 }

@@ -1,5 +1,12 @@
 var items = []
+var options = {}
 var current = {items: items}
+
+function configure( opts ) {
+    if (opts && typeof opts == 'object') {
+        options = opts
+    }
+}
 
 function item(config, callback) {
 

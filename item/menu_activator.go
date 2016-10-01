@@ -3,15 +3,18 @@ package item
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/formatter"
+	"github.com/julienmoumne/hotshell/interpreter"
 	"io"
 )
 
 type MenuActivator struct {
+	conf interpreter.Conf
 	item *Item
 	Out  io.Writer
 }
 
-func (m *MenuActivator) Activate(item *Item) *Item {
+func (m *MenuActivator) Activate(conf interpreter.Conf, item *Item) *Item {
+	m.conf = conf
 	m.item = item
 	m.printBreadcrumb()
 	m.printItems()

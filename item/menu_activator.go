@@ -46,13 +46,26 @@ func (m *MenuActivator) printItems() {
 }
 
 func (m *MenuActivator) printBreadcrumb() {
+	
 	var bc string
-	for curMenu := m.item.Parent; curMenu != nil; curMenu = curMenu.Parent {
-		bc = fmt.Sprintf(" %s\n%s", curMenu.GetDesc(), bc)
+	
+	if m.conf.BreadcrumbType == "vertical" {
+		
+		for curMenu := m.item.Parent; curMenu != nil; curMenu = curMenu.Parent {
+			bc = fmt.Sprintf(" %s\n%s", curMenu.GetDesc(), bc)
+		}
+		m.print(formatter.ParentMenuFmt("%s", bc))
+		m.printf(" %s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
+		
+	} else {
+		
+		for curMenu := m.item.Parent; curMenu != nil; curMenu = curMenu.Parent {
+			bc = fmt.Sprintf("%s > %s", formatter.ParentMenuFmt("%s", curMenu.GetDesc()), bc)
+		}
+		m.printf(" %s", bc)
+		m.printf("%s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
 	}
-	m.print(formatter.ParentMenuFmt("%s", bc))
 
-	m.printf(" %s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
 	m.print("\n")
 	m.print("\n")
 }

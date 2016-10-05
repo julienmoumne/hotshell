@@ -108,7 +108,7 @@ item({key: 'f', desc: 'find text in files', cmd:
 })
 ```
 
-Use this pattern by importing [Hotshell Util](https://github.com/julienmoumne/hotshell-util).
+Use this pattern with less effort by importing [Hotshell Util](https://github.com/julienmoumne/hotshell-util).
 
 > Enter other interactive applications
 

@@ -23,14 +23,11 @@ Quick tip : Name your definition file `hs.js` and `hs` will pick it up without h
 
 ## Installation
 
-Hotshell is currently supported on Linux and OSX.
-
-Support for FreeBSD and Windows pending [1](https://github.com/pkg/term/pull/15)
-and [2](https://github.com/pkg/term/issues/8) or alternative solutions.
+Hotshell is currently supported on Linux, OSX and Windows.
 
 ### Precompiled packages
 
- - Linux : see [releases](https://github.com/julienmoumne/hotshell/releases)
+ - Linux & Windows ([WSL](https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux)) : see [releases](https://github.com/julienmoumne/hotshell/releases)
  - OSX :
 ```bash
 brew install julienmoumne/hotshell/hs

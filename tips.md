@@ -140,9 +140,11 @@ item({key: 'g', desc: 'group of related commands'}, function () {
 ```
 
 > Retrieve variables from a file
+
 ```javascript
 item({key: 'o', cmd: 'source ./variables && open $WEBSITE_URL'})
 ```
+
 ```bash
 // file ./variables
 WEBSITE_URL=http://julienmoumne.github.io/hotshell

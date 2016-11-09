@@ -146,7 +146,7 @@ item({key: 'o', cmd: 'source ./variables && open $WEBSITE_URL'})
 ```
 
 ```bash
-// file ./variables
+# file ./variables
 WEBSITE_URL=http://julienmoumne.github.io/hotshell
 ```
 

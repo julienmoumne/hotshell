@@ -117,26 +117,11 @@ item({key: 's', cmd: 'ssh remote-server'})
 item({key: 'h', cmd: 'sudo vim /etc/hosts'})
 ```
 
-> Writing simple scripts is a possibility
+> Call scripts
  
 ```javascript
-item({key: 't', desc: 'test brew formula' + '\n  ', cmd: script(
-    'set -eu',
-    'echo -n "[git hash] "',
-    'read githash',
-    'formula=https://raw.githubusercontent.com/julienmoumne/homebrew/$githash/Library/Formula/hs.rb',
-    'brew remove hs || true',
-    'brew cleanup -s',
-    'brew install $formula',
-    'brew test $formula',
-    'hs'
-)})
-
-function script () {
-    src = '';
-    _(arguments).each(function (el, ix) { src += '   ' + el + '\n' })
-    return src
-}
+item({key: 'b', desc: 'bash script', cmd: './script.sh'})
+item({key: 'p', desc: 'python script', cmd: './script.py'})
 ```
 
 > When running out of characters for defining hot keys
@@ -152,6 +137,15 @@ item({key: 'g', desc: 'group of related commands'}, function () {
   item({key: 'a', cmd: 'echo a'})
   item({key: 'b', cmd: 'echo b'})
 })
+```
+
+> Retrieve variables from a file
+```javascript
+item({key: 'o', cmd: 'source ./variables && open $WEBSITE_URL'})
+```
+```bash
+// file ./variables
+WEBSITE_URL=http://julienmoumne.github.io/hotshell
 ```
 
 > Factor groups of commands

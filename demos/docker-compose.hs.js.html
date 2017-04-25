@@ -121,6 +121,12 @@ var item =
     cmd: '',
     items: [
         
+            {key: 'c', item: 
+{
+    desc: 'commands > services',
+    cmd: '',
+    items: [
+        
             {key: 'u', item: 
 {
     desc: 'up -d',
@@ -521,9 +527,383 @@ var item =
 }
 },
         
-            {key: 'c', item: 
+    ]
+}
+},
+        
+            {key: 's', item: 
 {
-    desc: 'validate & display config',
+    desc: 'services > commands',
+    cmd: '',
+    items: [
+        
+            {key: 'a', item: 
+{
+    desc: 'all',
+    cmd: '',
+    items: [
+        
+            {key: 'u', item: 
+{
+    desc: 'up -d',
+    cmd: 'docker-compose up -d && docker-compose ps',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'r', item: 
+{
+    desc: 'restart',
+    cmd: 'docker-compose restart && docker-compose ps',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'stop',
+    cmd: 'docker-compose stop && docker-compose ps',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'k', item: 
+{
+    desc: 'kill',
+    cmd: 'docker-compose kill && docker-compose ps',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'l', item: 
+{
+    desc: 'logs',
+    cmd: 'docker-compose logs',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'p', item: 
+{
+    desc: 'ps',
+    cmd: 'docker-compose ps',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'b', item: 
+{
+    desc: 'build',
+    cmd: 'docker-compose build',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'd', item: 
+{
+    desc: 'rm',
+    cmd: 'docker-compose rm && docker-compose ps',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: '0', item: 
+{
+    desc: 'registry',
+    cmd: '',
+    items: [
+        
+            {key: 'u', item: 
+{
+    desc: 'up -d',
+    cmd: 'docker-compose up -d registry && docker-compose ps registry',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'r', item: 
+{
+    desc: 'restart',
+    cmd: 'docker-compose restart registry && docker-compose ps registry',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'stop',
+    cmd: 'docker-compose stop registry && docker-compose ps registry',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'k', item: 
+{
+    desc: 'kill',
+    cmd: 'docker-compose kill registry && docker-compose ps registry',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'l', item: 
+{
+    desc: 'logs',
+    cmd: 'docker-compose logs registry',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'p', item: 
+{
+    desc: 'ps',
+    cmd: 'docker-compose ps registry',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'b', item: 
+{
+    desc: 'build',
+    cmd: 'docker-compose build registry',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'd', item: 
+{
+    desc: 'rm',
+    cmd: 'docker-compose rm registry && docker-compose ps registry',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: '1', item: 
+{
+    desc: 'simple-http-server',
+    cmd: '',
+    items: [
+        
+            {key: 'u', item: 
+{
+    desc: 'up -d',
+    cmd: 'docker-compose up -d simple-http-server && docker-compose ps simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'r', item: 
+{
+    desc: 'restart',
+    cmd: 'docker-compose restart simple-http-server && docker-compose ps simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'stop',
+    cmd: 'docker-compose stop simple-http-server && docker-compose ps simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'k', item: 
+{
+    desc: 'kill',
+    cmd: 'docker-compose kill simple-http-server && docker-compose ps simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'l', item: 
+{
+    desc: 'logs',
+    cmd: 'docker-compose logs simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'p', item: 
+{
+    desc: 'ps',
+    cmd: 'docker-compose ps simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'b', item: 
+{
+    desc: 'build',
+    cmd: 'docker-compose build simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'd', item: 
+{
+    desc: 'rm',
+    cmd: 'docker-compose rm simple-http-server && docker-compose ps simple-http-server',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: '2', item: 
+{
+    desc: 'tomcat',
+    cmd: '',
+    items: [
+        
+            {key: 'u', item: 
+{
+    desc: 'up -d',
+    cmd: 'docker-compose up -d tomcat && docker-compose ps tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'r', item: 
+{
+    desc: 'restart',
+    cmd: 'docker-compose restart tomcat && docker-compose ps tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 's', item: 
+{
+    desc: 'stop',
+    cmd: 'docker-compose stop tomcat && docker-compose ps tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'k', item: 
+{
+    desc: 'kill',
+    cmd: 'docker-compose kill tomcat && docker-compose ps tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'l', item: 
+{
+    desc: 'logs',
+    cmd: 'docker-compose logs tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'p', item: 
+{
+    desc: 'ps',
+    cmd: 'docker-compose ps tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'b', item: 
+{
+    desc: 'build',
+    cmd: 'docker-compose build tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'd', item: 
+{
+    desc: 'rm',
+    cmd: 'docker-compose rm tomcat && docker-compose ps tomcat',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'd', item: 
+{
+    desc: 'display config',
     cmd: 'docker-compose config',
     items: [
         

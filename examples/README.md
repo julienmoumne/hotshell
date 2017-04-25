@@ -55,6 +55,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/do
 cd $DOCKER_COMPOSE_PROJECT
 hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/docker/docker-compose.hs.js
 ```
+  - integrate it in your own menus using [hotshell-docker](https://github.com/julienmoumne/hotshell-docker)
 
 ## Vagrant
 

@@ -3,6 +3,7 @@
   - [Command-line usage](#command-line-usage)
   - [Menu and item definition](#menu-and-item-definition)
   - [Exec](#exec)
+  - [Published patterns](#published-patterns)
 
 ## Command-line usage
 
@@ -205,3 +206,10 @@ _(recentlyUpdatedLogs).each(function(el, ix) {
 ```javascript
 console.log(exec('echo $(date)'))
 ```
+
+## Published patterns
+
+Some patterns are published in separate projects
+and can easily be integrated in your menus using npm, e.g : 
+ - [hotshell-util](https://www.npmjs.com/package/hotshell-util)
+ - [hotshell-docker](https://www.npmjs.com/package/hotshell-docker)

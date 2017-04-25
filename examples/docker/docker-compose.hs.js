@@ -1,31 +1,48 @@
+var services = exec('docker-compose config --services | sort').split('\n')
+var commands = [
+    {key: 'u', desc: 'up -d', ps: true},
+    {key: 'r', desc: 'restart', ps: true},
+    {key: 's', desc: 'stop', ps: true},
+    {key: 'k', desc: 'kill', ps: true},
+    {key: 'l', desc: 'logs'},
+    {key: 'p', desc: 'ps'},
+    {key: 'b', desc: 'build'},
+    {key: 'd', desc: 'rm', ps: true}
+]
+
 item({desc: 'docker-compose'}, function () {
 
-    var services = exec('docker-compose config --services | sort').split('\n')
+    item({key: 'c', desc: 'commands > services'}, function() {
+        _(commands).each(createCommandForEveryServices)
+    })
+    
+    item({key: 's', desc: 'services > commands'}, function() {
+        createCommandsForSingleService('all', 'a')
+        _(services).each(createCommandsForSingleService)
+    })
+    
+    item({key: 'd', desc: 'display config', cmd: 'docker-compose config'})
+    
+    function createCmdForService(command, service) {
+        var service = service == 'all' ? '' : ' ' + service
+        var post = _(command.ps).isUndefined() ? '' : ' && docker-compose ps' + service
+        return 'docker-compose ' + command.desc + service + post
+    }
+    
+    function createCommandsForSingleService(service, key) {
+        item({key: key, desc: service}, function () {
+            _(commands).each(function (command, cmdIndex) {
+                item({key: command.key, desc: command.desc, cmd: createCmdForService(command, service)})
+            })
+        })
+    }
 
-    forAllServices({key: 'u', desc: 'up -d', ps: true})
-    forAllServices({key: 'r', desc: 'restart', ps: true})
-    forAllServices({key: 's', desc: 'stop', ps: true})
-    forAllServices({key: 'k', desc: 'kill', ps: true})
-    forAllServices({key: 'l', desc: 'logs'})
-    forAllServices({key: 'p', desc: 'ps'})
-    forAllServices({key: 'b', desc: 'build'})
-    forAllServices({key: 'd', desc: 'rm', ps: true})
-
-    item({key: 'c', desc: 'validate & display config', cmd: 'docker-compose config'})
-
-    function forAllServices(config) {
-        item(config, function () {
-                function createCmd(el) {
-                    el = _(el).isUndefined() ? '' : ' ' + el
-                    var post = _(config.ps).isUndefined() ? '' : ' && docker-compose ps' + el
-                    return 'docker-compose ' + config.desc + el + post
-                }
-
-                item({key: 'a', desc: 'all', cmd: createCmd()})
-                _(services).each(function (el, ix) {
-                    item({key: ix, desc: el, cmd: createCmd(el)})
-                })
-            }
-        )
+    function createCommandForEveryServices(command) {
+        item(command, function () {
+            item({key: 'a', desc: 'all', cmd: createCmdForService(command, 'all')})
+            _(services).each(function (service, serviceIndex) {
+                item({key: serviceIndex, desc: service, cmd: createCmdForService(command, service)})
+            })
+        })
     }
 })

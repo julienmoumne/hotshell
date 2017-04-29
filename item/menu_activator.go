@@ -3,15 +3,18 @@ package item
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/formatter"
+	"github.com/julienmoumne/hotshell/interpreter"
 	"io"
 )
 
 type MenuActivator struct {
+	conf interpreter.Conf
 	item *Item
 	Out  io.Writer
 }
 
-func (m *MenuActivator) Activate(item *Item) *Item {
+func (m *MenuActivator) Activate(conf interpreter.Conf, item *Item) *Item {
+	m.conf = conf
 	m.item = item
 	m.printBreadcrumb()
 	m.printItems()
@@ -43,13 +46,26 @@ func (m *MenuActivator) printItems() {
 }
 
 func (m *MenuActivator) printBreadcrumb() {
+	
 	var bc string
-	for curMenu := m.item.Parent; curMenu != nil; curMenu = curMenu.Parent {
-		bc = fmt.Sprintf(" %s\n%s", curMenu.GetDesc(), bc)
+	
+	if m.conf.BreadcrumbType == "vertical" {
+		
+		for curMenu := m.item.Parent; curMenu != nil; curMenu = curMenu.Parent {
+			bc = fmt.Sprintf(" %s\n%s", curMenu.GetDesc(), bc)
+		}
+		m.print(formatter.ParentMenuFmt("%s", bc))
+		m.printf(" %s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
+		
+	} else {
+		
+		for curMenu := m.item.Parent; curMenu != nil; curMenu = curMenu.Parent {
+			bc = fmt.Sprintf("%s > %s", formatter.ParentMenuFmt("%s", curMenu.GetDesc()), bc)
+		}
+		m.printf(" %s", bc)
+		m.printf("%s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
 	}
-	m.print(formatter.ParentMenuFmt("%s", bc))
 
-	m.printf(" %s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
 	m.print("\n")
 	m.print("\n")
 }

@@ -11,6 +11,7 @@ import (
 
 type Bootstrap struct {
 	options *options
+	conf    interpreter.Conf
 	ast     []interpreter.Ast
 	item    *item.Item
 	term    *term
@@ -116,7 +117,7 @@ func (b *Bootstrap) buildMenu() error {
 
 func (b *Bootstrap) startController() (bool, error) {
 
-	ctrl := controller{root: b.item, term: b.term}
+	ctrl := controller{ conf: b.conf, root: b.item, term: b.term }
 
 	return ctrl.start()
 }
@@ -131,7 +132,8 @@ func (b *Bootstrap) initTerm() error {
 func (b *Bootstrap) interpretDSL() error {
 
 	interpreter := interpreter.Interpreter{Filename: b.options.filename, Dsl: b.options.dsl}
-	result, err := interpreter.Interpret()
+	conf, result, err := interpreter.Interpret()
+	b.conf = conf
 	b.ast = result
 
 	return err

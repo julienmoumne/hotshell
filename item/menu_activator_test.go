@@ -2,6 +2,7 @@ package item_test
 
 import (
 	"bytes"
+	"github.com/julienmoumne/hotshell/interpreter"
 	"github.com/julienmoumne/hotshell/item"
 	. "gopkg.in/check.v1"
 	"testing"
@@ -72,6 +73,6 @@ func (s *MenuActivatorTestSuite) TestCmdWithoutDesc(c *C) {
 }
 
 func (s *MenuActivatorTestSuite) validateOut(c *C, it *item.Item, out string) {
-	s.activator.Activate(it)
+	s.activator.Activate( interpreter.Conf{}, it )
 	c.Check(s.buf.String(), Equals, out)
 }

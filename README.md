@@ -114,6 +114,22 @@ See some [examples](./tips.md#exec).
 For more information on how the DSL is interpreted see
 [Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
 
+## How to configure behavior
+
+Configuration can be supplied in the same JavaScript DSL as menus using ```configure``` function:
+
+```javascript
+configure({
+	breadcrumbType: 'vertical'
+})
+```
+
+For now, there's only one parameter:
+
+| Parameter Name       | Type   | Default            | Description |
+| -------------------- | ------ | ------------------ | ----------- |
+| ```breadcrumbType``` | string | ```"horizontal"``` | Possible breadcrumb type of display, one of ```"horizontal"``` or ```"vertical"``` |
+
 ## Project Motives
 
 ### Being more productive using the shell

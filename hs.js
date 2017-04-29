@@ -1,3 +1,8 @@
+
+configure({
+    breadcrumbType: 'vertical' // horizontal (default), vertical
+});
+
 item({desc: 'hotshell-dev'}, function () {
 
     linux = exec('uname').indexOf('Linux') > -1

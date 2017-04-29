@@ -3,12 +3,14 @@ package hotshell
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/formatter"
+	"github.com/julienmoumne/hotshell/interpreter"
 	"github.com/julienmoumne/hotshell/item"
 	"os"
 	"os/signal"
 )
 
 type controller struct {
+	conf             interpreter.Conf
 	root             *item.Item
 	activeItem       *item.Item
 	lastActivatedCmd item.Key
@@ -20,7 +22,7 @@ func (c *controller) start() (bool, error) {
 	c.initSignals()
 	defer c.resetSignals()
 	fmt.Print("\n")
-	c.activeItem = item.Activate(c.root)
+	c.activeItem = item.Activate( c.conf, c.root )
 	return c.mainLoop()
 }
 
@@ -92,11 +94,11 @@ func (c *controller) triggerItem(key item.Key, it *item.Item) {
 
 	c.lastActivatedCmd = item.NUL_KEY
 
-	nextMenu := item.Activate(it)
+	nextMenu := item.Activate( c.conf, it )
 
 	if nextMenu == nil || nextMenu == c.activeItem {
 		c.lastActivatedCmd = key
-		item.Activate(c.activeItem)
+		item.Activate( c.conf, c.activeItem )
 	} else {
 		c.activeItem = nextMenu
 	}

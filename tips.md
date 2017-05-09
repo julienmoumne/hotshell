@@ -21,6 +21,12 @@ hs -f ~/projects/web/hs.js
 hs -f ~/projects/web
 ```
 
+> Generate a markdown documentation of your menus, [example](./examples/network/network.hs.js.md)
+
+```bash
+hs --generate-doc > COMMANDS.md  
+```
+
 > Load a menu remotely (does not work when using [modules](examples#modules))
 
 ```bash
@@ -200,7 +206,7 @@ _(recentlyUpdatedLogs).each(function(el, ix) {
   item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})
 })
 ```
-![Generated Items - Logs](doc/generated-items-logs.png)
+![Generated Items - Logs](assets/generated-items-logs.png)
 > 'console.log()' can be used to help debugging
 
 ```javascript

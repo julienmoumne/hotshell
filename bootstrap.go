@@ -7,6 +7,7 @@ import (
 	"github.com/julienmoumne/hotshell/item"
 	"os"
 	"path/filepath"
+	"github.com/julienmoumne/hotshell/doc"
 )
 
 type Bootstrap struct {
@@ -42,11 +43,22 @@ func (b *Bootstrap) doBoot() (bool, error) {
 		return false, err
 	}
 
+	return b.activateAction()
+}
+
+func (b *Bootstrap) activateAction() (bool, error) {
 	if b.options.flags.GenerateDemo {
 		return false, b.generateDemo()
+	} else if b.options.flags.GenerateDoc {
+		return false, b.generateDoc()
 	} else {
 		return b.bootMenu()
 	}
+}
+
+func (b *Bootstrap) generateDoc() error {
+	gen := doc.Generator{Item: b.item, Filename: filepath.Base(b.options.filename)}
+	return gen.Generate()
 }
 
 func (b *Bootstrap) generateDemo() error {

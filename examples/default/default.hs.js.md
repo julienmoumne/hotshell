@@ -1,0 +1,41 @@
+Hotshell
+- Hit 'a' to get to know it  
+  - restart apache : `sudo service apache2 restart`
+  - synchronize time : `sudo /usr/sbin/ntpdate pool.ntp.org`
+  - apache logs  
+    - access.log : `less +F /var/log/apache2/access.log`
+    - error.log : `less +F /var/log/apache2/error.log`
+  - Hit 'm' to open Hotshell's page : `open https://github.com/julienmoumne/hotshell`
+- Hit 'h' to display the help : `hs --help`
+- Hit 'e'  
+  - weather & time  
+    - check the weather : `curl wttr.in`
+    - synchronize time : `sudo /usr/sbin/ntpdate pool.ntp.org`
+    - watch the time go by : `watch -n 1 date`
+  - SSH your most accessed servers  
+    - localhost : `ssh localhost`
+    - Grex Public Access UNIX : `ssh newuser@grex.org`
+  - edit your configuration files  
+    - vim ~/.bash_profile : `vim ~/.bash_profile`
+    - emacs ~/.bash_profile : `emacs ~/.bash_profile`
+    - vim /etc/hosts : `sudo vim /etc/hosts`
+    - emacs /etc/hosts : `sudo emacs /etc/hosts`
+  - network & system utils  
+    - find text in files : `echo -n "[location] [pattern] "; read l p; grep -rnws $l -e $p`
+    - check local port : `echo -n "[port] "; read p; cat < /dev/tcp/127.0.0.1/$p`
+    - system uptime : `uptime`
+    - most used commands : `echo "history" | bash -i 2>/dev/null | sed "s/^ *[0-9]* *//" | sort | uniq -c | sort -nr | head`
+    - public ip address & geolocation : `curl http://ipinfo.io`
+    - internet connection speed : `wget -O /dev/null http://releases.ubuntu.com/14.04.4/ubuntu-14.04.4-desktop-amd64.iso`
+    - ping linux.org (ctrl+c to stop) : `ping linux.org`
+    - serve current directory on port 8081 : `python -m SimpleHTTPServer 8081`
+  - log files  
+    - last updated system log files : `ls -lt /var/log | head`
+    - less apache2/error : `less +F /var/log/apache2/error.log`
+    - less /var/log/appfirewall.log : `less +F /var/log/appfirewall.log`
+    - less /var/log/mail.log : `less +F /var/log/mail.log`
+    - less /var/log/system.log : `less +F /var/log/system.log`
+    - less /var/log/commerce.log : `less +F /var/log/commerce.log`
+    - less /var/log/accountpolicy.log : `less +F /var/log/accountpolicy.log`
+
+\* *generated using [hotshell](https://github.com/julienmoumne/hotshell)*

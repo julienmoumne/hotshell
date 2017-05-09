@@ -1,0 +1,82 @@
+docker-compose
+- commands > services  
+  - up -d  
+    - all : `docker-compose up -d && docker-compose ps`
+    - registry : `docker-compose up -d registry && docker-compose ps registry`
+    - simple-http-server : `docker-compose up -d simple-http-server && docker-compose ps simple-http-server`
+    - tomcat : `docker-compose up -d tomcat && docker-compose ps tomcat`
+  - restart  
+    - all : `docker-compose restart && docker-compose ps`
+    - registry : `docker-compose restart registry && docker-compose ps registry`
+    - simple-http-server : `docker-compose restart simple-http-server && docker-compose ps simple-http-server`
+    - tomcat : `docker-compose restart tomcat && docker-compose ps tomcat`
+  - stop  
+    - all : `docker-compose stop && docker-compose ps`
+    - registry : `docker-compose stop registry && docker-compose ps registry`
+    - simple-http-server : `docker-compose stop simple-http-server && docker-compose ps simple-http-server`
+    - tomcat : `docker-compose stop tomcat && docker-compose ps tomcat`
+  - kill  
+    - all : `docker-compose kill && docker-compose ps`
+    - registry : `docker-compose kill registry && docker-compose ps registry`
+    - simple-http-server : `docker-compose kill simple-http-server && docker-compose ps simple-http-server`
+    - tomcat : `docker-compose kill tomcat && docker-compose ps tomcat`
+  - logs  
+    - all : `docker-compose logs`
+    - registry : `docker-compose logs registry`
+    - simple-http-server : `docker-compose logs simple-http-server`
+    - tomcat : `docker-compose logs tomcat`
+  - ps  
+    - all : `docker-compose ps`
+    - registry : `docker-compose ps registry`
+    - simple-http-server : `docker-compose ps simple-http-server`
+    - tomcat : `docker-compose ps tomcat`
+  - build  
+    - all : `docker-compose build`
+    - registry : `docker-compose build registry`
+    - simple-http-server : `docker-compose build simple-http-server`
+    - tomcat : `docker-compose build tomcat`
+  - rm  
+    - all : `docker-compose rm && docker-compose ps`
+    - registry : `docker-compose rm registry && docker-compose ps registry`
+    - simple-http-server : `docker-compose rm simple-http-server && docker-compose ps simple-http-server`
+    - tomcat : `docker-compose rm tomcat && docker-compose ps tomcat`
+- services > commands  
+  - all  
+    - up -d : `docker-compose up -d && docker-compose ps`
+    - restart : `docker-compose restart && docker-compose ps`
+    - stop : `docker-compose stop && docker-compose ps`
+    - kill : `docker-compose kill && docker-compose ps`
+    - logs : `docker-compose logs`
+    - ps : `docker-compose ps`
+    - build : `docker-compose build`
+    - rm : `docker-compose rm && docker-compose ps`
+  - registry  
+    - up -d : `docker-compose up -d registry && docker-compose ps registry`
+    - restart : `docker-compose restart registry && docker-compose ps registry`
+    - stop : `docker-compose stop registry && docker-compose ps registry`
+    - kill : `docker-compose kill registry && docker-compose ps registry`
+    - logs : `docker-compose logs registry`
+    - ps : `docker-compose ps registry`
+    - build : `docker-compose build registry`
+    - rm : `docker-compose rm registry && docker-compose ps registry`
+  - simple-http-server  
+    - up -d : `docker-compose up -d simple-http-server && docker-compose ps simple-http-server`
+    - restart : `docker-compose restart simple-http-server && docker-compose ps simple-http-server`
+    - stop : `docker-compose stop simple-http-server && docker-compose ps simple-http-server`
+    - kill : `docker-compose kill simple-http-server && docker-compose ps simple-http-server`
+    - logs : `docker-compose logs simple-http-server`
+    - ps : `docker-compose ps simple-http-server`
+    - build : `docker-compose build simple-http-server`
+    - rm : `docker-compose rm simple-http-server && docker-compose ps simple-http-server`
+  - tomcat  
+    - up -d : `docker-compose up -d tomcat && docker-compose ps tomcat`
+    - restart : `docker-compose restart tomcat && docker-compose ps tomcat`
+    - stop : `docker-compose stop tomcat && docker-compose ps tomcat`
+    - kill : `docker-compose kill tomcat && docker-compose ps tomcat`
+    - logs : `docker-compose logs tomcat`
+    - ps : `docker-compose ps tomcat`
+    - build : `docker-compose build tomcat`
+    - rm : `docker-compose rm tomcat && docker-compose ps tomcat`
+- display config : `docker-compose config`
+
+\* *generated using [hotshell](https://github.com/julienmoumne/hotshell)*

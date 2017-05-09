@@ -57,9 +57,15 @@ item({desc: 'hotshell-dev'}, function () {
 
     item({key: 'e', desc: 'examples'}, function () {
 
-        _(exec('ls examples/**/*.js').split('\n')).each(function (el, ix) {
+        var examples = exec('ls examples/**/*.js').split('\n')
+        _(examples).each(function (el, ix) {
             item({key: ix, desc: el, cmd: buildAndRun + ' --chdir -f ' + el})
         })
+        var mdGeneration = ''
+        _(examples).each(function (el, ix) {
+            mdGeneration += 'hs --generate-doc --chdir -f ' + el + ' > ' + el + '.md;'
+        })
+        item({key: 'g', desc: 'generate markdowns', cmd: mdGeneration})
     })
 
     item({key: 'd', desc: 'dev env setup'}, function () {

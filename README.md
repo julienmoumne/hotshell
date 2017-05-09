@@ -4,7 +4,7 @@
 
 Hotshell is a command-line application to efficiently recall and share commands :
 
-![demo](doc/demo.png)
+![demo](assets/demo.png)
 
 Check out the [definition](https://github.com/julienmoumne/hotshell/blob/gh-pages/_includes/demo.hs.js)
 and the [simulated demo](http://julienmoumne.github.io/hotshell/demos/demo.hs.js.html)
@@ -88,7 +88,8 @@ item({desc: 'top level menu'}, function () {
 })
 ```
 
-See a [simulated demo](http://julienmoumne.github.io/hotshell/demos/tutorial.hs.js.html) of the resulting menu.
+See a [simulated demo](http://julienmoumne.github.io/hotshell/demos/tutorial.hs.js.html)
+and the generated [markdown documentation](./assets/tutorial.hs.js.md) of the resulting menu.
  
 ### Tips & Examples
 

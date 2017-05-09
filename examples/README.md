@@ -14,6 +14,7 @@
 Used to develop, build and test Hotshell.
 
   - [demo](http://julienmoumne.github.io/hotshell/demos/hs.js.html)
+  - [generated markdown](../COMMANDS.md)
   - [source](../hs.js)
   - try it :
 ```bash
@@ -25,6 +26,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/hs.js
 This menu is loaded when no definition file is found.
 
   - [demo](http://julienmoumne.github.io/hotshell/demos/default.hs.js.html)
+  - [generated markdown](./default/default.hs.js.md)
   - [source](./default/default.hs.js)
   - try it :
 ```bash
@@ -39,6 +41,10 @@ Menus with useful Docker commands.
     * [docker](http://julienmoumne.github.io/hotshell/demos/docker.hs.js.html)
     * [docker-compose](http://julienmoumne.github.io/hotshell/demos/docker-compose.hs.js.html)
     * [docker-machine](http://julienmoumne.github.io/hotshell/demos/docker-machine.hs.js.html)
+  - generated markdown
+    * [docker](./docker/docker.hs.js.md)
+    * [docker-compose](./docker/docker-compose.hs.js.md)
+    * [docker-machine](./docker/docker-machine.hs.js.md)
   - sources
     * [docker](./docker/docker.hs.js)
     * [docker-compose](./docker/docker-compose.hs.js)
@@ -62,6 +68,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/do
 Menus with useful Vagrant commands.
 
   - [demo](http://julienmoumne.github.io/hotshell/demos/vagrant.hs.js.html)
+  - [generated markdown](./vagrant/vagrant.hs.js.md)
   - [source](./vagrant/vagrant.hs.js)
   - try it :
 ```bash
@@ -74,6 +81,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/va
 Dynamically creates a menu with the 10 most used commands.
 
   - [demo](http://julienmoumne.github.io/hotshell/demos/topten.hs.js.html)
+  - [generated markdown](./topten/topten.hs.js.md)
   - [source](./topten/topten.hs.js)
   - try it :
 ```bash
@@ -85,6 +93,7 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/to
 A menu to manage 'eth0' and 'wlan0'. Showcases the ability to factor out groups of commands.
 
   - [demo](http://julienmoumne.github.io/hotshell/demos/network.hs.js.html)
+  - [generated markdown](./network/network.hs.js.md)
   - [source](./network/network.hs.js)
   - try it :
 ```bash
@@ -96,12 +105,14 @@ hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/ne
 Showcases the ability to modularize menu definitions.
 
   - [source](./modules)
+  - [generated markdown](./modules/modules.hs.js.md)
 
 ## Nested Hotshells
 
 Showcases the ability to call Hotshell within Hotshell.
 
   - [source](./nested/nested.hs.js)
+  - [generated markdown](./nested/nested.hs.js.md)
   - try it :
 ```bash
 hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/nested/nested.hs.js

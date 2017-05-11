@@ -4,6 +4,8 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/testutil"
 	. "gopkg.in/check.v1"
 	"testing"
+	"fmt"
+	"time"
 )
 
 func TestBuilder(t *testing.T) { TestingT(t) }
@@ -19,7 +21,7 @@ func (s *TestHsMan) TestMan(c *C) {
 	c.Check(actualStdout, Equals, expectedMan)
 }
 
-var expectedMan = `.TH hs 1 "11 May 2017"
+var expectedMan = fmt.Sprintf(`.TH hs 1 "%s"
 .SH NAME
 hs \- Interactive single keystroke menus for the shell
 .SH SYNOPSIS
@@ -45,4 +47,4 @@ Generate a markdown documentation of the menu to stdout
 .TP
 \fB\fB\-v\fR, \fB\-\-version\fR\fP
 Print version information and quit
-`
+`, time.Now().Format("02 January 2006"))

@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/testutil"
-	"github.com/julienmoumne/hotshell/versioning"
+	"github.com/julienmoumne/hotshell/cmd/term"
+	"github.com/julienmoumne/hotshell/cmd/hs/versioning"
 	. "gopkg.in/check.v1"
 	"io/ioutil"
 	"os"
 	"testing"
+	"github.com/julienmoumne/hotshell/cmd/hs/test"
 )
 
 func TestBuilder(t *testing.T) { TestingT(t) }
@@ -16,10 +17,8 @@ type TestHs struct{}
 
 var _ = Suite(&TestHs{})
 
-const TEST_CASES_DIR = "testcases/"
-
 func (s *TestHs) TestVersion(c *C) {
-	driver := testutil.Driver{Main: func() {
+	driver := term.TestDriver{Main: func() {
 		os.Args = []string{"", "--version"}
 		main()
 	}}
@@ -33,7 +32,7 @@ func (s *TestHs) TestVersion(c *C) {
 
 func (s *TestHs) TestEndToEnd(c *C) {
 
-	err := os.RemoveAll(TEST_TMP_DIR)
+	err := os.RemoveAll(test.TEST_TMP_DIR)
 	if err != nil {
 		c.Fatal(err)
 	}
@@ -49,7 +48,7 @@ func listTestCases(c *C) []string {
 
 	testCases := make([]string, 0)
 
-	directories, err := ioutil.ReadDir(TEST_CASES_DIR)
+	directories, err := ioutil.ReadDir(test.TEST_CASES_DIR)
 	if err != nil {
 		c.Fatal(err)
 	}
@@ -61,7 +60,7 @@ func listTestCases(c *C) []string {
 		}
 
 		dirName := directory.Name()
-		files, err := ioutil.ReadDir(TEST_CASES_DIR + dirName)
+		files, err := ioutil.ReadDir(test.TEST_CASES_DIR + dirName)
 		if err != nil {
 			c.Fatal(err)
 		}
@@ -79,12 +78,14 @@ func listTestCases(c *C) []string {
 }
 
 func runTest(c *C, testName string) {
-	endToEnd := endToEnd{
+	endToEnd := test.EndToEnd{
 		SpecDirectory: testName,
 		Testing:       c,
+		Exit: &exit,
+		Main: main,
 	}
 
-	if err := endToEnd.run(); err != nil {
+	if err := endToEnd.Run(); err != nil {
 		c.Fatal(err)
 	}
 }

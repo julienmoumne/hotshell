@@ -28,7 +28,7 @@ item({desc: 'hotshell-dev'}, function () {
         item({key: 't', desc: 'test', cmd: runTests})
         item({key: 'i', desc: 'interactively run end to end tests'}, function () {
 
-            testDir = hsCmdDir + '/testcases/'
+            testDir = hsCmdDir + '/test/cases/'
             _(exec('ls -d ' + testDir + '*/').split('\n')).each(function(subdir, ix) {
                 item({key: ix, desc: subdir}, function () {
 

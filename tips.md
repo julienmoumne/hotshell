@@ -206,7 +206,7 @@ _(recentlyUpdatedLogs).each(function(el, ix) {
   item({key: ix, desc: 'less ' + el, cmd: 'less +F ' + el})
 })
 ```
-![Generated Items - Logs](assets/generated-items-logs.png)
+![Generated Items - Logs](demo/generated-items-logs.png)
 > 'console.log()' can be used to help debugging
 
 ```javascript

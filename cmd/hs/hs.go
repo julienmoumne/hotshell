@@ -2,22 +2,21 @@ package main
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hotshell"
-	"github.com/julienmoumne/hotshell/cmd/optionparser"
-	"github.com/julienmoumne/hotshell/versioning"
+	"github.com/julienmoumne/hotshell/cmd/options"
+	"github.com/julienmoumne/hotshell/cmd/hs/versioning"
 	"github.com/robertkrimen/otto"
 	"os"
 )
 
 func main() {
-	handleError((&Main{}).boot())
+	handleError((&hs{}).start())
 }
 
-type Main struct {
-	options *hotshell.Options
+type hs struct {
+	options *options.Options
 }
 
-func (m *Main) boot() error {
+func (m *hs) start() error {
 	if err := m.parseOptions(); err != nil {
 		return err
 	}
@@ -27,17 +26,17 @@ func (m *Main) boot() error {
 	return m.startHotshell()
 }
 
-func (m *Main) startHotshell() error {
-	return (&hotshell.Hotshell{Options: m.options}).Start()
+func (m *hs) startHotshell() error {
+	return (&booter{options: m.options}).start()
 }
 
-func (m *Main) parseOptions() error {
+func (m *hs) parseOptions() error {
 	var err error
-	m.options, err = (&optionparser.OptionParser{}).Parse()
+	m.options, err = (&options.OptionParser{}).Parse()
 	return err
 }
 
-func (m *Main) printVersion() error {
+func (m *hs) printVersion() error {
 	version, err := versioning.GetVersion()
 	if err != nil {
 		return err

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/julienmoumne/hotshell/cmd/testutil"
+	"github.com/julienmoumne/hotshell/cmd/term"
 	. "gopkg.in/check.v1"
 	"testing"
 	"fmt"
@@ -15,7 +15,7 @@ type TestHsMan struct{}
 var _ = Suite(&TestHsMan{})
 
 func (s *TestHsMan) TestMan(c *C) {
-	driver := testutil.Driver{Main: main}
+	driver := term.TestDriver{Main: main}
 	actualStdout, _, err := driver.Run()
 	c.Check(err, IsNil)
 	c.Check(actualStdout, Equals, expectedMan)

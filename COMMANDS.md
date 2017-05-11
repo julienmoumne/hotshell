@@ -10,23 +10,23 @@ hotshell-dev
 - tests  
   - test : `go generate ./... && go test $(go list ./... | grep -v /vendor/) -timeout 10s`
   - interactively run end to end tests  
-    - ./cmd/hs/testcases/dsl-errors/  
-      - error-in-nested-closure : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/error-in-nested-closure`
-      - failed-exec : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/failed-exec`
-      - multiple-root-items : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/multiple-root-items`
-      - ref-error-in-closure : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/ref-error-in-closure`
-      - ref-error-in-module : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/ref-error-in-module`
-      - ref-error-in-module-closure : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/ref-error-in-module-closure`
-      - ref-error-in-params : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/ref-error-in-params`
-      - syntax-error : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/syntax-error`
-      - syntax-error-in-module : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/dsl-errors/syntax-error-in-module`
-    - ./cmd/hs/testcases/input-transfer/  
-      - bash-as-item : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/input-transfer/bash-as-item`
-      - bash-as-menu-action : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/input-transfer/bash-as-menu-action`
-    - ./cmd/hs/testcases/valid-menu-variations/  
-      - empty-menu : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/valid-menu-variations/empty-menu`
-      - factored-nested-evaled-menu : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/valid-menu-variations/factored-nested-evaled-menu`
-      - submenu-module : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/testcases/valid-menu-variations/submenu-module`
+    - ./cmd/hs/test/cases/dsl-errors/  
+      - error-in-nested-closure : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/error-in-nested-closure`
+      - failed-exec : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/failed-exec`
+      - multiple-root-items : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/multiple-root-items`
+      - ref-error-in-closure : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-closure`
+      - ref-error-in-module : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-module`
+      - ref-error-in-module-closure : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-module-closure`
+      - ref-error-in-params : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-params`
+      - syntax-error : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/syntax-error`
+      - syntax-error-in-module : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/dsl-errors/syntax-error-in-module`
+    - ./cmd/hs/test/cases/input-transfer/  
+      - bash-as-item : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/input-transfer/bash-as-item`
+      - bash-as-menu-action : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/input-transfer/bash-as-menu-action`
+    - ./cmd/hs/test/cases/valid-menu-variations/  
+      - empty-menu : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/valid-menu-variations/empty-menu`
+      - factored-nested-evaled-menu : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/valid-menu-variations/factored-nested-evaled-menu`
+      - submenu-module : `go generate ./... && go build ./cmd/hs && ./hs --chdir -f ./cmd/hs/test/cases/valid-menu-variations/submenu-module`
   - failed end to end tests  
     - run tests : `go generate ./... && go test $(go list ./... | grep -v /vendor/) -timeout 10s`
     - open failed tests directory : `open ./cmd/hs/tmp/failed-cases`

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/optionparser"
+	"github.com/julienmoumne/hotshell/cmd/options"
 )
 
 func main() {
-	fmt.Printf((&optionparser.OptionParser{}).CreateManPage())
+	fmt.Printf((&options.OptionParser{}).CreateManPage())
 }

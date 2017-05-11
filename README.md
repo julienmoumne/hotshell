@@ -17,7 +17,7 @@ Quick tip : Name your definition file `hs.js` and `hs` will pick it up without h
   - [Installation](#installation)
   - [How to define menus](#how-to-define-menus)
   - [Examples](./examples)
-  - [Tips](./tips.md)
+  - [Tips](./TIPS.md)
   - [Project Motives](#project-motives)
   - [Changelog](CHANGELOG.md)
 
@@ -93,7 +93,7 @@ and the generated [markdown documentation](./demo/tutorial.hs.js.md) of the resu
  
 ### Tips & Examples
 
-Check out [tips](./tips.md) and fully-featured [examples](./examples).
+Check out [tips](./TIPS.md) and fully-featured [examples](./examples).
 
 ### JavaScript Runtime
 
@@ -110,7 +110,7 @@ the stdout if the command returned a non-zero exit code.
 
 In case of failure, stderr is displayed in the menu without stopping the interpretation of the DSL.
 
-See some [examples](./tips.md#exec).
+See some [examples](./TIPS.md#exec).
 
 For more information on how the DSL is interpreted see
 [Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).

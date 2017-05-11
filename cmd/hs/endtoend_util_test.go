@@ -2,20 +2,21 @@ package main
 
 import (
 	"fmt"
+	"github.com/julienmoumne/hotshell/cmd/testutil"
 	dmp "github.com/sergi/go-diff/diffmatchpatch"
+	. "gopkg.in/check.v1"
 	"io/ioutil"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
-	"testing"
 )
 
 const TEST_TMP_DIR = "tmp/failed-cases/"
 
 type endToEnd struct {
 	SpecDirectory string
-	Testing       *testing.T
+	Testing       *C
 }
 
 func (e *endToEnd) path(file string) string {
@@ -29,12 +30,22 @@ func (e *endToEnd) run() error {
 		return err
 	}
 
-	driver := driver{
-		menuDefinition: e.path("hs.js"),
-		input:          input,
+	driver := testutil.Driver{
+		Input: input,
+		Main: func() {
+			os.Args = []string{"", "--chdir", "-f", e.path("hs.js")}
+
+			// todo test exitCode
+			var exitCode int
+			exit = func(code int) {
+				exitCode = code
+			}
+
+			main()
+		},
 	}
 
-	actualStdout, actualStderr, err := driver.run()
+	actualStdout, actualStderr, err := driver.Run()
 	if err != nil {
 		return err
 	}

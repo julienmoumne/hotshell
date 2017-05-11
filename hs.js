@@ -10,7 +10,7 @@ item({desc: 'hotshell-dev'}, function () {
     runTests = generate + ' && go test ' + allButVendor + ' -timeout 10s'
 
     item({key: 'i', desc: 'install', cmd: install})
-    item({key: 'c', desc: 'clean', cmd: 'go clean -i ./...'})
+    item({key: 'c', desc: 'clean', cmd: 'go clean -i ./... && find . -type f -name \'bindata.go\' -exec rm {} +'})
     item({key: 'v', desc: 'vet', cmd: 'go vet ' + allButVendor})
     item({key: 'f', desc: 'fmt', cmd: 'go fmt ' + allButVendor})
 
@@ -20,6 +20,7 @@ item({desc: 'hotshell-dev'}, function () {
         item({key: 'g', desc: 'generate man', cmd: install + ' && hs-man | gzip > ' + man})
         item({key: 's', desc: 'show man', cmd: 'gunzip -c ' + man + ' | groff -Tascii -man -'})
         item({key: 'p', desc: 'package', cmd: "goxc -pv $(cat VERSION) -wd " + hsCmdDir})
+        item({key: 'c', desc: 'generate changelog', cmd: 'github_changelog_generator'})
     })
 
     item({key: 't', desc: 'tests'}, function () {
@@ -68,12 +69,5 @@ item({desc: 'hotshell-dev'}, function () {
         item({key: 'g', desc: 'generate markdowns', cmd: mdGeneration})
     })
 
-    item({key: 'd', desc: 'dev env setup'}, function () {
-        item({key: 'b', cmd: 'go get -u github.com/jteeuwen/go-bindata/...'})
-        item({key: 'v', cmd: 'go get -u github.com/kardianos/govendor'})
-        item({key: 'x', cmd: 'go get -u github.com/laher/goxc'})
-        item({key: 'g', cmd: 'sudo gem install github_changelog_generator'})
-    })
-
-    item({key: 'g', desc: 'generate changelog', cmd: 'github_changelog_generator'})
+    item({key: 'd', desc: 'install dev dependencies', cmd: './scripts/install-dev-deps.sh'})
 })

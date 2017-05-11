@@ -1,4 +1,4 @@
-package main
+package testutil
 
 import (
 	"bytes"
@@ -8,22 +8,22 @@ import (
 	"os"
 )
 
-type driver struct {
-	menuDefinition string
-	input          []byte
-	osCwd          string
-	osStdin        *os.File
-	osStdout       *os.File
-	osStderr       *os.File
-	readOut        *os.File
-	writeOut       *os.File
-	readErr        *os.File
-	writeErr       *os.File
-	ptm            *os.File
-	pts            *os.File
+type Driver struct {
+	Input    []byte
+	Main     func()
+	osCwd    string
+	osStdin  *os.File
+	osStdout *os.File
+	osStderr *os.File
+	readOut  *os.File
+	writeOut *os.File
+	readErr  *os.File
+	writeErr *os.File
+	ptm      *os.File
+	pts      *os.File
 }
 
-func (d *driver) run() (string, string, error) {
+func (d *Driver) Run() (string, string, error) {
 	d.backupStds()
 	defer d.restoreStds()
 
@@ -42,41 +42,29 @@ func (d *driver) run() (string, string, error) {
 	}
 	defer d.restoreCwd()
 
-	d.execMain()
+	d.Main()
 
 	return d.getStds()
 }
 
-func (d *driver) restoreCwd() {
+func (d *Driver) restoreCwd() {
 	os.Chdir(d.osCwd) // ignored returned Error
 }
 
-func (d *driver) backupCwd() error {
+func (d *Driver) backupCwd() error {
 	var err error
 	d.osCwd, err = os.Getwd()
 	return err
 }
 
-func (d *driver) execMain() {
-	os.Args = []string{"", "--chdir", "-f", d.menuDefinition}
-
-	// todo test exitCode
-	var exitCode int
-	exit = func(code int) {
-		exitCode = code
-	}
-
-	main()
-}
-
-func (d *driver) setupPty() error {
+func (d *Driver) setupPty() error {
 	var err error
 	d.ptm, d.pts, err = termios.Pty()
 	if err != nil {
 		return err
 	}
 
-	if _, err = d.ptm.Write(d.input); err != nil {
+	if _, err = d.ptm.Write(d.Input); err != nil {
 		return err
 	}
 
@@ -86,12 +74,12 @@ func (d *driver) setupPty() error {
 	return err
 }
 
-func (d *driver) closePty() {
+func (d *Driver) closePty() {
 	d.ptm.Close() // ignored returned Error
 	d.pts.Close() // ignored returned Error
 }
 
-func (d *driver) setupPipes() error {
+func (d *Driver) setupPipes() error {
 	if err := d.setupOutPipe(); err != nil {
 		return err
 	}
@@ -101,14 +89,14 @@ func (d *driver) setupPipes() error {
 	return nil
 }
 
-func (d *driver) closePipes() {
+func (d *Driver) closePipes() {
 	d.readOut.Close()  // ignored returned Error
 	d.writeOut.Close() // ignored returned Error
 	d.readErr.Close()  // ignored returned Error
 	d.writeErr.Close() // ignored returned Error
 }
 
-func (d *driver) setupOutPipe() error {
+func (d *Driver) setupOutPipe() error {
 	var err error
 	d.readOut, d.writeOut, err = os.Pipe()
 	if err != nil {
@@ -118,7 +106,7 @@ func (d *driver) setupOutPipe() error {
 	return nil
 }
 
-func (d *driver) setupErrPipe() error {
+func (d *Driver) setupErrPipe() error {
 	var err error
 	d.readErr, d.writeErr, err = os.Pipe()
 	if err != nil {
@@ -128,19 +116,19 @@ func (d *driver) setupErrPipe() error {
 	return nil
 }
 
-func (d *driver) backupStds() {
+func (d *Driver) backupStds() {
 	d.osStdin = os.Stdin
 	d.osStdout = os.Stdout
 	d.osStderr = os.Stderr
 }
 
-func (d *driver) restoreStds() {
+func (d *Driver) restoreStds() {
 	os.Stdin = d.osStdin
 	os.Stdout = d.osStdout
 	os.Stderr = d.osStderr
 }
 
-func (d *driver) getStds() (string, string, error) {
+func (d *Driver) getStds() (string, string, error) {
 	stdout, err := fileToBuf(d.readOut, d.writeOut)
 	if err != nil {
 		return "", "", err

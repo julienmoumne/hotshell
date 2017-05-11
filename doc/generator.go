@@ -1,9 +1,9 @@
 package doc
 
 import (
-	"github.com/julienmoumne/hotshell/item"
 	"bytes"
 	"fmt"
+	"github.com/julienmoumne/hotshell/item"
 	"strings"
 	"text/template"
 )
@@ -11,9 +11,9 @@ import (
 type Generator struct {
 	Item     *item.Item
 	Filename string
-	buffer 	 bytes.Buffer
+	buffer   bytes.Buffer
 	itemTmpl *template.Template
-	depth	 int
+	depth    int
 }
 
 func (g *Generator) Generate() error {
@@ -39,7 +39,7 @@ func (g *Generator) generateSubitems(items []*item.Item) {
 		if len(i.Cmd) == 0 && len(i.Items) == 0 {
 			continue
 		}
-		g.buffer.WriteString(strings.Repeat(" ", g.depth * 2))
+		g.buffer.WriteString(strings.Repeat(" ", g.depth*2))
 		g.itemTmpl.Execute(&g.buffer, i)
 		g.depth++
 		g.generateSubitems(i.Items)

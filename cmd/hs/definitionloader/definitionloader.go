@@ -4,8 +4,8 @@ package definitionloader
 // todo unit test me
 import (
 	"fmt"
-	"os/user"
 	"github.com/julienmoumne/hotshell/cmd/hs/filefetcher"
+	"os/user"
 )
 
 const DEF_HS_FILENAME string = "hs.js"

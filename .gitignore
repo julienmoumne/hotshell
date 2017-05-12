@@ -1,5 +1,4 @@
 .idea
 *.iml
 cmd/hs/test/tmp
-/hs
 .vagrant

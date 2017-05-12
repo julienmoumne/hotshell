@@ -1,14 +1,14 @@
-//go:generate go-bindata -nometadata -ignore \.go$ -pkg demo ./
-package demo
+//go:generate go-bindata -nometadata -ignore \.go$ -pkg generator ./
+package generator
 
 import (
+	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"os"
 	"strings"
 	"text/template"
-	"github.com/julienmoumne/hotshell/cmd/hs/item"
 )
 
-type Generator struct {
+type Demo struct {
 	Item     *item.Item
 	Filename string
 	mainTmpl string
@@ -17,7 +17,7 @@ type Generator struct {
 	Js       string
 }
 
-func (g *Generator) Generate() error {
+func (g *Demo) Generate() error {
 	if err := g.loadAssets(); err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func (g *Generator) Generate() error {
 	return tmpl.Execute(os.Stdout, g)
 }
 
-func (g *Generator) loadAssets() error {
+func (g *Demo) loadAssets() error {
 
 	tmpl, err := Asset("demo.tmpl")
 	if err != nil {

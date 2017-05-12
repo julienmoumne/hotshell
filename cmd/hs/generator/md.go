@@ -1,4 +1,4 @@
-package doc
+package generator
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"text/template"
 )
 
-type Generator struct {
+type Md struct {
 	Item     *item.Item
 	Filename string
 	buffer   bytes.Buffer
@@ -16,7 +16,7 @@ type Generator struct {
 	depth    int
 }
 
-func (g *Generator) Generate() error {
+func (g *Md) Generate() error {
 	if err := g.parseTemplate(); err != nil {
 		return err
 	}
@@ -27,14 +27,14 @@ func (g *Generator) Generate() error {
 	return nil
 }
 
-func (g *Generator) parseTemplate() error {
+func (g *Md) parseTemplate() error {
 	var err error
 	var tmpl = "- {{if .Desc}}{{.Desc}} {{if not .Items}}:{{end}} {{end}}{{if .Cmd}}`{{.Cmd}}`{{end}}\n"
 	g.itemTmpl, err = template.New("itemTmpl").Parse(tmpl)
 	return err
 }
 
-func (g *Generator) generateSubitems(items []*item.Item) {
+func (g *Md) generateSubitems(items []*item.Item) {
 	for _, i := range items {
 		if len(i.Cmd) == 0 && len(i.Items) == 0 {
 			continue

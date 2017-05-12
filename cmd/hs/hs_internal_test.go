@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/term"
+	"github.com/julienmoumne/hotshell/cmd/hs/test"
 	"github.com/julienmoumne/hotshell/cmd/hs/versioning"
+	"github.com/julienmoumne/hotshell/cmd/term"
 	. "gopkg.in/check.v1"
 	"io/ioutil"
 	"os"
 	"testing"
-	"github.com/julienmoumne/hotshell/cmd/hs/test"
 )
 
 func TestBuilder(t *testing.T) { TestingT(t) }
@@ -81,8 +81,8 @@ func runTest(c *C, testName string) {
 	endToEnd := test.EndToEnd{
 		SpecDirectory: testName,
 		Testing:       c,
-		Exit: &exit,
-		Main: main,
+		Exit:          &exit,
+		Main:          main,
 	}
 
 	if err := endToEnd.Run(); err != nil {

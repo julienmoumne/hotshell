@@ -18,8 +18,8 @@ const TEST_TMP_DIR = "test/tmp/failed-cases/"
 type EndToEnd struct {
 	SpecDirectory string
 	Testing       *C
-	Exit *func(int)
-	Main func()
+	Exit          *func(int)
+	Main          func()
 }
 
 func (e *EndToEnd) path(file string) string {

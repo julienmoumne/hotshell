@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/term"
 	. "gopkg.in/check.v1"
 	"testing"
-	"fmt"
 	"time"
 )
 
@@ -42,7 +42,7 @@ Set the working directory to the location of the menu definition
 \fB\fB\-\-generate-demo\fR\fP
 Generate an interactive HTML demo to stdout
 .TP
-\fB\fB\-\-generate-doc\fR\fP
+\fB\fB\-\-generate-md\fR\fP
 Generate a markdown documentation of the menu to stdout
 .TP
 \fB\fB\-v\fR, \fB\-\-version\fR\fP

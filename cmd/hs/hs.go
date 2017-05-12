@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/options"
+	"github.com/julienmoumne/hotshell/cmd/hs/engine"
 	"github.com/julienmoumne/hotshell/cmd/hs/versioning"
+	"github.com/julienmoumne/hotshell/cmd/options"
 	"github.com/robertkrimen/otto"
 	"os"
 )
@@ -27,7 +28,7 @@ func (m *hs) start() error {
 }
 
 func (m *hs) startHotshell() error {
-	return (&booter{options: m.options}).start()
+	return (&engine.Starter{Options: m.options}).Start()
 }
 
 func (m *hs) parseOptions() error {

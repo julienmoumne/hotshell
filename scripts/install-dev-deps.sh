@@ -1,6 +1,6 @@
 #!/bin/bash
-set -euo pipefail
 IFS=$'\n\t'
+set -oxeu pipefail
 
 go get -u github.com/jteeuwen/go-bindata/...
 go get -u github.com/kardianos/govendor

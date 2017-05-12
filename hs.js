@@ -2,25 +2,19 @@ item({desc: 'hotshell-dev'}, function () {
 
     linux = exec('uname').indexOf('Linux') > -1
     browser = linux ? 'sensible-browser' : 'open'
-    generate = 'go generate ./...'
-    install = generate + ' && go install ./...'
     hsCmdDir = './cmd/hs'
-    buildAndRun = generate + ' && go build ' + hsCmdDir + ' && ./hs'
+    generate = './scripts/generate.sh'
+    installAndRun = './scripts/install.sh; $GOPATH/bin/hs'
     allButVendor = '$(go list ./... | grep -v /vendor/)'
-    runTests = generate + ' && go test ' + allButVendor + ' -timeout 10s'
+    runTests = generate + '; go test ' + allButVendor + ' -timeout 10s'
 
-    item({key: 'i', desc: 'install', cmd: install})
-    item({key: 'c', desc: 'clean', cmd: 'go clean -i ./... && find . -type f -name \'bindata.go\' -exec rm {} +'})
-    item({key: 'v', desc: 'vet', cmd: 'go vet ' + allButVendor})
-    item({key: 'f', desc: 'fmt', cmd: 'go fmt ' + allButVendor})
+    item({key: 'c', desc: 'clean install', cmd: './scripts/clean-install.sh'})
 
     item({key: 'p', desc: 'packaging'}, function () {
 
         man = 'debian/usr/share/man/man1/hs.1.gz'
-        item({key: 'g', desc: 'generate man', cmd: install + ' && hs-man | gzip > ' + man})
-        item({key: 's', desc: 'show man', cmd: 'gunzip -c ' + man + ' | groff -Tascii -man -'})
-        item({key: 'p', desc: 'package', cmd: "goxc -pv $(cat VERSION) -wd " + hsCmdDir})
-        item({key: 'c', desc: 'generate changelog', cmd: 'github_changelog_generator'})
+        item({key: 'm', desc: 'test man', cmd: './scripts/generate-man.sh; gunzip -c ' + man + ' | groff -Tascii -man -'})
+        item({key: 'p', desc: 'package', cmd: "./scripts/package.sh"})
     })
 
     item({key: 't', desc: 'tests'}, function () {
@@ -33,7 +27,7 @@ item({desc: 'hotshell-dev'}, function () {
                 item({key: ix, desc: subdir}, function () {
 
                     _(exec('ls ' + subdir).split('\n')).each(function(testName, ix) {
-                        item({key: ix, desc: testName, cmd: buildAndRun + ' --chdir -f ' + subdir + testName})
+                        item({key: ix, desc: testName, cmd: installAndRun + ' --chdir -f ' + subdir + testName})
                     })
                 })
             })
@@ -58,16 +52,12 @@ item({desc: 'hotshell-dev'}, function () {
 
     item({key: 'e', desc: 'examples'}, function () {
 
-        var examples = exec('ls examples/**/*.js').split('\n')
-        _(examples).each(function (el, ix) {
-            item({key: ix, desc: el, cmd: buildAndRun + ' --chdir -f ' + el})
+        _(exec('ls examples/**/*.js').split('\n')).each(function (el, ix) {
+            exampleName = el.substr(el.lastIndexOf('/') + 1)
+            item({key: ix, desc: exampleName, cmd: installAndRun + ' --chdir -f ' + el})
         })
-        var mdGeneration = ''
-        _(examples).each(function (el, ix) {
-            mdGeneration += 'hs --generate-doc --chdir -f ' + el + ' > ' + el + '.md;'
-        })
-        item({key: 'g', desc: 'generate markdowns', cmd: mdGeneration})
     })
 
+    item({key: 'g', desc: 'generate doc', cmd: './scripts/generate-doc.sh'})
     item({key: 'd', desc: 'install dev dependencies', cmd: './scripts/install-dev-deps.sh'})
 })

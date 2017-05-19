@@ -3,6 +3,8 @@ language: go
 go:
   - 1.6
 
-install: ./scripts/install-dev-go-deps.sh
+install:
+  - ./scripts/install-dev-go-deps.sh
+  - ./scripts/clean-install.sh
 
 script: ./scripts/test.sh

@@ -4,6 +4,7 @@ go:
   - 1.6
 
 install:
+  - go get -t -v ./...
   - ./scripts/install-dev-go-deps.sh
   - ./scripts/clean-install.sh
 

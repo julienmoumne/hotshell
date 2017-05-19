@@ -63,6 +63,12 @@
 			"revisionTime": "2016-02-26T14:51:57+11:00"
 		},
 		{
+			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
+			"path": "github.com/pmezard/go-difflib/difflib",
+			"revision": "792786c7400a136282c1664665ae0a8db921c6c2",
+			"revisionTime": "2016-01-10T10:55:54Z"
+		},
+		{
 			"checksumSHA1": "hfOcTc4YM7QuJlgkWi8J6ttntSQ=",
 			"path": "github.com/robertkrimen/otto",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",

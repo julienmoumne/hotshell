@@ -4,7 +4,7 @@ go:
   - 1.6
   
 install:
-  - ./scripts/install-dev-deps.sh
+  - ./scripts/install-dev-go-deps.sh
   - ./scripts/generate.sh
 
 script: ./scripts/test.sh

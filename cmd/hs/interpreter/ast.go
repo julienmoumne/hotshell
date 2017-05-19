@@ -2,10 +2,12 @@ package interpreter
 
 import "strconv"
 
-const DESC_KEY = "desc"
-const CMD_KEY = "cmd"
-const KEY_KEY = "key"
-const ITEMS_KEY = "items"
+const (
+	DescPropName  = "desc"
+	CmdPropName   = "cmd"
+	KeyPropName   = "key"
+	ItemsPropName = "items"
+)
 
 type Ast struct {
 	Key   string
@@ -38,20 +40,20 @@ func (a *astBuilder) build() Ast {
 	ast.Key = a.getKey()
 	ast.Desc = a.getDesc()
 	ast.Cmd = a.getCmd()
-	ast.Items = NewAst(a.value[ITEMS_KEY])
+	ast.Items = NewAst(a.value[ItemsPropName])
 	return ast
 }
 
 func (a *astBuilder) getDesc() string {
-	return a.getScalar(DESC_KEY)
+	return a.getScalar(DescPropName)
 }
 
 func (a *astBuilder) getKey() string {
-	return a.getScalar(KEY_KEY)
+	return a.getScalar(KeyPropName)
 }
 
 func (a *astBuilder) getCmd() string {
-	return a.getScalar(CMD_KEY)
+	return a.getScalar(CmdPropName)
 }
 
 func (a *astBuilder) getScalar(key string) string {

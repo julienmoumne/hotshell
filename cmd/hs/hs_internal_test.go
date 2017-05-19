@@ -5,52 +5,43 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/test"
 	"github.com/julienmoumne/hotshell/cmd/hs/versioning"
 	"github.com/julienmoumne/hotshell/cmd/term"
-	. "gopkg.in/check.v1"
+	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
 )
 
-func TestBuilder(t *testing.T) { TestingT(t) }
-
-type TestHs struct{}
-
-var _ = Suite(&TestHs{})
-
-func (s *TestHs) TestVersion(c *C) {
+func TestVersion(t *testing.T) {
+	a := assert.New(t)
 	driver := term.TestDriver{Main: func() {
 		os.Args = []string{"", "--version"}
 		main()
 	}}
 	actualStdout, _, err := driver.Run()
-	c.Check(err, IsNil)
+	a.Nil(err)
 	var version []byte
 	version, err = versioning.GetVersion()
-	c.Check(err, IsNil)
-	c.Check(actualStdout, Equals, fmt.Sprintf("Hotshell version %s\n", version))
+	a.Nil(err)
+	a.Equal(fmt.Sprintf("Hotshell version %s\n", version), actualStdout)
 }
 
-func (s *TestHs) TestEndToEnd(c *C) {
-
-	err := os.RemoveAll(test.TEST_TMP_DIR)
+func TestEndToEnd(t *testing.T) {
+	err := os.RemoveAll(test.TestTmpDir)
 	if err != nil {
-		c.Fatal(err)
+		t.Fatal(err)
 	}
-
-	testCases := listTestCases(c)
-
-	for _, testName := range testCases {
-		runTest(c, testName)
+	for _, testName := range listTestCases(t) {
+		runTest(t, testName)
 	}
 }
 
-func listTestCases(c *C) []string {
+func listTestCases(t *testing.T) []string {
 
 	testCases := make([]string, 0)
 
-	directories, err := ioutil.ReadDir(test.TEST_CASES_DIR)
+	directories, err := ioutil.ReadDir(test.TestCasesDir)
 	if err != nil {
-		c.Fatal(err)
+		t.Fatal(err)
 	}
 
 	for _, directory := range directories {
@@ -60,9 +51,9 @@ func listTestCases(c *C) []string {
 		}
 
 		dirName := directory.Name()
-		files, err := ioutil.ReadDir(test.TEST_CASES_DIR + dirName)
+		files, err := ioutil.ReadDir(test.TestCasesDir + dirName)
 		if err != nil {
-			c.Fatal(err)
+			t.Fatal(err)
 		}
 
 		for _, file := range files {
@@ -77,15 +68,15 @@ func listTestCases(c *C) []string {
 	return testCases
 }
 
-func runTest(c *C, testName string) {
+func runTest(t *testing.T, testName string) {
 	endToEnd := test.EndToEnd{
 		SpecDirectory: testName,
-		Testing:       c,
+		Testing:       t,
 		Exit:          &exit,
 		Main:          main,
 	}
 
 	if err := endToEnd.Run(); err != nil {
-		c.Fatal(err)
+		t.Fatal(err)
 	}
 }

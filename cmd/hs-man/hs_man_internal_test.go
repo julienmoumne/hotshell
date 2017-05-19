@@ -3,22 +3,17 @@ package main
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/term"
-	. "gopkg.in/check.v1"
+	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
 )
 
-func TestBuilder(t *testing.T) { TestingT(t) }
-
-type TestHsMan struct{}
-
-var _ = Suite(&TestHsMan{})
-
-func (s *TestHsMan) TestMan(c *C) {
+func TestMan(t *testing.T) {
 	driver := term.TestDriver{Main: main}
 	actualStdout, _, err := driver.Run()
-	c.Check(err, IsNil)
-	c.Check(actualStdout, Equals, expectedMan)
+	a := assert.New(t)
+	a.Nil(err)
+	a.Equal(expectedMan, actualStdout)
 }
 
 var expectedMan = fmt.Sprintf(`.TH hs 1 "%s"

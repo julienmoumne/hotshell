@@ -1,20 +1,21 @@
 //go:generate go-bindata -nometadata -pkg definitionloader ../../../examples/default/default.hs.js
 package definitionloader
 
-// todo unit test me
 import (
 	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/hs/filefetcher"
+	"github.com/blang/vfs"
+	"github.com/julienmoumne/hotshell/cmd/hs/fileloader"
 	"os/user"
 )
 
-const DEF_HS_FILENAME string = "hs.js"
+const defaultFilename = "hs.js"
 
 type DefinitionLoader struct {
-	Default          bool
-	File             string
+	FileLoader       fileloader.FileLoader
+	Fs               vfs.Filesystem
+	file             string
 	defaultLocations []string
-	definition       *Definition
+	definition       Definition
 }
 
 type Definition struct {
@@ -23,12 +24,18 @@ type Definition struct {
 	Dsl               []byte
 }
 
-func (d *DefinitionLoader) LoadDefinition() (*Definition, error) {
+var Default = DefinitionLoader{
+	FileLoader: fileloader.Default,
+	Fs:         vfs.ReadOnly(vfs.OS()),
+}
+
+func (d *DefinitionLoader) Load(defaultMenu bool, file string) (Definition, error) {
 	var err error
-	d.definition = &Definition{}
-	if d.Default {
+	d.definition = Definition{}
+	d.file = file
+	if defaultMenu {
 		err = d.loadDefaultMenu()
-	} else if len(d.File) > 0 {
+	} else if len(d.file) > 0 {
 		err = d.loadUserProvidedFile()
 	} else if !d.loadFileFromDefaultLocations() {
 		err = d.loadDefaultMenu()
@@ -39,15 +46,15 @@ func (d *DefinitionLoader) LoadDefinition() (*Definition, error) {
 func (d *DefinitionLoader) loadDefaultMenu() error {
 	var err error
 	d.definition.DefaultMenuLoaded = true
-	d.definition.Filename = "../../../examples/default/default.hs.js"
-	d.definition.Dsl, err = Asset(d.definition.Filename)
+	d.definition.Filename = "default.hs.js"
+	d.definition.Dsl, err = Asset(fmt.Sprintf("../../../examples/default/%s", d.definition.Filename))
 	return err
 }
 
 func (d *DefinitionLoader) loadFileFromDefaultLocations() bool {
 	d.initDefaultLocations()
-	for _, dir := range d.defaultLocations {
-		if err := d.fetchFile(dir); err == nil {
+	for _, loc := range d.defaultLocations {
+		if err := d.fetchFile(loc); err == nil {
 			return true
 		}
 	}
@@ -56,27 +63,39 @@ func (d *DefinitionLoader) loadFileFromDefaultLocations() bool {
 
 func (d *DefinitionLoader) initDefaultLocations() {
 	d.defaultLocations = make([]string, 1)
-	d.defaultLocations[0] = fmt.Sprintf("./%s", DEF_HS_FILENAME)
+	d.defaultLocations[0] = fmt.Sprintf("./%s", defaultFilename)
 
 	usr, err := user.Current()
 	if err != nil {
 		return
 	}
 
-	hsInHomeDir := fmt.Sprintf("%s/.hs/%s", usr.HomeDir, DEF_HS_FILENAME)
+	hsInHomeDir := fmt.Sprintf("%s/.hs/%s", usr.HomeDir, defaultFilename)
 	d.defaultLocations = append(d.defaultLocations, hsInHomeDir)
 }
 
 func (d *DefinitionLoader) loadUserProvidedFile() error {
-	return d.fetchFile(d.File)
+	isDir, err := d.userProvidedFileIsDir()
+	if err != nil {
+		return err
+	}
+	if isDir {
+		d.file += fmt.Sprintf("/%s", defaultFilename)
+	}
+	return d.fetchFile(d.file)
+}
+
+func (d *DefinitionLoader) userProvidedFileIsDir() (bool, error) {
+	info, err := d.Fs.Stat(d.file)
+	if err != nil {
+		return false, err
+	}
+	return info.IsDir(), nil
 }
 
 func (d *DefinitionLoader) fetchFile(path string) error {
 	var err error
-	d.definition.Dsl, d.definition.Filename, err = (&filefetcher.Filefetcher{
-		Fs:                filefetcher.NativeFS{},
-		WebClient:         filefetcher.NewWebClient(),
-		DefaultHSFilename: DEF_HS_FILENAME,
-	}).FetchFile(path)
+	d.definition.Filename = path
+	d.definition.Dsl, err = d.FileLoader.Load(path)
 	return err
 }

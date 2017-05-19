@@ -23,7 +23,7 @@ type ModuleLoader func(*Motto) (otto.Value, error)
 func CreateLoaderFromSource(source, pwd string) ModuleLoader {
     return func (vm *Motto) (otto.Value, error) {
         // Wraps the source to create a module environment
-        source = "(function (module) {var require = module.require;var exports = module.exports;\n" + source + "\n})"
+        source = "(function(module) {var require = module.require;var exports = module.exports;\n" + source + "\n})"
 
         // Provide the "require" method in the module scope.
         jsRequire := func(call otto.FunctionCall) otto.Value {

@@ -4,26 +4,28 @@ import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/term"
 	dmp "github.com/sergi/go-diff/diffmatchpatch"
-	. "gopkg.in/check.v1"
 	"io/ioutil"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
+	"testing"
 )
 
-const TEST_CASES_DIR = "test/cases/"
-const TEST_TMP_DIR = "test/tmp/failed-cases/"
+const (
+	TestCasesDir = "test/cases/"
+	TestTmpDir   = "test/tmp/failed-cases/"
+)
 
 type EndToEnd struct {
 	SpecDirectory string
-	Testing       *C
+	Testing       *testing.T
 	Exit          *func(int)
 	Main          func()
 }
 
 func (e *EndToEnd) path(file string) string {
-	return fmt.Sprintf("%s%s/%s", TEST_CASES_DIR, e.SpecDirectory, file)
+	return fmt.Sprintf("%s%s/%s", TestCasesDir, e.SpecDirectory, file)
 }
 
 func (e *EndToEnd) Run() error {
@@ -102,8 +104,7 @@ func (e *EndToEnd) diff(actual string, postfix string) error {
 }
 
 func (e *EndToEnd) reportFailedTest(actual string, expected string, postfix string) error {
-
-	testDir := fmt.Sprintf("%s%s", TEST_TMP_DIR, e.SpecDirectory)
+	testDir := fmt.Sprintf("%s%s", TestTmpDir, e.SpecDirectory)
 	if err := os.MkdirAll(testDir, 0755); err != nil {
 		return err
 	}

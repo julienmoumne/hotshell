@@ -3,90 +3,142 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "GNCf9wj6JZSD47Mw3w78YSKBbGM=",
+			"path": "github.com/blang/vfs",
+			"revision": "c14afcac17253ce7418da751ec6b1988790cdc8f",
+			"revisionTime": "2017-02-07T12:21:02Z"
+		},
+		{
+			"checksumSHA1": "zC9c3SnKn7wqczeb0l1snbhwk4Q=",
+			"path": "github.com/blang/vfs/memfs",
+			"revision": "c14afcac17253ce7418da751ec6b1988790cdc8f",
+			"revisionTime": "2017-02-07T12:21:02Z"
+		},
+		{
 			"checksumSHA1": "tjwGqMJO78mjSnRDp/UoM97AV+g=",
 			"path": "github.com/ddliu/motto",
 			"revision": "8933bbc2c051c5a0d2c5cac5b89ab36aa1123453",
 			"revisionTime": "2016-03-21T02:10:15Z"
 		},
 		{
+			"checksumSHA1": "gkRIq2AsG0e/ngNfqW+IF/zr9o8=",
 			"path": "github.com/fatih/color",
 			"revision": "533cd7fd8a85905f67a1753afb4deddc85ea174f",
 			"revisionTime": "2016-03-17T11:31:53+02:00"
 		},
 		{
+			"checksumSHA1": "Fsff4Yngdyqbq9ulSyTT4LGrxck=",
 			"path": "github.com/jessevdk/go-flags",
 			"revision": "6b9493b3cb60367edd942144879646604089e3f7",
 			"revisionTime": "2016-02-27T10:34:14+01:00"
 		},
 		{
+			"checksumSHA1": "rCffFCN6TpDAN3Jylyo8RFzhQ9E=",
 			"path": "github.com/mattn/go-colorable",
 			"revision": "9cbef7c35391cca05f15f8181dc0b18bc9736dbb",
 			"revisionTime": "2016-02-20T16:59:35+09:00"
 		},
 		{
+			"checksumSHA1": "NkbetqlpWBi3gP08JDneC+axTKw=",
 			"path": "github.com/mattn/go-isatty",
 			"revision": "56b76bdf51f7708750eac80fa38b952bb9f32639",
 			"revisionTime": "2015-12-11T09:06:21+09:00"
 		},
 		{
+			"checksumSHA1": "JMq+sAxNE45BIG58pZSQswG+EZE=",
 			"path": "github.com/pkg/term",
 			"revision": "9eb92a42e2b9dd9bc2bdb0a1d0f085c49233b6d4",
 			"revisionTime": "2016-02-26T14:51:57+11:00"
 		},
 		{
+			"checksumSHA1": "DSWGo7kL5hgm+xg35zRelg/wnA8=",
 			"path": "github.com/pkg/term/termios",
 			"revision": "9eb92a42e2b9dd9bc2bdb0a1d0f085c49233b6d4",
 			"revisionTime": "2016-02-26T14:51:57+11:00"
 		},
 		{
+			"checksumSHA1": "hfOcTc4YM7QuJlgkWi8J6ttntSQ=",
 			"path": "github.com/robertkrimen/otto",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "JUSDg6lTqVrODl0mRFDMMMkFvmw=",
 			"path": "github.com/robertkrimen/otto/ast",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "L0KsB2EzTlPgv0iae3q3SukNW7U=",
 			"path": "github.com/robertkrimen/otto/dbg",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "IyD638BE79e40ir0bF6+fN9T0LY=",
 			"path": "github.com/robertkrimen/otto/file",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "IMfTDRQdLnUFWxG6ywNGgED4DhY=",
 			"path": "github.com/robertkrimen/otto/parser",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "7J/7NaYRqKhBvZ+dTIutsEoEgFw=",
 			"path": "github.com/robertkrimen/otto/registry",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "/jMXYuXycBpTqWhRyJ2xsqvHvQI=",
 			"path": "github.com/robertkrimen/otto/token",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "PEC19eE84u8Fsg+NT+4x47h+7CQ=",
 			"path": "github.com/robertkrimen/otto/underscore",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},
 		{
+			"checksumSHA1": "5SsK4Rr15FZgGP4zDjmKWHyKwp8=",
 			"path": "github.com/sergi/go-diff/diffmatchpatch",
 			"revision": "ec7fdbb58eb3e300c8595ad5ac74a5aa50019cc7",
 			"revisionTime": "2015-10-21T21:14:53+02:00"
 		},
 		{
-			"path": "gopkg.in/check.v1",
-			"revision": "4f90aeace3a26ad7021961c297b22c42160c7b25",
-			"revisionTime": "2016-01-05T14:49:36-02:00"
+			"checksumSHA1": "K0crHygPTP42i1nLKWphSlvOQJw=",
+			"path": "github.com/stretchr/objx",
+			"revision": "1a9d0bb9f541897e62256577b352fdbc1fb4fd94",
+			"revisionTime": "2015-09-28T12:21:52Z"
+		},
+		{
+			"checksumSHA1": "/kKwYqD04AkkDZFQhGwklKw3RFA=",
+			"path": "github.com/stretchr/testify",
+			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
+			"revisionTime": "2017-01-30T11:31:45Z"
+		},
+		{
+			"checksumSHA1": "JXUVA1jky8ZX8w09p2t5KLs97Nc=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
+			"revisionTime": "2017-01-30T11:31:45Z"
+		},
+		{
+			"checksumSHA1": "WGwMB6WljaeGKzuNCX5M4E8LADE=",
+			"path": "github.com/stretchr/testify/mock",
+			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
+			"revisionTime": "2017-01-30T11:31:45Z"
+		},
+		{
+			"checksumSHA1": "Wx2FYL6OLgZ/9PF1nb+hhNoXcTo=",
+			"path": "gopkg.in/jarcoal/httpmock.v1",
+			"revision": "cf52904a3cf0f78f199ecade6a6df8e245d5b25a",
+			"revisionTime": "2017-04-12T08:57:02Z"
 		}
 	],
 	"rootPath": "github.com/julienmoumne/hotshell"

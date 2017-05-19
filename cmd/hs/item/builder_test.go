@@ -4,15 +4,9 @@ import (
 	"errors"
 	"github.com/julienmoumne/hotshell/cmd/hs/interpreter"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
-	. "gopkg.in/check.v1"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
-
-func TestBuilder(t *testing.T) { TestingT(t) }
-
-type BuilderTestSuite struct{}
-
-var _ = Suite(&BuilderTestSuite{})
 
 var builderTests = []struct {
 	in  []interpreter.Ast
@@ -41,7 +35,7 @@ var builderTests = []struct {
 		[]interpreter.Ast{{Items: []interpreter.Ast{{Key: "k", Cmd: "missing-desc"}}}},
 		&item.Item{
 			Items: []*item.Item{
-				&item.Item{
+				{
 					Key:   "k",
 					Cmd:   "missing-desc",
 					Items: []*item.Item{},
@@ -65,34 +59,34 @@ var builderTests = []struct {
 	{
 		[]interpreter.Ast{{Desc: "invalid-keys",
 			Items: []interpreter.Ast{
-				interpreter.Ast{Key: "", Desc: "key-not-provided-cmd", Cmd: "key-not-provided-cmd"},
-				interpreter.Ast{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
-				interpreter.Ast{Key: "", Desc: "key-not-provided-menu", Items: []interpreter.Ast{
-					interpreter.Ast{Desc: "key-not-provided-empty-menu"},
+				{Key: "", Desc: "key-not-provided-cmd", Cmd: "key-not-provided-cmd"},
+				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
+				{Key: "", Desc: "key-not-provided-menu", Items: []interpreter.Ast{
+					{Desc: "key-not-provided-empty-menu"},
 				}},
-				interpreter.Ast{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
-				interpreter.Ast{Key: "too-long", Desc: "too-long", Cmd: "too-long"},
+				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
+				{Key: "too-long", Desc: "too-long", Cmd: "too-long"},
 			},
 		}},
 		&item.Item{
 			Desc: "invalid-keys",
 			Items: []*item.Item{
-				&item.Item{Key: "key-not-provided", Desc: "key-not-provided-cmd", Cmd: "key-not-provided-cmd",
+				{Key: "key-not-provided", Desc: "key-not-provided-cmd", Cmd: "key-not-provided-cmd",
 					Items: []*item.Item{},
 				},
-				&item.Item{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key",
+				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key",
 					Items: []*item.Item{},
 				},
-				&item.Item{Key: "key-not-provided", Desc: "key-not-provided-menu",
-					Items: []*item.Item{&item.Item{
+				{Key: "key-not-provided", Desc: "key-not-provided-menu",
+					Items: []*item.Item{{
 						Desc:  "key-not-provided-empty-menu",
 						Items: []*item.Item{},
 					}},
 				},
-				&item.Item{Key: "duplicated-key:d", Desc: "duplicated-key", Cmd: "duplicated-key",
+				{Key: "duplicated-key:d", Desc: "duplicated-key", Cmd: "duplicated-key",
 					Items: []*item.Item{},
 				},
-				&item.Item{Key: "invalid-key too-long", Desc: "too-long", Cmd: "too-long",
+				{Key: "invalid-key too-long", Desc: "too-long", Cmd: "too-long",
 					Items: []*item.Item{},
 				},
 			},
@@ -104,11 +98,11 @@ var builderTests = []struct {
 	{
 		[]interpreter.Ast{{Key: "t", Desc: "test",
 			Items: []interpreter.Ast{
-				interpreter.Ast{Key: "f", Desc: "first cmd", Cmd: "echo 'first cmd'"},
-				interpreter.Ast{Key: "s", Desc: "second cmd", Cmd: "echo 'second cmd'"},
-				interpreter.Ast{Key: "m", Desc: "submenu",
+				{Key: "f", Desc: "first cmd", Cmd: "echo 'first cmd'"},
+				{Key: "s", Desc: "second cmd", Cmd: "echo 'second cmd'"},
+				{Key: "m", Desc: "submenu",
 					Items: []interpreter.Ast{
-						interpreter.Ast{Key: "s", Desc: "submenu cmd", Cmd: "echo 'submenu cmd'"},
+						{Key: "s", Desc: "submenu cmd", Cmd: "echo 'submenu cmd'"},
 					},
 				},
 			},
@@ -116,15 +110,15 @@ var builderTests = []struct {
 		&item.Item{
 			Desc: "test",
 			Items: []*item.Item{
-				&item.Item{Key: "f", Desc: "first cmd", Cmd: "echo 'first cmd'",
+				{Key: "f", Desc: "first cmd", Cmd: "echo 'first cmd'",
 					Items: []*item.Item{},
 				},
-				&item.Item{Key: "s", Desc: "second cmd", Cmd: "echo 'second cmd'",
+				{Key: "s", Desc: "second cmd", Cmd: "echo 'second cmd'",
 					Items: []*item.Item{},
 				},
-				&item.Item{Key: "m", Desc: "submenu",
+				{Key: "m", Desc: "submenu",
 					Items: []*item.Item{
-						&item.Item{
+						{
 							Key:   "s",
 							Desc:  "submenu cmd",
 							Cmd:   "echo 'submenu cmd'",
@@ -138,14 +132,15 @@ var builderTests = []struct {
 	},
 }
 
-func (s *BuilderTestSuite) TestBuilder(c *C) {
+func TestBuilder(t *testing.T) {
 	for _, tt := range builderTests {
 		if tt.out != nil {
 			adjustParentLinks(tt.out, nil)
 		}
 		actualOut, err := (&item.Builder{}).Build(tt.in)
-		c.Check(actualOut, DeepEquals, tt.out)
-		c.Check(err, DeepEquals, tt.err)
+		a := assert.New(t)
+		a.Equal(tt.out, actualOut)
+		a.Equal(tt.err, err)
 	}
 }
 

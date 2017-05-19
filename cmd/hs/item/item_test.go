@@ -2,40 +2,34 @@ package item_test
 
 import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
-	. "gopkg.in/check.v1"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-func TestItem(t *testing.T) { TestingT(t) }
-
-type ItemTestSuite struct{}
-
-var _ = Suite(&ItemTestSuite{})
-
-func (s *ItemTestSuite) TestIsCmd(c *C) {
+func TestIsCmd(t *testing.T) {
 	it := item.NewItem("", "", "echo 'test'")
-	checkIsCmd(c, it, true)
+	checkIsCmd(t, it, true)
 }
 
-func (s *ItemTestSuite) TestMenuWithItemsIsNotCmd(c *C) {
+func TestMenuWithItemsIsNotCmd(t *testing.T) {
 	it := item.NewItem("", "", "")
 	it.AddItem(it)
-	checkIsCmd(c, it, false)
+	checkIsCmd(t, it, false)
 }
 
-func (s *ItemTestSuite) TestMenuWithItemsWithCmdIsNotCmd(c *C) {
+func TestMenuWithItemsWithCmdIsNotCmd(t *testing.T) {
 	it := item.NewItem("", "", "echo 'test'")
 	it.AddItem(it)
-	checkIsCmd(c, it, false)
+	checkIsCmd(t, it, false)
 }
 
-func (s *ItemTestSuite) TestEmptyMenuIsNotCmd(c *C) {
+func TestEmptyMenuIsNotCmd(t *testing.T) {
 	it := item.NewItem("", "", "")
-	checkIsCmd(c, it, false)
+	checkIsCmd(t, it, false)
 }
 
-func checkIsCmd(c *C, it *item.Item, isCmd bool) {
-	c.Check(it.IsCmd(), Equals, isCmd)
+func checkIsCmd(t *testing.T, it *item.Item, isCmd bool) {
+	assert.Equal(t, isCmd, it.IsCmd())
 }
 
 var descTests = []struct {
@@ -75,10 +69,11 @@ var descTests = []struct {
 	{itemWithParentAndChild("k", "desc", "cmd"), "desc", "k desc >"},
 }
 
-func (s *ItemTestSuite) TestDesc(c *C) {
-	for _, t := range descTests {
-		c.Check(t.item.GetDesc(), Equals, t.desc)
-		c.Check(t.item.GetInMenuDesc(), Equals, t.inMenuDesc)
+func TestDesc(t *testing.T) {
+	for _, test := range descTests {
+		a := assert.New(t)
+		a.Equal(test.desc, test.item.GetDesc())
+		a.Equal(test.inMenuDesc, test.item.GetInMenuDesc())
 	}
 }
 

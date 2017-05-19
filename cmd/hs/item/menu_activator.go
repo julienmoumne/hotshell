@@ -22,10 +22,10 @@ func (m *MenuActivator) Activate(item *Item) *Item {
 func (m *MenuActivator) printHelp() {
 	m.printf(
 		" %v back, %v bash, %v repeat, %v reload, %v quit",
-		formatter.HelpFmt(PREVIOUS_MENU_KEY.String()),
-		formatter.HelpFmt(BASH_KEY.String()),
-		formatter.HelpFmt(REPEAT_KEY.String()),
-		formatter.HelpFmt(RELOAD_KEY.String()),
+		formatter.HelpFmt(PreviousMenuKey.String()),
+		formatter.HelpFmt(BashKey.String()),
+		formatter.HelpFmt(RepeatKey.String()),
+		formatter.HelpFmt(ReloadKey.String()),
 		formatter.HelpFmt("^d or ^c"),
 	)
 	m.print("\n")

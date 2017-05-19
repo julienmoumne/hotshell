@@ -1,5 +1,5 @@
 #!/bin/bash
 IFS=$'\n\t'
-set -oxeu pipefail
+set -oeu pipefail
 
 ALL_BUT_VENDORS=$(go list ./... | grep -v /vendor/)

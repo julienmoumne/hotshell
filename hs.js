@@ -5,10 +5,10 @@ item({desc: 'hotshell-dev'}, function () {
     hsCmdDir = './cmd/hs'
     generate = './scripts/generate.sh'
     installAndRun = './scripts/install.sh; $GOPATH/bin/hs'
-    allButVendor = '$(go list ./... | grep -v /vendor/)'
-    runTests = generate + '; go test ' + allButVendor + ' -timeout 10s'
+    runTests = './scripts/test.sh'
 
     item({key: 'c', desc: 'clean install', cmd: './scripts/clean-install.sh'})
+    item({key: 'f', desc: 'format', cmd: './scripts/format.sh'})
 
     item({key: 'p', desc: 'packaging'}, function () {
 
@@ -59,5 +59,11 @@ item({desc: 'hotshell-dev'}, function () {
     })
 
     item({key: 'g', desc: 'generate doc', cmd: './scripts/generate-doc.sh'})
-    item({key: 'd', desc: 'install dev dependencies', cmd: './scripts/install-dev-deps.sh'})
+    item({key: 'i', desc: 'install dev dependencies', cmd: './scripts/install-dev-deps.sh'})
+    
+    item({key: 'v', desc: 'vendoring'}, function() {
+        item({key: 'a', desc: 'add dependency', cmd: './scripts/add-dependency.sh'})
+        item({key: 'd', desc: 'delete dependency', cmd: './scripts/rm-dependency.sh'})
+        item({key: 'r', desc: 'reset vendor', cmd: 'find ./vendor/* -not -name \'vendor.json\' -print0 | xargs -0 rm -Rf –-- && govendor sync'})
+    })
 })

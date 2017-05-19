@@ -6,22 +6,20 @@ import (
 	pkgterm "github.com/pkg/term"
 )
 
-const DEFAULT_TTY = "/dev/tty"
+const defaultTty = "/dev/tty"
 
-var tty = DEFAULT_TTY
+var tty = defaultTty
 
 type Term struct {
 	term *pkgterm.Term
 }
 
-func NewTerm() (*Term, error) {
+func NewTerm() (Term, error) {
 	t, err := pkgterm.Open(tty)
-
 	if err != nil {
-		return nil, err
+		return Term{}, err
 	}
-
-	return &Term{t}, err
+	return Term{t}, err
 }
 
 func (t *Term) Close() error {
@@ -30,7 +28,7 @@ func (t *Term) Close() error {
 
 func (t *Term) Restore() {
 	// term.Restore() blocks when running tests with pseudo term (termios.Pty())
-	if tty != DEFAULT_TTY {
+	if tty != defaultTty {
 		return
 	}
 
@@ -50,7 +48,7 @@ func (t *Term) ReadUserChoice() (item.Key, error) {
 	defer t.Restore()
 
 	if err != nil {
-		return item.NUL_KEY, err
+		return item.NullKey, err
 	}
 
 	bytes := make([]byte, 1)

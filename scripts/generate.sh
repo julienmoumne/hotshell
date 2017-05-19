@@ -1,5 +1,7 @@
 #!/bin/bash
 IFS=$'\n\t'
-set -oxeu pipefail
+set -oeu pipefail
 
-go generate ./...
+. ./scripts/common-vars.sh
+
+go generate $ALL_BUT_VENDORS

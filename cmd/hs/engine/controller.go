@@ -1,5 +1,6 @@
 package engine
 
+// todo unit test me
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
@@ -13,7 +14,7 @@ type controller struct {
 	root             *item.Item
 	activeItem       *item.Item
 	lastActivatedCmd item.Key
-	term             *term.Term
+	term             term.Term
 	activeSubprocess bool
 }
 
@@ -27,7 +28,6 @@ func (c *controller) start() (bool, error) {
 
 func (c *controller) mainLoop() (bool, error) {
 	c.printPrompt()
-
 	for {
 		key, err := c.term.ReadUserChoice()
 		if err != nil {
@@ -36,21 +36,21 @@ func (c *controller) mainLoop() (bool, error) {
 
 		switch key {
 
-		case item.EOF_KEY:
+		case item.EofKey:
 			fallthrough
-		case item.NUL_KEY:
+		case item.NullKey:
 			fmt.Print("\n")
 			return false, nil
-		case item.PREVIOUS_MENU_KEY:
+		case item.PreviousMenuKey:
 			if c.activeItem.Parent != nil {
 				c.triggerItem(key, c.activeItem.Parent)
 			}
-		case item.BASH_KEY:
+		case item.BashKey:
 			c.triggerItem(key, item.BashCmd)
-		case item.REPEAT_KEY:
+		case item.RepeatKey:
 			c.triggerLastCmd()
-		case item.RELOAD_KEY:
-			c.printKey(item.RELOAD_KEY)
+		case item.ReloadKey:
+			c.printKey(item.ReloadKey)
 			return true, nil
 		default:
 			if selectedItem, found := c.activeItem.GetItem(key); found {
@@ -65,12 +65,12 @@ func (c *controller) printPrompt() {
 }
 
 func (c *controller) triggerLastCmd() {
-	if c.lastActivatedCmd == item.NUL_KEY {
+	if c.lastActivatedCmd == item.NullKey {
 		return
 	}
 
 	var it *item.Item
-	if c.lastActivatedCmd == item.BASH_KEY {
+	if c.lastActivatedCmd == item.BashKey {
 		it = item.BashCmd
 	} else {
 		it, _ = c.activeItem.GetItem(c.lastActivatedCmd)
@@ -91,7 +91,7 @@ func (c *controller) triggerItem(key item.Key, it *item.Item) {
 
 	c.printKey(key)
 
-	c.lastActivatedCmd = item.NUL_KEY
+	c.lastActivatedCmd = item.NullKey
 
 	nextMenu := item.Activate(it)
 

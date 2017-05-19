@@ -3,75 +3,94 @@ package item_test
 import (
 	"bytes"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
-	. "gopkg.in/check.v1"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
-func TestMenuActivator(t *testing.T) { TestingT(t) }
-
-type MenuActivatorTestSuite struct {
+var (
+	a         *assert.Assertions
 	buf       *bytes.Buffer
 	activator item.MenuActivator
+	tests     []testCase
+)
+
+func init() {
+	emptyDescInNestedMenu := item.NewItem("", "notice", "")
+	emptyDescInNestedMenu.AddItem(item.NewItem("", "notice", ""))
+	cmdWithoutDesc := item.NewItem("", "cmd-without-desc", "")
+	cmdWithoutDesc.AddItem(item.NewItem("k", "", "cmd-without-desc"))
+
+	tests = []testCase{
+		{
+			in{item.NewItem("", "empty-menu", "")},
+			out{" empty-menu\n" +
+				"\n" +
+				" no items found\n" +
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n"},
+		},
+		{
+			in{item.NewItem("", "", "")},
+			out{" missing-desc\n" +
+				"\n" +
+				" no items found\n" +
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n"},
+		},
+		{
+			in{emptyDescInNestedMenu},
+			out{" notice\n" +
+				"\n" +
+				" notice\n" +
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n"},
+		},
+		{
+			in{cmdWithoutDesc},
+			out{" cmd-without-desc\n" +
+				"\n" +
+				" k cmd-without-desc\n" +
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n"},
+		},
+	}
 }
 
-var _ = Suite(&MenuActivatorTestSuite{})
+type (
+	in struct {
+		item *item.Item
+	}
+	out struct {
+		str string
+	}
+	testCase struct {
+		in
+		out
+	}
+)
 
-func (s *MenuActivatorTestSuite) SetUpTest(c *C) {
-	s.buf = &bytes.Buffer{}
-	s.activator = item.MenuActivator{Out: s.buf}
+func TestMenuActivator(t *testing.T) {
+	a = assert.New(t)
+	for _, test := range tests {
+		runTest(test)
+	}
 }
 
-func (s *MenuActivatorTestSuite) TestEmptyMenu(c *C) {
-	it := item.NewItem("", "empty-menu", "")
-	s.validateOut(c, it,
-		" empty-menu\n"+
-			"\n"+
-			" no items found\n"+
-			"\n"+
-			" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n"+
-			"\n",
-	)
+func runTest(t testCase) {
+	setupTest()
+	validateTest(t)
 }
 
-func (s *MenuActivatorTestSuite) TestEmptyDescEmptyMenu(c *C) {
-	it := item.NewItem("", "", "")
-	s.validateOut(c, it,
-		" missing-desc\n"+
-			"\n"+
-			" no items found\n"+
-			"\n"+
-			" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n"+
-			"\n",
-	)
+func setupTest() {
+	buf = &bytes.Buffer{}
+	activator = item.MenuActivator{Out: buf}
 }
 
-func (s *MenuActivatorTestSuite) TestEmptyDescInNestedMenu(c *C) {
-	it := item.NewItem("", "notice", "")
-	it.AddItem(item.NewItem("", "notice", ""))
-	s.validateOut(c, it,
-		" notice\n"+
-			"\n"+
-			" notice\n"+
-			"\n"+
-			" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n"+
-			"\n",
-	)
-}
-
-func (s *MenuActivatorTestSuite) TestCmdWithoutDesc(c *C) {
-	it := item.NewItem("", "cmd-without-desc", "")
-	it.AddItem(item.NewItem("k", "", "cmd-without-desc"))
-	s.validateOut(c, it,
-		" cmd-without-desc\n"+
-			"\n"+
-			" k cmd-without-desc\n"+
-			"\n"+
-			" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n"+
-			"\n",
-	)
-}
-
-func (s *MenuActivatorTestSuite) validateOut(c *C, it *item.Item, out string) {
-	s.activator.Activate(it)
-	c.Check(s.buf.String(), Equals, out)
+func validateTest(t testCase) {
+	activator.Activate(t.in.item)
+	a.Equal(t.out.str, buf.String())
 }

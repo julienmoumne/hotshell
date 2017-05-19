@@ -14,30 +14,30 @@ func main() {
 }
 
 type hs struct {
-	options *options.Options
+	options options.Options
 }
 
-func (m *hs) start() error {
-	if err := m.parseOptions(); err != nil {
+func (h *hs) start() error {
+	if err := h.parseOptions(); err != nil {
 		return err
 	}
-	if m.options.Version {
-		return m.printVersion()
+	if h.options.Version {
+		return h.printVersion()
 	}
-	return m.startHotshell()
+	return h.startHotshell()
 }
 
-func (m *hs) startHotshell() error {
-	return (&engine.Starter{Options: m.options}).Start()
+func (h *hs) startHotshell() error {
+	return (&engine.Starter{Options: h.options}).Start()
 }
 
-func (m *hs) parseOptions() error {
+func (h *hs) parseOptions() error {
 	var err error
-	m.options, err = (&options.OptionParser{}).Parse()
+	h.options, err = (&options.OptionParser{}).Parse()
 	return err
 }
 
-func (m *hs) printVersion() error {
+func (h *hs) printVersion() error {
 	version, err := versioning.GetVersion()
 	if err != nil {
 		return err

@@ -15,6 +15,12 @@
 			"revisionTime": "2017-02-07T12:21:02Z"
 		},
 		{
+			"checksumSHA1": "dvabztWVQX8f6oMLRyv4dLH+TGY=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",
+			"revisionTime": "2016-10-29T20:57:26Z"
+		},
+		{
 			"checksumSHA1": "tjwGqMJO78mjSnRDp/UoM97AV+g=",
 			"path": "github.com/ddliu/motto",
 			"revision": "8933bbc2c051c5a0d2c5cac5b89ab36aa1123453",

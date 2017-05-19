@@ -3,4 +3,4 @@ language: go
 go:
   - 1.6
 
-script: go test $(go list ./... | grep -v /vendor/)
+script: ./scripts/test.sh

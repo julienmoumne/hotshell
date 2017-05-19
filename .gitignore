@@ -3,4 +3,3 @@
 cmd/hs/test/tmp
 .vagrant
 cmd/**/mock_*.go
-bindata.go

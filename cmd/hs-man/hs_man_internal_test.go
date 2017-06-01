@@ -42,4 +42,4 @@ Generate a markdown documentation of the menu to stdout
 .TP
 \fB\fB\-v\fR, \fB\-\-version\fR\fP
 Print version information and quit
-`, time.Now().Format("02 January 2006"))
+`, time.Now().Format("2 January 2006"))

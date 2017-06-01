@@ -1,3 +1,4 @@
+//go:generate mockery -name UserGetter -inpkg -case underscore
 package definitionloader_test
 
 import (
@@ -7,62 +8,88 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/definitionloader"
 	"github.com/julienmoumne/hotshell/cmd/hs/fileloader"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"io/ioutil"
 	"testing"
+	"os/user"
+	"errors"
 )
 
 var (
-	dummyPayload   = []byte{0xFF}
+	dummyPayload = []byte{0xFF}
+	dummyUser = user.User{HomeDir: "/home/user"}
+	homeHotshell = fsEntry{dummyUser.HomeDir + "/.hs", "hs.js"}
 	defaultMenu, _ = ioutil.ReadFile("../../../examples/default/default.hs.js")
 	a              *assert.Assertions
-	dl             definitionloader.DefinitionLoader
-	tests          = []testCase{
+	dl definitionloader.DefinitionLoader
+	tests = []testCase{
 		// default menu explicitly requested
 		{
-			ctx{},
+			in: in{true, "directory/sub/hs.js"},
+			out: out{true, false, "default.hs.js", defaultMenu},
+		},
+		{
+			ctx{fs: []fsEntry{{"directory/sub", "hs.js"}}},
 			in{true, "directory/sub/hs.js"},
 			out{true, false, "default.hs.js", defaultMenu},
 		},
 		{
-			ctx{"directory/sub", "hs.js"},
-			in{true, "directory/sub/hs.js"},
-			out{true, false, "default.hs.js", defaultMenu},
-		},
-		{
-			ctx{"directory/sub", "hs.js"},
+			ctx{fs: []fsEntry{{"directory/sub", "hs.js"}}},
 			in{true, ""},
 			out{true, false, "default.hs.js", defaultMenu},
 		},
+		// default fallback
+		{
+			in: in{false, ""},
+			out: out{true, false, "default.hs.js", defaultMenu},
+		},
 		// "-f" option, file found
 		{
-			ctx{"directory/sub", "hs.js"},
+			ctx{fs: []fsEntry{{"directory/sub", "hs.js"}}},
 			in{false, "directory/sub"},
 			out{false, false, "directory/sub/hs.js", dummyPayload},
 		},
 		{
-			ctx{"directory/sub", "hs.js"},
+			ctx{fs: []fsEntry{{"directory/sub", "hs.js"}}},
 			in{false, "directory/sub/hs.js"},
 			out{false, false, "directory/sub/hs.js", dummyPayload},
 		},
 		// "-f" option, missing file
 		{
-			ctx{},
-			in{false, "directory/sub"},
-			out{false, true, "", nil},
+			in: in{false, "directory/sub"},
+			out: out{false, true, "", nil},
 		},
 		{
-			ctx{},
-			in{false, "directory/sub/hs.js"},
-			out{false, true, "", nil},
+			in: in{false, "directory/sub/hs.js"},
+			out: out{false, true, "", nil},
 		},
-		// todo default locations with fallback to default
+		// default locations
+		{
+			ctx{fs: []fsEntry{{".", "hs.js"}}},
+			in{false, ""},
+			out{false, false, "./hs.js", dummyPayload},
+		},
+		{
+			ctx{fs: []fsEntry{{".", "hs.js"}, homeHotshell}, userFound: true},
+			in{false, ""},
+			out{false, false, "./hs.js", dummyPayload},
+		},
+		{
+			ctx{fs: []fsEntry{homeHotshell}, userFound: true},
+			in{false, ""},
+			out{false, false, homeHotshell.dir + "/" + homeHotshell.filename, dummyPayload},
+		},
 	}
 )
 
 type (
-	ctx struct {
+	fsEntry struct {
 		dir      string
 		filename string
+	}
+	ctx struct {
+		fs        []fsEntry
+		userFound bool
 	}
 	in struct {
 		loadDefaultMenu bool
@@ -94,17 +121,29 @@ func runTest(t testCase) {
 }
 
 func setupTest(t testCase) {
-	fl := fileloader.MockFileLoader{}
-	fs := memfs.Create()
-	dl = definitionloader.DefinitionLoader{FileLoader: &fl, Fs: fs}
-
-	if t.ctx == (ctx{}) {
-		return
+	fl := new(fileloader.MockFileLoader)
+	ug := new(definitionloader.MockUserGetter)
+	dl = definitionloader.DefinitionLoader{FileLoader: fl, Fs: memfs.Create(), UserGetter: ug}
+	for _, entry := range t.fs {
+		setupFsEntry(fl, entry)
 	}
-	path := fmt.Sprintf("%s/%s", t.ctx.dir, t.ctx.filename)
+	fl.On("Load", mock.AnythingOfType("string")).Return(nil, errors.New("file not found"))
+	setupCurrentUser(t, ug)
+}
+
+func setupCurrentUser(t testCase, ug *definitionloader.MockUserGetter) {
+	var err error
+	if !t.ctx.userFound {
+		err = errors.New("user not found")
+	}
+	ug.On("Get").Return(&dummyUser, err)
+}
+
+func setupFsEntry(fl *fileloader.MockFileLoader, entry fsEntry) {
+	path := fmt.Sprintf("%s/%s", entry.dir, entry.filename)
 	fl.On("Load", path).Return(dummyPayload, nil)
-	vfs.MkdirAll(fs, t.ctx.dir, 0)
-	vfs.WriteFile(fs, path, dummyPayload, 0)
+	vfs.MkdirAll(dl.Fs, entry.dir, 0)
+	vfs.WriteFile(dl.Fs, path, dummyPayload, 0)
 }
 
 func validateTest(t testCase) {

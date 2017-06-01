@@ -10,9 +10,19 @@ import (
 
 const defaultFilename = "hs.js"
 
+type UserGetter interface {
+	Get() (*user.User, error)
+}
+type SysUserGetter struct{}
+
+func (t SysUserGetter) Get() (*user.User, error) {
+	return user.Current()
+}
+
 type DefinitionLoader struct {
 	FileLoader       fileloader.FileLoader
 	Fs               vfs.Filesystem
+	UserGetter       UserGetter
 	file             string
 	defaultLocations []string
 	definition       Definition
@@ -27,6 +37,7 @@ type Definition struct {
 var Default = DefinitionLoader{
 	FileLoader: fileloader.Default,
 	Fs:         vfs.ReadOnly(vfs.OS()),
+	UserGetter: SysUserGetter{},
 }
 
 func (d *DefinitionLoader) Load(defaultMenu bool, file string) (Definition, error) {
@@ -65,7 +76,7 @@ func (d *DefinitionLoader) initDefaultLocations() {
 	d.defaultLocations = make([]string, 1)
 	d.defaultLocations[0] = fmt.Sprintf("./%s", defaultFilename)
 
-	usr, err := user.Current()
+	usr, err := d.UserGetter.Get()
 	if err != nil {
 		return
 	}

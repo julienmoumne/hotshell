@@ -33,12 +33,6 @@ hs --generate-md > COMMANDS.md
 hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js
 ```
 
-> Set the working directory to the location of the menu definition
-
-```bash
-hs --chdir -f ~/projects/web/hs.js
-```
-
 > Use aliases
 
 ```bash

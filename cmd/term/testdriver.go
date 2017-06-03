@@ -7,9 +7,11 @@ import (
 	"os"
 )
 
+
 type TestDriver struct {
 	Input    []byte
 	Main     func()
+	Cwd      string
 	osCwd    string
 	osStdin  *os.File
 	osStdout *os.File
@@ -39,6 +41,11 @@ func (d *TestDriver) Run() (string, string, error) {
 	if err := d.backupCwd(); err != nil {
 		return "", "", err
 	}
+	if d.Cwd != "" {
+		if err := os.Chdir(d.Cwd); err != nil {
+			return "", "", err
+		}
+	}
 	defer d.restoreCwd()
 
 	d.Main()
@@ -47,7 +54,9 @@ func (d *TestDriver) Run() (string, string, error) {
 }
 
 func (d *TestDriver) restoreCwd() {
-	os.Chdir(d.osCwd) // ignored returned Error
+	if err:= os.Chdir(d.osCwd); err != nil {
+		panic(err)
+	}
 }
 
 func (d *TestDriver) backupCwd() error {

@@ -9,7 +9,6 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/options"
 	"github.com/julienmoumne/hotshell/cmd/term"
-	"os"
 	"path/filepath"
 )
 
@@ -30,9 +29,6 @@ func (s *Starter) Start() error {
 		if err != nil {
 			return err
 		}
-		if err := s.restoreCwd(); err != nil {
-			return err
-		}
 	}
 	return nil
 }
@@ -40,7 +36,6 @@ func (s *Starter) Start() error {
 func (s *Starter) initBootSeq() {
 	s.bootSeq = []func() error{
 		s.loadDefinitionFile,
-		s.adjustWorkingDirectory,
 		s.interpretDSL,
 		s.buildMenu,
 	}
@@ -100,30 +95,6 @@ func (s *Starter) loadDefinitionFile() error {
 	var err error
 	s.definition, err = definitionloader.Default.Load(s.Options.Default, s.Options.File)
 	return err
-}
-
-// todo factor out cwd logic
-func (s *Starter) chdir() bool {
-	return s.Options.Chdir && !s.definition.DefaultMenuLoaded
-}
-
-func (s *Starter) adjustWorkingDirectory() error {
-	if !s.chdir() {
-		return nil
-	}
-	var err error
-	s.osCwd, err = os.Getwd()
-	if err != nil {
-		return err
-	}
-	return os.Chdir(filepath.Dir(s.definition.Filename))
-}
-
-func (s *Starter) restoreCwd() error {
-	if !s.chdir() {
-		return nil
-	}
-	return os.Chdir(s.osCwd)
 }
 
 func (s *Starter) buildMenu() error {

@@ -1,42 +1,31 @@
 hotshell-dev
 - clean install : `./scripts/clean-install.sh`
+- format : `./scripts/format.sh`
 - packaging  
   - test man : `./scripts/generate-man.sh; gunzip -c debian/usr/share/man/man1/hs.1.gz | groff -Tascii -man -`
   - package : `./scripts/package.sh`
 - tests  
-  - test : `./scripts/generate.sh; go test $(go list ./... | grep -v /vendor/) -timeout 10s`
-  - interactively run end to end tests  
-    - ./cmd/hs/test/cases/dsl-errors/  
-      - error-in-nested-closure : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/error-in-nested-closure`
-      - failed-exec : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/failed-exec`
-      - multiple-root-items : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/multiple-root-items`
-      - ref-error-in-closure : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-closure`
-      - ref-error-in-module : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-module`
-      - ref-error-in-module-closure : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-module-closure`
-      - ref-error-in-params : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/ref-error-in-params`
-      - syntax-error : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/syntax-error`
-      - syntax-error-in-module : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/dsl-errors/syntax-error-in-module`
-    - ./cmd/hs/test/cases/input-transfer/  
-      - bash-as-item : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/input-transfer/bash-as-item`
-      - bash-as-menu-action : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/input-transfer/bash-as-menu-action`
-    - ./cmd/hs/test/cases/valid-menu-variations/  
-      - empty-menu : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/valid-menu-variations/empty-menu`
-      - factored-nested-evaled-menu : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/valid-menu-variations/factored-nested-evaled-menu`
-      - submenu-module : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f ./cmd/hs/test/cases/valid-menu-variations/submenu-module`
+  - test : `./scripts/test.sh`
   - failed end to end tests  
-    - run tests : `./scripts/generate.sh; go test $(go list ./... | grep -v /vendor/) -timeout 10s`
-    - open failed tests directory : `open ./cmd/hs/tmp/failed-cases`
+    - run tests : `./scripts/test.sh`
+    - open failed tests directory : `sensible-browser ./cmd/hs/test/tmp/failed-cases`
 - examples  
-  - default.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/default/default.hs.js`
-  - docker-compose.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/docker/docker-compose.hs.js`
-  - docker-machine.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/docker/docker-machine.hs.js`
-  - docker.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/docker/docker.hs.js`
-  - modules.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/modules/modules.hs.js`
-  - nested.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/nested/nested.hs.js`
-  - network.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/network/network.hs.js`
-  - topten.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/topten/topten.hs.js`
-  - vagrant.hs.js : `./scripts/install.sh; $GOPATH/bin/hs --chdir -f examples/vagrant/vagrant.hs.js`
-- generate doc : `./scripts/generate-doc.sh`
+  - default.hs.js : `cd examples/default/; $GOPATH/bin/hs -f default.hs.js`
+  - docker-compose.hs.js : `cd examples/docker/; $GOPATH/bin/hs -f docker-compose.hs.js`
+  - docker.hs.js : `cd examples/docker/; $GOPATH/bin/hs -f docker.hs.js`
+  - docker-machine.hs.js : `cd examples/docker/; $GOPATH/bin/hs -f docker-machine.hs.js`
+  - modules.hs.js : `cd examples/modules/; $GOPATH/bin/hs -f modules.hs.js`
+  - nested.hs.js : `cd examples/nested/; $GOPATH/bin/hs -f nested.hs.js`
+  - network.hs.js : `cd examples/network/; $GOPATH/bin/hs -f network.hs.js`
+  - topten.hs.js : `cd examples/topten/; $GOPATH/bin/hs -f topten.hs.js`
+  - vagrant.hs.js : `cd examples/vagrant/; $GOPATH/bin/hs -f vagrant.hs.js`
+- doc  
+  - generate changelog : `./scripts/generate-changelog.sh`
+  - generate md : `./scripts/generate-md.sh`
 - install dev dependencies : `./scripts/install-dev-deps.sh`
+- vendoring  
+  - add dependency : `./scripts/add-dependency.sh`
+  - delete dependency : `./scripts/rm-dependency.sh`
+  - reset vendor : `find ./vendor/* -not -name 'vendor.json' -print0 | xargs -0 rm -Rf –-- && govendor sync`
 
 \* *generated using [hotshell](https://github.com/julienmoumne/hotshell)*

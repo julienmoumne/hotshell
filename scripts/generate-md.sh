@@ -2,10 +2,10 @@
 IFS=$'\n\t'
 set -oxeu pipefail
 
-./scripts/install.sh
-
 generate_md() {
-    $GOPATH/bin/hs --generate-md --chdir -f $1 > $2
+    hsFile=$(basename $1)
+    mdFile=$(basename $2)
+    (cd $(dirname $1); $GOPATH/bin/hs --generate-md -f $hsFile > $mdFile)
 }
 
 for e in examples/**/*.js; do

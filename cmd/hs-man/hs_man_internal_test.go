@@ -31,9 +31,6 @@ Load the default menu to get to know Hotshell
 \fB\fB\-f\fR, \fB\-\-file\fR \fIFILE|DIR\fR\fP
 Specify an alternate definition file (defaults: ./hs.js, ~/.hs/hs.js)
 .TP
-\fB\fB\-\-chdir\fR\fP
-Set the working directory to the location of the menu definition
-.TP
 \fB\fB\-\-generate-demo\fR\fP
 Generate an interactive HTML demo to stdout
 .TP

@@ -38,7 +38,7 @@ func (e *EndToEnd) Run() error {
 	driver := term.TestDriver{
 		Input: input,
 		Main: func() {
-			os.Args = []string{"", "--chdir", "-f", e.path("hs.js")}
+			os.Args = []string{"", "-f", "hs.js"}
 
 			// todo test exitCode
 			var exitCode int
@@ -48,6 +48,7 @@ func (e *EndToEnd) Run() error {
 
 			e.Main()
 		},
+		Cwd: e.path(""),
 	}
 
 	actualStdout, actualStderr, err := driver.Run()

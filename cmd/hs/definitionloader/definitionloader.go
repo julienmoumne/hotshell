@@ -30,7 +30,6 @@ type DefinitionLoader struct {
 
 type Definition struct {
 	Filename          string
-	DefaultMenuLoaded bool
 	Dsl               []byte
 }
 
@@ -56,7 +55,6 @@ func (d *DefinitionLoader) Load(defaultMenu bool, file string) (Definition, erro
 
 func (d *DefinitionLoader) loadDefaultMenu() error {
 	var err error
-	d.definition.DefaultMenuLoaded = true
 	d.definition.Filename = "default.hs.js"
 	d.definition.Dsl, err = Asset(fmt.Sprintf("../../../examples/default/%s", d.definition.Filename))
 	return err

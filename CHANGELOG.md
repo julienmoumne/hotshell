@@ -6,6 +6,8 @@
 
 **Implemented enhancements:**
 
+- Deprecate ability to specify a directory with the '-f' option [\#19](https://github.com/julienmoumne/hotshell/issues/19)
+- Deprecate '--chdir' option [\#18](https://github.com/julienmoumne/hotshell/issues/18)
 - Ability to generate a markdown documentation of a menu [\#16](https://github.com/julienmoumne/hotshell/issues/16)
 
 ## [v0.3.0](https://github.com/julienmoumne/hotshell/tree/v0.3.0) (2016-08-07)

@@ -7,7 +7,6 @@ import (
 	"os"
 )
 
-
 type TestDriver struct {
 	Input    []byte
 	Main     func()
@@ -54,7 +53,7 @@ func (d *TestDriver) Run() (string, string, error) {
 }
 
 func (d *TestDriver) restoreCwd() {
-	if err:= os.Chdir(d.osCwd); err != nil {
+	if err := os.Chdir(d.osCwd); err != nil {
 		panic(err)
 	}
 }

@@ -14,40 +14,30 @@ const defaultFilename = "hs.js"
 type UserGetter interface {
 	Get() (*user.User, error)
 }
-type SysUserGetter struct{}
-
-func (t SysUserGetter) Get() (*user.User, error) {
-	return user.Current()
-}
 
 type Loader struct {
-	FileLoader       fileloader.FileLoader
-	Fs               vfs.Filesystem
-	UserGetter       UserGetter
+	fs               vfs.Filesystem
+	userGetter       UserGetter
 	file             string
 	defaultLocations []string
 	definition       Definition
 }
 
 type Definition struct {
-	Filename          string
-	Dsl               []byte
+	Filename string
+	Dsl      []byte
 }
 
-var Default = &Loader{
-	FileLoader: fileloader.Default,
-	Fs:         vfs.ReadOnly(vfs.OS()),
-	UserGetter: SysUserGetter{},
-}
-
-func (d *Loader) Load(defaultMenu bool, file string) (Definition, error) {
+func (d *Loader) Load(fs vfs.Filesystem, userGetter UserGetter, defaultMenu bool, file string) (Definition, error) {
+	d.fs = fs
+	d.userGetter = userGetter
 	var err error
 	d.definition = Definition{}
 	d.file = file
 	if defaultMenu {
 		err = d.loadDefaultMenu()
 	} else if len(d.file) > 0 {
-		err = d.loadUserProvidedFile()
+		err = d.fetchFile(d.file)
 	} else if !d.loadFileFromDefaultLocations() {
 		err = d.loadDefaultMenu()
 	}
@@ -75,7 +65,7 @@ func (d *Loader) initDefaultLocations() {
 	d.defaultLocations = make([]string, 1)
 	d.defaultLocations[0] = fmt.Sprintf("./%s", defaultFilename)
 
-	usr, err := d.UserGetter.Get()
+	usr, err := d.userGetter.Get()
 	if err != nil {
 		return
 	}
@@ -84,28 +74,9 @@ func (d *Loader) initDefaultLocations() {
 	d.defaultLocations = append(d.defaultLocations, hsInHomeDir)
 }
 
-func (d *Loader) loadUserProvidedFile() error {
-	isDir, err := d.userProvidedFileIsDir()
-	if err != nil {
-		return err
-	}
-	if isDir {
-		d.file += fmt.Sprintf("/%s", defaultFilename)
-	}
-	return d.fetchFile(d.file)
-}
-
-func (d *Loader) userProvidedFileIsDir() (bool, error) {
-	info, err := d.Fs.Stat(d.file)
-	if err != nil {
-		return false, err
-	}
-	return info.IsDir(), nil
-}
-
 func (d *Loader) fetchFile(path string) error {
 	var err error
 	d.definition.Filename = path
-	d.definition.Dsl, err = d.FileLoader.Load(path)
+	d.definition.Dsl, err = (&fileloader.Loader{}).Load(d.fs, path)
 	return err
 }

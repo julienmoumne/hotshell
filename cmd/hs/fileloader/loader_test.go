@@ -19,25 +19,23 @@ var (
 	tests        = []testCase{
 		// empty path
 		{
-			ctx{file{"directory/sub", "hs.js"}, false},
-			in{},
-			out{true},
+			ctx: ctx{file: file{"directory/sub", "hs.js"}},
+			out: out{true},
 		},
 		// directory
 		{
-			ctx{file{"directory/sub", "hs.js"}, false},
+			ctx{file: file{"directory/sub", "hs.js"}},
 			in{"directory"},
 			out{true},
 		},
 		// non-existent file
 		{
-			ctx{remote: false},
-			in{"directory/sub/hs.js"},
-			out{true},
+			in: in{"directory/sub/hs.js"},
+			out: out{true},
 		},
 		// valid local file
 		{
-			ctx{file{"directory/sub", "file"}, false},
+			ctx{file: file{"directory/sub", "file"}},
 			in{"directory/sub/file"},
 			out{false},
 		},
@@ -49,7 +47,7 @@ var (
 		},
 		// existing remote file
 		{
-			ctx{file{filename: "http://localhost/hs.js"}, true},
+			ctx{file: file{filename: "http://localhost/hs.js"}, remote: true},
 			in{"http://localhost/hs.js"},
 			out{false},
 		},
@@ -95,7 +93,7 @@ func runTest(t testCase) {
 func setupTest(t testCase) {
 	httpmock.Activate()
 	fs = memfs.Create()
-	loader = fileloader.Loader{Fs: fs}
+	loader = fileloader.Loader{}
 	if t.ctx.file == (file{}) {
 		return
 	}
@@ -112,7 +110,7 @@ func setupTest(t testCase) {
 }
 
 func validateTest(t testCase) {
-	content, err := loader.Load(t.in.path)
+	content, err := loader.Load(fs, t.in.path)
 	if t.out.error {
 		a.NotNil(err)
 	} else {

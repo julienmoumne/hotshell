@@ -13,8 +13,8 @@ import (
 )
 
 type Interpreter struct {
-	dsl      []byte
-	vm       *motto.Motto
+	dsl []byte
+	vm  *motto.Motto
 }
 
 func (i *Interpreter) Interpret(dsl []byte) ([]Ast, error) {

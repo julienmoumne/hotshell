@@ -1,4 +1,3 @@
-//go:generate mockery -name FileLoader -inpkg -case underscore
 package fileloader
 
 import (
@@ -11,21 +10,15 @@ import (
 
 const timeoutInSeconds = 5
 
-var Default = &Loader{
-	Fs: vfs.ReadOnly(vfs.OS()),
-}
-
-type FileLoader interface {
-	Load(path string) ([]byte, error)
-}
-
+// todo because this file is short and not reused it could be merged into definitionloader
 type Loader struct {
-	Fs          vfs.Filesystem
+	fs          vfs.Filesystem
 	path        string
 	fileContent []byte
 }
 
-func (f *Loader) Load(path string) ([]byte, error) {
+func (f *Loader) Load(fs vfs.Filesystem, path string) ([]byte, error) {
+	f.fs = fs
 	f.path = path
 	var isLocal, err = f.isLocal()
 	if err != nil {
@@ -49,7 +42,7 @@ func (f *Loader) isLocal() (bool, error) {
 
 func (f *Loader) loadLocalFile() error {
 	var err error
-	f.fileContent, err = vfs.ReadFile(f.Fs, f.path)
+	f.fileContent, err = vfs.ReadFile(f.fs, f.path)
 	return err
 }
 

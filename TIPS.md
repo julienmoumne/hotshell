@@ -17,8 +17,6 @@ hs
 
 ```bash
 hs -f ~/projects/web/hs.js
-# or
-hs -f ~/projects/web
 ```
 
 > Generate a markdown documentation of your menus, [example](./examples/network/network.hs.js.md)

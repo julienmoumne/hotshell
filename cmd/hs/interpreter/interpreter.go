@@ -13,12 +13,12 @@ import (
 )
 
 type Interpreter struct {
-	Filename string
-	Dsl      []byte
+	dsl      []byte
 	vm       *motto.Motto
 }
 
-func (i *Interpreter) Interpret() ([]Ast, error) {
+func (i *Interpreter) Interpret(dsl []byte) ([]Ast, error) {
+	i.dsl = dsl
 	i.vm = motto.New()
 
 	if err := i.registerNatives(); err != nil {
@@ -58,7 +58,7 @@ func (i *Interpreter) exec() error {
 		return err
 	}
 
-	_, err = motto.CreateLoaderFromSource(string(i.Dsl), "")(i.vm)
+	_, err = motto.CreateLoaderFromSource(string(i.dsl), "")(i.vm)
 	return err
 }
 

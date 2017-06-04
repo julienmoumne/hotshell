@@ -9,19 +9,17 @@ import (
 )
 
 type Md struct {
-	Item     *item.Item
-	Filename string
 	buffer   bytes.Buffer
 	itemTmpl *template.Template
 	depth    int
 }
 
-func (g *Md) Generate() error {
+func (g *Md) Generate(item *item.Item, filename string) error {
 	if err := g.parseTemplate(); err != nil {
 		return err
 	}
-	g.buffer.WriteString(fmt.Sprintf("%s\n", g.Item.Desc))
-	g.generateSubitems(g.Item.Items)
+	g.buffer.WriteString(fmt.Sprintf("%s\n", item.Desc))
+	g.generateSubitems(item.Items)
 	g.buffer.WriteString("\n\\* *generated using [hotshell](https://github.com/julienmoumne/hotshell)*")
 	fmt.Print(g.buffer.String())
 	return nil
@@ -39,7 +37,7 @@ func (g *Md) generateSubitems(items []*item.Item) {
 		if len(i.Cmd) == 0 && len(i.Items) == 0 {
 			continue
 		}
-		g.buffer.WriteString(strings.Repeat(" ", g.depth*2))
+		g.buffer.WriteString(strings.Repeat(" ", g.depth * 2))
 		g.itemTmpl.Execute(&g.buffer, i)
 		g.depth++
 		g.generateSubitems(i.Items)

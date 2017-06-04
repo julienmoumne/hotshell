@@ -2,28 +2,25 @@ package engine
 
 // todo unit test me
 import (
-	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/definitionloader"
 	"github.com/julienmoumne/hotshell/cmd/hs/generator"
 	"github.com/julienmoumne/hotshell/cmd/hs/interpreter"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/options"
-	"github.com/julienmoumne/hotshell/cmd/term"
 	"path/filepath"
 )
 
 type Starter struct {
-	Options    options.Options
-	ast        []interpreter.Ast
-	item       *item.Item
-	term       term.Term
-	osCwd      string
-	definition definitionloader.Definition
-	bootSeq    []func() error
+	options          options.Options
+	ast              []interpreter.Ast
+	item             *item.Item
+	osCwd            string
+	definition       definitionloader.Definition
+	bootSeq          []func() error
 }
 
-// todo probably factor-out reloading logic
-func (s *Starter) Start() error {
+func (s *Starter) Start(options options.Options) error {
+	s.options = options
 	s.initBootSeq()
 	for reload, err := s.doStart(); err != nil || reload; reload, err = s.doStart() {
 		if err != nil {
@@ -58,42 +55,26 @@ func (s *Starter) executeBootSeq() error {
 }
 
 func (s *Starter) activateAction() (bool, error) {
-	if s.Options.GenerateDemo {
+	if s.options.GenerateDemo {
 		return false, s.generateDemo()
-	} else if s.Options.GenerateMd {
+	} else if s.options.GenerateMd {
 		return false, s.generateMd()
 	} else {
-		return s.startMenu()
+		return s.startController()
 	}
 }
 
 func (s *Starter) generateMd() error {
-	gen := generator.Md{Item: s.item, Filename: filepath.Base(s.definition.Filename)}
-	return gen.Generate()
+	return (&generator.Md{}).Generate(s.item, filepath.Base(s.definition.Filename))
 }
 
 func (s *Starter) generateDemo() error {
-	gen := generator.Demo{Item: s.item, Filename: filepath.Base(s.definition.Filename)}
-	return gen.Generate()
-}
-
-func (s *Starter) startMenu() (bool, error) {
-	if err := s.initTerm(); err != nil {
-		return false, err
-	}
-
-	defer func() {
-		if err := s.term.Close(); err != nil {
-			fmt.Println(err)
-		}
-	}()
-
-	return s.startController()
+	return (&generator.Demo{}).Generate(s.item, filepath.Base(s.definition.Filename))
 }
 
 func (s *Starter) loadDefinitionFile() error {
 	var err error
-	s.definition, err = definitionloader.Default.Load(s.Options.Default, s.Options.File)
+	s.definition, err = definitionloader.Default.Load(s.options.Default, s.options.File)
 	return err
 }
 
@@ -104,18 +85,11 @@ func (s *Starter) buildMenu() error {
 }
 
 func (s *Starter) startController() (bool, error) {
-	return (&controller{root: s.item, term: s.term}).start()
-}
-
-func (s *Starter) initTerm() error {
-	var err error
-	s.term, err = term.NewTerm()
-	return err
+	return (&controller{}).Start(s.item)
 }
 
 func (s *Starter) interpretDSL() error {
-	inter := interpreter.Interpreter{Filename: s.definition.Filename, Dsl: s.definition.Dsl}
 	var err error
-	s.ast, err = inter.Interpret()
+	s.ast, err = (&interpreter.Interpreter{}).Interpret(s.definition.Dsl)
 	return err
 }

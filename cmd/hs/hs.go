@@ -28,7 +28,7 @@ func (h *hs) start() error {
 }
 
 func (h *hs) startHotshell() error {
-	return (&engine.Starter{Options: h.options}).Start()
+	return (&engine.Starter{}).Start(h.options)
 }
 
 func (h *hs) parseOptions() error {

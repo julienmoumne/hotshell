@@ -1,4 +1,3 @@
-//go:generate mockery -name UserGetter -inpkg -case underscore
 package definitionloader_test
 
 import (
@@ -21,7 +20,7 @@ var (
 	homeHotshell   = fsEntry{dummyUser.HomeDir + "/.hs", "hs.js"}
 	defaultMenu, _ = ioutil.ReadFile("../../../examples/default/default.hs.js")
 	a              *assert.Assertions
-	dl             definitionloader.DefinitionLoader
+	dl             definitionloader.Loader
 	tests          = []testCase{
 		// default menu explicitly requested
 		{
@@ -122,7 +121,7 @@ func runTest(t testCase) {
 func setupTest(t testCase) {
 	fl := new(fileloader.MockFileLoader)
 	ug := new(definitionloader.MockUserGetter)
-	dl = definitionloader.DefinitionLoader{FileLoader: fl, Fs: memfs.Create(), UserGetter: ug}
+	dl = definitionloader.Loader{FileLoader: fl, Fs: memfs.Create(), UserGetter: ug}
 	for _, entry := range t.fs {
 		setupFsEntry(fl, entry)
 	}

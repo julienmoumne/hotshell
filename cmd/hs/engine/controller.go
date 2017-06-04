@@ -11,19 +11,34 @@ import (
 )
 
 type controller struct {
-	root             *item.Item
 	activeItem       *item.Item
 	lastActivatedCmd item.Key
 	term             term.Term
 	activeSubprocess bool
 }
 
-func (c *controller) start() (bool, error) {
+func (c *controller) Start(root *item.Item) (bool, error) {
+	if err := c.initTerm(); err != nil {
+		return false, err
+	}
+	defer func() {
+		if err := c.term.Close(); err != nil {
+			fmt.Println(err)
+		}
+	}()
+
 	c.initSignals()
 	defer c.resetSignals()
+
 	fmt.Print("\n")
-	c.activeItem = item.Activate(c.root)
+	c.activeItem = item.Activate(root)
 	return c.mainLoop()
+}
+
+func (c *controller) initTerm() error {
+	var err error
+	c.term, err = term.NewTerm()
+	return err
 }
 
 func (c *controller) mainLoop() (bool, error) {

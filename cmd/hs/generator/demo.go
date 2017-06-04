@@ -3,9 +3,9 @@ package generator
 
 import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
-	"os"
 	"strings"
 	"text/template"
+	"os"
 )
 
 type Demo struct {
@@ -17,7 +17,9 @@ type Demo struct {
 	Js       string
 }
 
-func (g *Demo) Generate() error {
+func (g *Demo) Generate(item *item.Item, filename string) error {
+	g.Item = item
+	g.Filename = filename
 	if err := g.loadAssets(); err != nil {
 		return err
 	}

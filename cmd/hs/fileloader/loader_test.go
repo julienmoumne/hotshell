@@ -1,4 +1,3 @@
-//go:generate mockery -name FileLoader -inpkg -case underscore
 package fileloader_test
 
 import (

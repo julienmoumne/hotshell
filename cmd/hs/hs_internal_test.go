@@ -25,6 +25,32 @@ func TestVersion(t *testing.T) {
 	a.Equal(fmt.Sprintf("Hotshell version %s\n", version), actualStdout)
 }
 
+// todo instead of using the default menu, generate the demo for all test/cases/* ?
+func TestDemo(t *testing.T) {
+	a := assert.New(t)
+	driver := term.TestDriver{Main: func() {
+		os.Args = []string{"", "-f", "test/cases/valid-menu-variations/factored-nested-evaled-menu/hs.js", "--generate-demo"}
+		main()
+	}}
+	actualStdout, _, err := driver.Run()
+	a.Nil(err)
+	expected, err := ioutil.ReadFile("test/doc/factored-nested-evaled-menu.hs.js.html")
+	a.Equal(string(expected), actualStdout)
+}
+
+// todo instead of using the default menu, generate the markdown for all test/cases/* ?
+func TestMd(t *testing.T) {
+	a := assert.New(t)
+	driver := term.TestDriver{Main: func() {
+		os.Args = []string{"", "-f", "test/cases/valid-menu-variations/factored-nested-evaled-menu/hs.js", "--generate-md"}
+		main()
+	}}
+	actualStdout, _, err := driver.Run()
+	a.Nil(err)
+	expected, err := ioutil.ReadFile("test/doc/factored-nested-evaled-menu.hs.js.md")
+	a.Equal(string(expected), actualStdout)
+}
+
 func TestEndToEnd(t *testing.T) {
 	err := os.RemoveAll(test.TestTmpDir)
 	if err != nil {

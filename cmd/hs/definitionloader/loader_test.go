@@ -1,26 +1,21 @@
 package definitionloader_test
 
 import (
-	"errors"
 	"fmt"
 	"github.com/blang/vfs"
 	"github.com/blang/vfs/memfs"
 	"github.com/julienmoumne/hotshell/cmd/hs/definitionloader"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"os/user"
 	"testing"
 )
 
 var (
 	dummyPayload   = []byte{0xFF}
-	dummyUser      = user.User{HomeDir: "/home/user"}
-	homeHotshell   = fsEntry{dir: dummyUser.HomeDir + "/.hs", name: "hs.js"}
 	defaultMenu, _ = ioutil.ReadFile("../../../examples/default/default.hs.js")
 	a              *assert.Assertions
 	dl             definitionloader.Loader
 	fs             vfs.Filesystem
-	ug             *definitionloader.MockUserGetter
 	tests          = []testCase{
 		// default menu explicitly requested
 		{
@@ -64,21 +59,11 @@ var (
 			in: in{false, "https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js"},
 			out: out{true, "", nil},
 		},
-		// default locations
+		// "-f" option not specified, hs.js in current working directory
 		{
 			ctx{fs: []fsEntry{{dir: ".", name: "hs.js"}}},
 			in{false, ""},
 			out{false, "./hs.js", dummyPayload},
-		},
-		{
-			ctx{fs: []fsEntry{{dir: ".", name: "hs.js"}, homeHotshell}, userFound: true},
-			in{false, ""},
-			out{false, "./hs.js", dummyPayload},
-		},
-		{
-			ctx{fs: []fsEntry{homeHotshell}, userFound: true},
-			in{false, ""},
-			out{false, homeHotshell.dir + "/" + homeHotshell.name, dummyPayload},
 		},
 	}
 )
@@ -122,21 +107,11 @@ func runTest(t testCase) {
 }
 
 func setupTest(t testCase) {
-	ug = new(definitionloader.MockUserGetter)
 	fs = memfs.Create()
 	dl = definitionloader.Loader{}
 	for _, entry := range t.fs {
 		setupFsEntry(entry)
 	}
-	setupCurrentUser(t)
-}
-
-func setupCurrentUser(t testCase) {
-	var err error
-	if !t.ctx.userFound {
-		err = errors.New("user not found")
-	}
-	ug.On("Get").Return(&dummyUser, err)
 }
 
 func setupFsEntry(e fsEntry) {
@@ -146,7 +121,7 @@ func setupFsEntry(e fsEntry) {
 }
 
 func validateTest(t testCase) {
-	d, err := dl.Load(fs, ug, t.in.loadDefaultMenu, t.in.path)
+	d, err := dl.Load(fs, t.in.loadDefaultMenu, t.in.path)
 	if t.out.error {
 		a.NotNil(err)
 	} else {

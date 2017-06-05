@@ -8,7 +8,6 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/interpreter"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/options"
-	"os/user"
 	"path/filepath"
 )
 
@@ -19,12 +18,6 @@ type Starter struct {
 	osCwd      string
 	definition definitionloader.Definition
 	bootSeq    []func() error
-}
-
-type SysUserGetter struct{}
-
-func (t SysUserGetter) Get() (*user.User, error) {
-	return user.Current()
 }
 
 func (s *Starter) Start(options options.Options) error {
@@ -84,7 +77,6 @@ func (s *Starter) loadDefinitionFile() error {
 	var err error
 	s.definition, err = (&definitionloader.Loader{}).Load(
 		vfs.ReadOnly(vfs.OS()),
-		SysUserGetter{},
 		s.options.Default, s.options.File,
 	)
 	return err

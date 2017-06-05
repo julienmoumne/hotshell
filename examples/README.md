@@ -113,7 +113,3 @@ Showcases the ability to call Hotshell within Hotshell.
 
   - [source](./nested/nested.hs.js)
   - [generated markdown](./nested/nested.hs.js.md)
-  - try it :
-```bash
-H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/nested/nested.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
-```

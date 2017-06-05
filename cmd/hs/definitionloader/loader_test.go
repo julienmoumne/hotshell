@@ -56,7 +56,7 @@ var (
 		},
 		// "-f" option, remote file
 		{
-			in: in{false, "https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js"},
+			in:  in{false, "https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js"},
 			out: out{true, "", nil},
 		},
 		// "-f" option not specified, hs.js in current working directory

@@ -28,23 +28,17 @@ hs --generate-md > COMMANDS.md
 > Load a menu remotely (does not work when using [modules](examples#modules))
 
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```
 
 > Use aliases
 
 ```bash
-# system-wide hotshell
-alias hsh="hs -f ~/.hs/hs.js"
+# user hotshell
+alias hs-home="hs -f ~/.hs/hs.js"
 
-# generic hotshells, docker :
-alias hsd="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/docker/docker.hs.js"
-# docker compose
-alias hsdc="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/docker/docker-compose.hs.js"
-# docker machine
-alias hsdm="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/docker/docker-machine.hs.js"
-# vagrant
-alias hsv="hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/examples/vagrant/vagrant.hs.js"
+# project hotshell
+alias hs-someproject="cd ~/work/someproject; hs"
 ```
 
 > Generate an interactive HTML demo of your menus, [example](http://julienmoumne.github.io/hotshell/demos/hs.js.html)

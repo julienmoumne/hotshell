@@ -145,12 +145,6 @@
 			"path": "github.com/stretchr/testify/mock",
 			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
 			"revisionTime": "2017-01-30T11:31:45Z"
-		},
-		{
-			"checksumSHA1": "Wx2FYL6OLgZ/9PF1nb+hhNoXcTo=",
-			"path": "gopkg.in/jarcoal/httpmock.v1",
-			"revision": "cf52904a3cf0f78f199ecade6a6df8e245d5b25a",
-			"revisionTime": "2017-04-12T08:57:02Z"
 		}
 	],
 	"rootPath": "github.com/julienmoumne/hotshell"

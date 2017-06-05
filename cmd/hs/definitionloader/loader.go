@@ -5,7 +5,6 @@ package definitionloader
 import (
 	"fmt"
 	"github.com/blang/vfs"
-	"github.com/julienmoumne/hotshell/cmd/hs/fileloader"
 	"os/user"
 )
 
@@ -77,6 +76,6 @@ func (d *Loader) initDefaultLocations() {
 func (d *Loader) fetchFile(path string) error {
 	var err error
 	d.definition.Filename = path
-	d.definition.Dsl, err = (&fileloader.Loader{}).Load(d.fs, path)
+	d.definition.Dsl, err = vfs.ReadFile(d.fs, path)
 	return err
 }

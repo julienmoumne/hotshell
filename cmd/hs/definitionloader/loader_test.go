@@ -7,7 +7,6 @@ import (
 	"github.com/blang/vfs/memfs"
 	"github.com/julienmoumne/hotshell/cmd/hs/definitionloader"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/jarcoal/httpmock.v1"
 	"io/ioutil"
 	"os/user"
 	"testing"
@@ -60,15 +59,9 @@ var (
 			in{false, "directory/sub"},
 			out{true, "", nil},
 		},
-		// "-f" option, present remote file
+		// "-f" option, remote file
 		{
-			ctx{fs: []fsEntry{{name: "http://localhost/hs.js", remote: true}}},
-			in{false, "http://localhost/hs.js"},
-			out{false, "http://localhost/hs.js", dummyPayload},
-		},
-		// "-f" option, absent remote file
-		{
-			in:  in{false, "http://localhost/hs.js"},
+			in: in{false, "https://raw.githubusercontent.com/julienmoumne/hotshell/v0.1.0/hs.js"},
 			out: out{true, "", nil},
 		},
 		// default locations
@@ -126,11 +119,9 @@ func TestDefinitionLoader(t *testing.T) {
 func runTest(t testCase) {
 	setupTest(t)
 	validateTest(t)
-	cleanupTest()
 }
 
 func setupTest(t testCase) {
-	httpmock.Activate()
 	ug = new(definitionloader.MockUserGetter)
 	fs = memfs.Create()
 	dl = definitionloader.Loader{}
@@ -149,17 +140,9 @@ func setupCurrentUser(t testCase) {
 }
 
 func setupFsEntry(e fsEntry) {
-	if e.remote {
-		httpmock.RegisterResponder(
-			"GET",
-			e.name,
-			httpmock.NewBytesResponder(200, dummyPayload),
-		)
-	} else {
-		path := fmt.Sprintf("%s/%s", e.dir, e.name)
-		vfs.MkdirAll(fs, e.dir, 0)
-		vfs.WriteFile(fs, path, dummyPayload, 0)
-	}
+	path := fmt.Sprintf("%s/%s", e.dir, e.name)
+	vfs.MkdirAll(fs, e.dir, 0)
+	vfs.WriteFile(fs, path, dummyPayload, 0)
 }
 
 func validateTest(t testCase) {
@@ -171,8 +154,4 @@ func validateTest(t testCase) {
 		a.Equal(t.out.filename, d.Filename)
 		a.Equal(t.out.content, d.Dsl)
 	}
-}
-
-func cleanupTest() {
-	httpmock.DeactivateAndReset()
 }

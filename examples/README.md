@@ -18,7 +18,7 @@ Used to develop, build and test Hotshell.
   - [source](../hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```
 
 ## Hotshell's default menu
@@ -30,7 +30,7 @@ This menu is loaded when no definition file is found.
   - [source](./default/default.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/default/default.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/default/default.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```
 
 ## Docker, Docker Compose & Docker Machine
@@ -52,14 +52,14 @@ Menus with useful Docker commands.
   - try it :
 ```bash
 # docker
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/docker/docker.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/docker/docker.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 
 # docker-machine
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/docker/docker-machine.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/docker/docker-machine.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 
 # docker-compose
 cd $DOCKER_COMPOSE_PROJECT
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/docker/docker-compose.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/docker/docker-compose.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```
   - integrate it in your own menus using [hotshell-docker](https://github.com/julienmoumne/hotshell-docker)
 
@@ -73,7 +73,7 @@ Menus with useful Vagrant commands.
   - try it :
 ```bash
 cd $VAGRANT_PROJECT
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/vagrant/vagrant.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/vagrant/vagrant.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```
 
 ## Topten
@@ -85,7 +85,7 @@ Dynamically creates a menu with the 10 most used commands.
   - [source](./topten/topten.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/topten/topten.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/topten/topten.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```
 
 ## Network
@@ -97,7 +97,7 @@ A menu to manage 'eth0' and 'wlan0'. Showcases the ability to factor out groups 
   - [source](./network/network.hs.js)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/network/network.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/network/network.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```
 
 ## Modules
@@ -115,5 +115,5 @@ Showcases the ability to call Hotshell within Hotshell.
   - [generated markdown](./nested/nested.hs.js.md)
   - try it :
 ```bash
-hs -f https://raw.githubusercontent.com/julienmoumne/hotshell/master/examples/nested/nested.hs.js
+H='raw.githubusercontent.com/julienmoumne/hotshell/master/examples/nested/nested.hs.js'; T=`mktemp`; wget $H -qO $T && hs -f $T; rm $T
 ```

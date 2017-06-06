@@ -1,3 +1,4 @@
+var item = require('hotshell').item
 var submenu1 = require('./lib/submenu1.hs.js')
 var submenu2 = require('./lib/submenu2.hs.js')
 

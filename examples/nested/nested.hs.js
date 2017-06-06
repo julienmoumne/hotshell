@@ -1,3 +1,5 @@
+var item = require('hotshell').item
+
 item({desc: 'nested'}, function () {
 
     item({key: 'd', desc: 'docker', cmd: 'hs -f ../docker/docker.hs.js'})

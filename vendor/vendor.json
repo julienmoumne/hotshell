@@ -27,6 +27,12 @@
 			"revisionTime": "2016-03-21T02:10:15Z"
 		},
 		{
+			"checksumSHA1": "VPPYOkDd0gOu4dR5o+MX7ecj90o=",
+			"path": "github.com/ddliu/motto/underscore",
+			"revision": "b73cfd26c91b45e1c1dcb9ff70634b5240e442c3",
+			"revisionTime": "2017-02-24T03:22:39Z"
+		},
+		{
 			"checksumSHA1": "gkRIq2AsG0e/ngNfqW+IF/zr9o8=",
 			"path": "github.com/fatih/color",
 			"revision": "533cd7fd8a85905f67a1753afb4deddc85ea174f",
@@ -107,12 +113,6 @@
 		{
 			"checksumSHA1": "/jMXYuXycBpTqWhRyJ2xsqvHvQI=",
 			"path": "github.com/robertkrimen/otto/token",
-			"revision": "53221230c215611a90762720c9042ac782ef74ee",
-			"revisionTime": "2016-02-19T09:43:13+11:00"
-		},
-		{
-			"checksumSHA1": "PEC19eE84u8Fsg+NT+4x47h+7CQ=",
-			"path": "github.com/robertkrimen/otto/underscore",
 			"revision": "53221230c215611a90762720c9042ac782ef74ee",
 			"revisionTime": "2016-02-19T09:43:13+11:00"
 		},

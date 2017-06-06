@@ -1,3 +1,7 @@
+var item = require('hotshell').item
+var exec = require('hotshell').exec
+var _ = require('underscore')
+
 item({desc: 'vagrant'}, function () {
 
     var vagrantVms = exec('vagrant status | sed -n "s;\\([^ ]*\\).*(.*;\\1;p"').split('\n')

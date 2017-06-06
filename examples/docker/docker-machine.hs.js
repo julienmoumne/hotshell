@@ -1,3 +1,6 @@
+var item = require('hotshell').item
+var exec = require('hotshell').exec
+
 var machine = exec('echo $DOCKER_MACHINE_NAME')
 if (machine == '') throw 'please set $DOCKER_MACHINE_NAME'
 

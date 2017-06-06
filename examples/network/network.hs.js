@@ -1,3 +1,5 @@
+var item = require('hotshell').item
+
 item({desc: 'network'}, function () {
 
     item({key: 'e', desc: 'eth0'}, interface('eth0'))

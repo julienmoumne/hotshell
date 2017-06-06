@@ -1,3 +1,6 @@
+var item = require('hotshell').item
+var _ = require('underscore')
+
 item({desc: 'Factored Menu'}, function () {
 
     // item defined using eval

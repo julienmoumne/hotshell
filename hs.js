@@ -1,3 +1,7 @@
+var item = require('hotshell').item
+var exec = require('hotshell').exec
+var _ = require('underscore')
+
 item({desc: 'hotshell-dev'}, function () {
 
     linux = exec('uname').indexOf('Linux') > -1

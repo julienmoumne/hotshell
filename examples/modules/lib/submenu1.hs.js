@@ -1,3 +1,4 @@
+var item = require('hotshell').item
 var randNumberGenerator = require('./commons.hs.js').randNumberGenerator
 
 module.exports = function () {

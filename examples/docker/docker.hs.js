@@ -1,3 +1,7 @@
+var item = require('hotshell').item
+var exec = require('hotshell').exec
+var _ = require('underscore')
+
 item({desc: 'docker'}, function () {
 
     item({key: 'p', desc: 'ps'}, function () {

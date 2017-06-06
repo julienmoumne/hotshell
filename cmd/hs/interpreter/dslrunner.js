@@ -1,3 +1,5 @@
+var _ = require('underscore')
+
 var items = []
 var current = {items: items}
 
@@ -28,3 +30,6 @@ function item(config, callback) {
     if (_.isFunction(callback))
         recurse()
 }
+
+module.exports.item = item
+module.exports.items = items

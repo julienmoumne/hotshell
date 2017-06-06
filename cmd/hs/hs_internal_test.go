@@ -1,4 +1,5 @@
 package main
+// todo find a way to test all examples
 
 import (
 	"fmt"
@@ -25,7 +26,7 @@ func TestVersion(t *testing.T) {
 	a.Equal(fmt.Sprintf("Hotshell version %s\n", version), actualStdout)
 }
 
-// todo instead of using the default menu, generate the demo for all test/cases/* ?
+// todo generate the demo for all test/cases/* ?
 func TestDemo(t *testing.T) {
 	a := assert.New(t)
 	driver := term.TestDriver{Main: func() {
@@ -38,7 +39,7 @@ func TestDemo(t *testing.T) {
 	a.Equal(string(expected), actualStdout)
 }
 
-// todo instead of using the default menu, generate the markdown for all test/cases/* ?
+// todo generate the markdown for all test/cases/* ?
 func TestMd(t *testing.T) {
 	a := assert.New(t)
 	driver := term.TestDriver{Main: func() {

@@ -48,6 +48,8 @@ Menus are defined using a JavaScript DSL.
 > Menus are first defined with a top-level *menu item*
 
 ```javascript
+var item = require('hotshell').item
+
 item({desc: 'top level menu'}, function () {
     
 })
@@ -97,21 +99,39 @@ Check out [tips](./TIPS.md) and fully-featured [examples](./examples).
 
 ### JavaScript Runtime
 
-The DSL is interpreted using Otto, an embeddable JavaScript interpreter.
-See [Otto](https://github.com/robertkrimen/otto) and
-[Otto Underscore](https://github.com/robertkrimen/otto/tree/master/underscore) 
-for available JavaScript functions.
+#### `exec`
 
-A custom function, `exec`, is provided to interact with the system when
-defining menus.
+The system can be probed when defining menus using `exec()`
 
-`string = exec(string)` executes the specified command using `bash -c` and returns
-the stdout if the command returned a non-zero exit code.
+```javascript
+var exec = require('hotshell').exec
+
+// executes the specified command using `bash -c` and returns the stdout if the command returned a non-zero exit code
+stdoutString = exec(commandString)
+```
 
 In case of failure, stderr is displayed in the menu without stopping the interpretation of the DSL.
 
 See some [examples](./TIPS.md#exec).
 
+#### Underscore.js
+
+[Underscore.js](http://underscorejs.org/) is embedded by default in Hotshell.
+
+```javascript
+var _ = require('underscore')
+
+```
+
+#### JavaScript Interpreter
+
+The JavaScript is interpreted using Otto, an embeddable JavaScript interpreter.
+See [Otto](https://github.com/robertkrimen/otto) and
+[Otto Underscore](https://github.com/robertkrimen/otto/tree/master/underscore) 
+for available JavaScript functions.
+
+#### DSL Interpreter
+ 
 For more information on how the DSL is interpreted see
 [Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
 

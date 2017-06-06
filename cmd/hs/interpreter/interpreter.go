@@ -6,59 +6,65 @@ import (
 	"github.com/ddliu/motto"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
 	"github.com/robertkrimen/otto"
-	_ "github.com/robertkrimen/otto/underscore"
+	_ "github.com/ddliu/motto/underscore"
 	"os/exec"
 	"regexp"
 	"strings"
 )
 
 type Interpreter struct {
-	dsl []byte
-	vm  *motto.Motto
+	dsl            []byte
+	vm             *motto.Motto
 }
 
 func (i *Interpreter) Interpret(dsl []byte) ([]Ast, error) {
 	i.dsl = dsl
 	i.vm = motto.New()
-
-	if err := i.registerNatives(); err != nil {
+	if err := i.loadHotshellModule(); err != nil {
 		return nil, err
 	}
-
 	if err := i.exec(); err != nil {
 		return nil, err
 	}
-
-	return i.buildAst()
+	return i.retrieveItems()
 }
 
-func (i *Interpreter) buildAst() ([]Ast, error) {
-	value, err := i.vm.Get("items")
+func (i *Interpreter) retrieveItems() ([]Ast, error) {
+	hsModule, err := i.vm.Require("hotshell", "")
 	if err != nil {
 		return nil, err
 	}
-
+	value, err := hsModule.Object().Get("items")
+	if err != nil {
+		return nil, err
+	}
 	val, err := value.Export()
 	if err != nil {
 		return nil, err
 	}
-
 	return NewAst(val), nil
 }
 
-func (i *Interpreter) exec() error {
-	// could be cached when reloading menu definition
-	dslrunner := "dslrunner.js"
-	js, err := Asset(dslrunner)
+func (i *Interpreter) loadHotshellModule() error {
+	js, err := Asset("dslrunner.js")
 	if err != nil {
 		return err
 	}
+	i.vm.AddModule("hotshell", func(vm *motto.Motto) (otto.Value, error) {
+		module, err := motto.CreateLoaderFromSource(string(js), "")(i.vm)
+		if err != nil {
+			return otto.Value{}, err
+		}
+		if err := module.Object().Set("exec", nativeExec); err != nil {
+			return otto.Value{}, err
+		}
+		return module, nil
+	})
+	return nil
+}
 
-	if err := i.compileAndRun(dslrunner, js); err != nil {
-		return err
-	}
-
-	_, err = motto.CreateLoaderFromSource(string(i.dsl), "")(i.vm)
+func (i *Interpreter) exec() error {
+	_, err := motto.CreateLoaderFromSource(string(i.dsl), "")(i.vm)
 	return err
 }
 
@@ -72,10 +78,6 @@ func (i *Interpreter) compileAndRun(filename string, content []byte) error {
 	_, err = i.vm.Otto.Run(script)
 
 	return err
-}
-
-func (i *Interpreter) registerNatives() error {
-	return i.vm.Set("exec", nativeExec)
 }
 
 func nativeExec(call otto.FunctionCall) otto.Value {

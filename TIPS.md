@@ -152,6 +152,12 @@ See [network example](examples#network)
 
 See [modules example](examples#modules)
 
+> Import JSON data
+
+```javascript
+var data = require('./data.json')
+```
+
 > Nest Hotshells
 
 See [nested hotshells](examples#nested-hotshells)
@@ -170,6 +176,8 @@ see [Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/buildin
 > Retrieve environment variables
   
 ```javascript
+var exec = require('hotshell').exec
+
 var httpPort = exec('echo $HTTP_PORT'); if (httpPort == '') throw 'please set $HTTP_PORT'
 
 item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + httpPort})
@@ -178,6 +186,8 @@ item({key: 's', desc: 'start http server', cmd: 'python -m SimpleHTTPServer ' + 
 > Conditionally set-up items based on the result of system commands
   
 ```javascript
+var exec = require('hotshell').exec
+
 var linux = exec('uname').indexOf('Linux') > -1
 
 item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew update'})
@@ -186,6 +196,8 @@ item({key: 'u', desc: 'update', cmd: linux ? 'sudo apt-get update' : 'brew updat
 > Dynamically create menus
   
 ```javascript
+var exec = require('hotshell').exec
+
 var recentlyUpdatedLogs = exec('ls -dt /var/log/*.* | head -n 3').split('\n')
 
 _(recentlyUpdatedLogs).each(function(el, ix) {
@@ -196,6 +208,8 @@ _(recentlyUpdatedLogs).each(function(el, ix) {
 > 'console.log()' can be used to help debugging
 
 ```javascript
+var exec = require('hotshell').exec
+
 console.log(exec('echo $(date)'))
 ```
 

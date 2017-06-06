@@ -1,3 +1,7 @@
+var item = require('hotshell').item
+var exec = require('hotshell').exec
+var _ = require('underscore')
+
 var services = exec('docker-compose config --services | sort').split('\n')
 var commands = [
     {key: 'u', desc: 'up -d', ps: true},

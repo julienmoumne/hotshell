@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
 
-    <style>/* TODO find a way to retrieve the colors from formatter/formatter.go */
+    <style>/* todo find a way to retrieve the colors from formatter/formatter.go */
 
 body {
     font-family: "Lucida Console", Monaco, monospace;
@@ -121,30 +121,10 @@ var item =
     cmd: '',
     items: [
         
-            {key: 'i', item: 
-{
-    desc: 'install',
-    cmd: 'go generate ./... && go install ./...',
-    items: [
-        
-    ]
-}
-},
-        
             {key: 'c', item: 
 {
-    desc: 'clean',
-    cmd: 'go clean -i ./...',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: 'v', item: 
-{
-    desc: 'vet',
-    cmd: 'go vet $(go list ./... | grep -v /vendor/)',
+    desc: 'clean install',
+    cmd: './scripts/clean-install.sh',
     items: [
         
     ]
@@ -153,8 +133,8 @@ var item =
         
             {key: 'f', item: 
 {
-    desc: 'fmt',
-    cmd: 'go fmt $(go list ./... | grep -v /vendor/)',
+    desc: 'format',
+    cmd: './scripts/format.sh',
     items: [
         
     ]
@@ -167,20 +147,10 @@ var item =
     cmd: '',
     items: [
         
-            {key: 'g', item: 
+            {key: 'm', item: 
 {
-    desc: 'generate man',
-    cmd: 'go generate ./... && go install ./... && hs-man | gzip > debian/usr/share/man/man1/hs.1.gz',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: 's', item: 
-{
-    desc: 'show man',
-    cmd: 'gunzip -c debian/usr/share/man/man1/hs.1.gz | groff -Tascii -man -',
+    desc: 'test man',
+    cmd: './scripts/generate-man.sh; gunzip -c debian/usr/share/man/man1/hs.1.gz | groff -Tascii -man -',
     items: [
         
     ]
@@ -190,7 +160,7 @@ var item =
             {key: 'p', item: 
 {
     desc: 'package',
-    cmd: 'goxc -pv $(cat VERSION) -wd ./cmd/hs',
+    cmd: './scripts/package.sh',
     items: [
         
     ]
@@ -210,148 +180,8 @@ var item =
             {key: 't', item: 
 {
     desc: 'test',
-    cmd: 'go generate ./... && go test $(go list ./... | grep -v /vendor/) -timeout 10s',
+    cmd: './scripts/test.sh',
     items: [
-        
-    ]
-}
-},
-        
-            {key: 'i', item: 
-{
-    desc: 'interactively run end to end tests',
-    cmd: '',
-    items: [
-        
-            {key: '0', item: 
-{
-    desc: './cmd/hs/testcases/dsl-errors/',
-    cmd: '',
-    items: [
-        
-            {key: '0', item: 
-{
-    desc: 'error-in-nested-closure',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/dsl-errors/error-in-nested-closure',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '1', item: 
-{
-    desc: 'failed-exec',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/dsl-errors/failed-exec',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '2', item: 
-{
-    desc: 'multiple-root-items',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/dsl-errors/multiple-root-items',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '3', item: 
-{
-    desc: 'ref-error-in-closure',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/dsl-errors/ref-error-in-closure',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '4', item: 
-{
-    desc: 'ref-error-in-params',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/dsl-errors/ref-error-in-params',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '5', item: 
-{
-    desc: 'syntax-error',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/dsl-errors/syntax-error',
-    items: [
-        
-    ]
-}
-},
-        
-    ]
-}
-},
-        
-            {key: '1', item: 
-{
-    desc: './cmd/hs/testcases/input-transfer/',
-    cmd: '',
-    items: [
-        
-            {key: '0', item: 
-{
-    desc: 'bash-as-item',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/input-transfer/bash-as-item',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '1', item: 
-{
-    desc: 'bash-as-menu-action',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/input-transfer/bash-as-menu-action',
-    items: [
-        
-    ]
-}
-},
-        
-    ]
-}
-},
-        
-            {key: '2', item: 
-{
-    desc: './cmd/hs/testcases/valid-menu-variations/',
-    cmd: '',
-    items: [
-        
-            {key: '0', item: 
-{
-    desc: 'empty-menu',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/valid-menu-variations/empty-menu',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '1', item: 
-{
-    desc: 'factored-nested-evaled-menu',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs -f ./cmd/hs/testcases/valid-menu-variations/factored-nested-evaled-menu',
-    items: [
-        
-    ]
-}
-},
-        
-    ]
-}
-},
         
     ]
 }
@@ -376,7 +206,7 @@ var item =
             {key: 'r', item: 
 {
     desc: 'run tests',
-    cmd: 'go generate ./... && go test $(go list ./... | grep -v /vendor/) -timeout 10s',
+    cmd: './scripts/test.sh',
     items: [
         
     ]
@@ -386,7 +216,7 @@ var item =
             {key: 'o', item: 
 {
     desc: 'open failed tests directory',
-    cmd: 'sensible-browser ./cmd/hs/tmp/failed-cases',
+    cmd: 'sensible-browser ./cmd/hs/test/tmp/failed-cases',
     items: [
         
     ]
@@ -409,8 +239,8 @@ var item =
         
             {key: '0', item: 
 {
-    desc: 'examples/default/default.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/default/default.hs.js',
+    desc: 'default.hs.js',
+    cmd: 'cd examples/default/; $GOPATH/bin/hs -f default.hs.js',
     items: [
         
     ]
@@ -419,8 +249,8 @@ var item =
         
             {key: '1', item: 
 {
-    desc: 'examples/docker/docker-compose.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/docker/docker-compose.hs.js',
+    desc: 'docker-compose.hs.js',
+    cmd: 'cd examples/docker/; $GOPATH/bin/hs -f docker-compose.hs.js',
     items: [
         
     ]
@@ -429,8 +259,8 @@ var item =
         
             {key: '2', item: 
 {
-    desc: 'examples/docker/docker.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/docker/docker.hs.js',
+    desc: 'docker.hs.js',
+    cmd: 'cd examples/docker/; $GOPATH/bin/hs -f docker.hs.js',
     items: [
         
     ]
@@ -439,8 +269,8 @@ var item =
         
             {key: '3', item: 
 {
-    desc: 'examples/docker/docker-machine.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/docker/docker-machine.hs.js',
+    desc: 'docker-machine.hs.js',
+    cmd: 'cd examples/docker/; $GOPATH/bin/hs -f docker-machine.hs.js',
     items: [
         
     ]
@@ -449,8 +279,8 @@ var item =
         
             {key: '4', item: 
 {
-    desc: 'examples/includes/includes.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/includes/includes.hs.js',
+    desc: 'modules.hs.js',
+    cmd: 'cd examples/modules/; $GOPATH/bin/hs -f modules.hs.js',
     items: [
         
     ]
@@ -459,8 +289,8 @@ var item =
         
             {key: '5', item: 
 {
-    desc: 'examples/network/network.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/network/network.hs.js',
+    desc: 'nested.hs.js',
+    cmd: 'cd examples/nested/; $GOPATH/bin/hs -f nested.hs.js',
     items: [
         
     ]
@@ -469,8 +299,8 @@ var item =
         
             {key: '6', item: 
 {
-    desc: 'examples/topten/topten.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/topten/topten.hs.js',
+    desc: 'network.hs.js',
+    cmd: 'cd examples/network/; $GOPATH/bin/hs -f network.hs.js',
     items: [
         
     ]
@@ -479,8 +309,18 @@ var item =
         
             {key: '7', item: 
 {
-    desc: 'examples/vagrant/vagrant.hs.js',
-    cmd: 'go generate ./... && go build ./cmd/hs && ./hs --chdir -f examples/vagrant/vagrant.hs.js',
+    desc: 'topten.hs.js',
+    cmd: 'cd examples/topten/; $GOPATH/bin/hs -f topten.hs.js',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: '8', item: 
+{
+    desc: 'vagrant.hs.js',
+    cmd: 'cd examples/vagrant/; $GOPATH/bin/hs -f vagrant.hs.js',
     items: [
         
     ]
@@ -493,14 +333,38 @@ var item =
         
             {key: 'd', item: 
 {
-    desc: 'dev env setup',
+    desc: 'doc',
     cmd: '',
     items: [
         
-            {key: 'b', item: 
+            {key: 'c', item: 
 {
-    desc: '',
-    cmd: 'go get -u github.com/jteeuwen/go-bindata/...',
+    desc: 'generate changelog',
+    cmd: './scripts/generate-changelog.sh',
+    items: [
+        
+    ]
+}
+},
+        
+            {key: 'm', item: 
+{
+    desc: 'generate md',
+    cmd: './scripts/generate-md.sh',
+    items: [
+        
+    ]
+}
+},
+        
+    ]
+}
+},
+        
+            {key: 'i', item: 
+{
+    desc: 'install dev dependencies',
+    cmd: './scripts/install-dev-deps.sh',
     items: [
         
     ]
@@ -509,43 +373,39 @@ var item =
         
             {key: 'v', item: 
 {
-    desc: '',
-    cmd: 'go get -u github.com/kardianos/govendor',
+    desc: 'vendoring',
+    cmd: '',
     items: [
         
-    ]
-}
-},
-        
-            {key: 'x', item: 
+            {key: 'a', item: 
 {
-    desc: '',
-    cmd: 'go get -u github.com/laher/goxc',
+    desc: 'add dependency',
+    cmd: './scripts/add-dependency.sh',
     items: [
         
     ]
 }
 },
         
-            {key: 'g', item: 
+            {key: 'd', item: 
 {
-    desc: '',
-    cmd: 'sudo gem install github_changelog_generator',
+    desc: 'delete dependency',
+    cmd: './scripts/rm-dependency.sh',
     items: [
         
     ]
 }
 },
         
-    ]
-}
-},
-        
-            {key: 'g', item: 
+            {key: 'r', item: 
 {
-    desc: 'generate changelog',
-    cmd: 'github_changelog_generator',
+    desc: 'reset vendor',
+    cmd: 'find ./vendor/* -not -name \'vendor.json\' -print0 | xargs -0 rm -Rf –-- && govendor sync',
     items: [
+        
+    ]
+}
+},
         
     ]
 }

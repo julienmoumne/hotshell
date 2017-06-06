@@ -1,3 +1,7 @@
+var item = require('hotshell').item
+var exec = require('hotshell').exec
+var _ = require('underscore')
+
 item({desc: 'hotshell website'}, function () {
 
     linux = exec('uname').indexOf('Linux') > -1
@@ -11,30 +15,30 @@ item({desc: 'hotshell website'}, function () {
 
         item({key: 'g', desc: 'generate\n  ', cmd: script(
                 'set -e',
-                generateDemo('_includes/demo.hs.js', 'demo.hs.js'),
-                generateDemo('demos/tutorial.hs.js', 'tutorial.hs.js'),
-                generateDemo(fromHotshell('hs.js'), 'hs.js'),
-                generateDemo(fromHotshell('examples/default/default.hs.js'), 'default.hs.js'),
-                generateDemo(fromHotshell('examples/docker/docker.hs.js'), 'docker.hs.js'),
-                generateDemo(fromHotshell('examples/docker/docker-compose.hs.js'), 'docker-compose.hs.js'),
-                'DOCKER_MACHINE_NAME=dev ' + generateDemo(fromHotshell('examples/docker/docker-machine.hs.js'), 'docker-machine.hs.js'),
-                generateDemo(fromHotshell('examples/vagrant/vagrant.hs.js'), 'vagrant.hs.js'),
-                generateDemo(fromHotshell('examples/topten/topten.hs.js'), 'topten.hs.js'),
-                generateDemo(fromHotshell('examples/network/network.hs.js'), 'network.hs.js')
+                generateDemo('_includes', 'demo.hs.js'),
+                generateDemo('demos', 'tutorial.hs.js'),
+                generateDemo(fromHotshell(''), 'hs.js'),
+                generateDemo(fromHotshell('examples/default'), 'default.hs.js'),
+                generateDemo(fromHotshell('examples/docker'), 'docker.hs.js'),
+                generateDemo(fromHotshell('examples/docker'), 'docker-compose.hs.js'),
+                generateDemo(fromHotshell('examples/docker'), 'docker-machine.hs.js'),
+                generateDemo(fromHotshell('examples/vagrant'), 'vagrant.hs.js'),
+                generateDemo(fromHotshell('examples/topten'), 'topten.hs.js'),
+                generateDemo(fromHotshell('examples/network'), 'network.hs.js')
         )})
 
         item({key: 'o', desc: 'open demos', cmd: 'find demos  -name "*.html" -exec ' + browser + ' {} \\;'})
     })
 
-    item({key: 'h', desc: 'hotshell', cmd: 'hs --chdir -f ' + hotshellDir + '/hs.js'})
+    item({key: 'h', desc: 'hotshell', cmd: 'cd ' + hotshellDir + '; hs -f hs.js'})
 })
 
-function generateDemo(src, out) {
-    return 'hs --chdir --generate-demo -f ' + src + ' > demos/' + out + '.html'
+function generateDemo(dir, name) {
+    return '(cd ' + dir + '; DOCKER_MACHINE_NAME=dev hs --generate-demo -f ' + name + ') > demos/' + name + '.html'
 }
 
-function fromHotshell(file) {
-    return hotshellDir + '/' + file
+function fromHotshell(dir) {
+    return hotshellDir + '/' + dir
 }
 
 function script() {

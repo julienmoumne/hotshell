@@ -1,3 +1,5 @@
+var item = require('hotshell').item
+
 item({desc: 'top level menu'}, function () {
 
     item({desc: 'this is a description item, you can use it to describe the menu\n'})

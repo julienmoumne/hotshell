@@ -1,3 +1,5 @@
+var item = require('hotshell').item
+
 item({desc: 'hotshell demo'}, function () {
 
     // command items

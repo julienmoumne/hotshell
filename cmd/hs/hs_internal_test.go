@@ -1,4 +1,5 @@
 package main
+
 // todo find a way to test all examples
 
 import (

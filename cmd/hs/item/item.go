@@ -21,7 +21,6 @@ func NewItem(key string, desc string, cmd string) *Item {
 	item.Key = key
 	item.Desc = desc
 	item.Cmd = strings.TrimSpace(cmd)
-	item.Items = make([]*Item, 0)
 	return &item
 }
 

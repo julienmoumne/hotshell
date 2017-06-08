@@ -33,7 +33,7 @@ func (i *Item) GetItem(key Key) (*Item, error) {
 		}
 	}
 	if len(found) != 1 {
-		return nil, errors.New(fmt.Sprintf("could not find item for key '%s'", key))
+		return nil, errors.New(fmt.Sprintf("could not find item for key '%s'", key.String()))
 	}
 	return found[0], nil
 }

@@ -6,7 +6,7 @@ set -oxeu pipefail
 
 ./scripts/generate.sh
 
-go vet $ALL_BUT_VENDORS
+./scripts/vet.sh
 
 go install ./...
 

@@ -57,6 +57,12 @@
 			"revisionTime": "2015-12-11T09:06:21+09:00"
 		},
 		{
+			"checksumSHA1": "EHjhpHipgm+XGccrRAms9AW3Ewk=",
+			"path": "github.com/mitchellh/mapstructure",
+			"revision": "d0303fe809921458f417bcf828397a65db30a7e4",
+			"revisionTime": "2017-05-23T03:00:23Z"
+		},
+		{
 			"checksumSHA1": "JMq+sAxNE45BIG58pZSQswG+EZE=",
 			"path": "github.com/pkg/term",
 			"revision": "9eb92a42e2b9dd9bc2bdb0a1d0f085c49233b6d4",

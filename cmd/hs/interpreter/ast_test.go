@@ -27,7 +27,7 @@ var tests = []struct {
 	},
 	{
 		in:  []map[string]interface{}{},
-		out: nil,
+		out: []Ast{},
 	},
 	{
 		in:  []map[string]interface{}{{}},
@@ -59,7 +59,7 @@ var tests = []struct {
 		err: true,
 	},
 	{
-		in:  []map[string]interface{}{{"items": []string{}}},
+		in:  []map[string]interface{}{{"items": []string{"test"}}},
 		err: true,
 	},
 	// Doubly nested menu

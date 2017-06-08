@@ -13,11 +13,11 @@ var tests = []struct {
 }{
 	// Various Otto types for integers
 	{
-		in:  []map[string]interface{}{{DescPropName: 1, KeyPropName: int64(1)}},
+		in:  []map[string]interface{}{{"desc": 1, "key": int64(1)}},
 		out: []Ast{{Desc: "1", Key: "1"}},
 	},
 	{
-		in:  []map[string]interface{}{{DescPropName: 1.0, KeyPropName: float64(1)}},
+		in:  []map[string]interface{}{{"desc": 1.0, "key": float64(1)}},
 		out: []Ast{{Desc: "1", Key: "1"}},
 	},
 	// Empty values
@@ -65,27 +65,27 @@ var tests = []struct {
 	// Doubly nested menu
 	{
 		in: []map[string]interface{}{{
-			KeyPropName:  "t",
-			DescPropName: "test",
-			ItemsPropName: []map[string]interface{}{
+			"key":  "t",
+			"desc": "test",
+			"items": []map[string]interface{}{
 				{
-					KeyPropName:  "f",
-					DescPropName: "first cmd",
-					CmdPropName:  "echo 'first cmd'",
+					"key":  "f",
+					"desc": "first cmd",
+					"cmd":  "echo 'first cmd'",
 				},
 				{
-					KeyPropName:  "s",
-					DescPropName: "second cmd",
-					CmdPropName:  "echo 'second cmd'",
+					"key":  "s",
+					"desc": "second cmd",
+					"cmd":  "echo 'second cmd'",
 				},
 				{
-					KeyPropName:  "m",
-					DescPropName: "submenu",
-					ItemsPropName: []map[string]interface{}{
+					"key":  "m",
+					"desc": "submenu",
+					"items": []map[string]interface{}{
 						{
-							KeyPropName:  "s",
-							DescPropName: "submenu cmd",
-							CmdPropName:  "echo 'submenu cmd'",
+							"key":  "s",
+							"desc": "submenu cmd",
+							"cmd":  "echo 'submenu cmd'",
 						},
 					},
 				},

@@ -4,17 +4,17 @@ package interpreter
 import (
 	"fmt"
 	"github.com/ddliu/motto"
+	_ "github.com/ddliu/motto/underscore"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
 	"github.com/robertkrimen/otto"
-	_ "github.com/ddliu/motto/underscore"
 	"os/exec"
 	"regexp"
 	"strings"
 )
 
 type Interpreter struct {
-	dsl            []byte
-	vm             *motto.Motto
+	dsl []byte
+	vm  *motto.Motto
 }
 
 func (i *Interpreter) Interpret(dsl []byte) ([]Ast, error) {
@@ -42,7 +42,7 @@ func (i *Interpreter) retrieveItems() ([]Ast, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewAst(val), nil
+	return NewAst(val)
 }
 
 func (i *Interpreter) loadHotshellModule() error {

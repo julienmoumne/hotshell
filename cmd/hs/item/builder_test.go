@@ -2,66 +2,80 @@ package item_test
 
 import (
 	"errors"
-	. "github.com/julienmoumne/hotshell/cmd/hs/interpreter"
 	. "github.com/julienmoumne/hotshell/cmd/hs/item"
+	"github.com/mitchellh/mapstructure"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 var builderTests = []struct {
-	in  []Ast
+	in  interface{}
 	out *Item
 	err error
 }{
-	// Failures
+	// Empty values
 	{
-		[]Ast{},
-		nil,
-		errors.New("no items found"),
+		in:  nil,
+		err: errors.New("no items found"),
 	},
 	{
-		[]Ast{{}, {}},
-		nil,
-		errors.New("only one top level item is allowed, found 2"),
+		in:  []map[string]interface{}{},
+		err: errors.New("no items found"),
 	},
 	{
-		[]Ast{{Cmd: "echo 'test'"}},
-		nil,
-		errors.New("top level item must not be a command"),
+		in:  []map[string]interface{}{{}},
+		out: &Item{},
 	},
-
+	{
+		in:  []map[string]interface{}{{}, {}},
+		err: errors.New("only one top level item is allowed, found 2"),
+	},
+	{
+		in:  []map[string]interface{}{{"ignoredKey": []string{"test"}}},
+		out: &Item{},
+	},
+	// Various Otto types for integers
+	{
+		in:  []map[string]interface{}{{"desc": 1, "key": int64(1)}},
+		out: &Item{Key: "1", Desc: "1"},
+	},
+	{
+		in:  []map[string]interface{}{{"desc": 1.0, "key": float64(1)}},
+		out: &Item{Key: "1", Desc: "1"},
+	},
+	// Invalid root item
+	{
+		in:  []map[string]interface{}{{"cmd": "echo 'test'"}},
+		err: errors.New("top level item must not be a command"),
+	},
 	// Missing desc, nothing special happens
 	{
-		[]Ast{{Items: []Ast{{Key: "k", Cmd: "missing-desc"}}}},
-		&Item{Items: []*Item{{Key: "k", Cmd: "missing-desc"}}},
-		nil,
+		in:  []map[string]interface{}{{"items": []map[string]interface{}{{"key": "k", "cmd": "missing-desc"}}}},
+		out: &Item{Items: []*Item{{Key: "k", Cmd: "missing-desc"}}},
 	},
-
 	// Empty menu, nothing special happens
 	{
-		[]Ast{{Desc: "top-level-no-items"}},
-		&Item{Desc: "top-level-no-items"},
-		nil,
+		in:  []map[string]interface{}{{"desc": "top-level-no-items"}},
+		out: &Item{Desc: "top-level-no-items"},
 	},
-
 	// Invalid keys
 	{
-		[]Ast{{Desc: "invalid-keys",
-			Items: []Ast{
-				{Key: "", Desc: "key-not-provided-cmd", Cmd: "key-not-provided-cmd"},
-				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
-				{Key: "", Desc: "key-not-provided-menu", Items: []Ast{
-					{Desc: "key-not-provided-empty-menu"},
-				}},
-				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
-				{Key: "too-long", Desc: "too-long", Cmd: "too-long"},
-			},
-		}},
-		&Item{
+		in: []map[string]interface{}{{
+			"desc": "invalid-keys",
+			"items": []map[string]interface{}{
+				{"desc": "key-not-provided-cmd", "cmd": "key-not-provided-cmd"},
+				{"key": "d", "desc": "duplicated-key", "cmd": "duplicated-key"},
+				{"desc": "key-not-provided-menu", "items": []map[string]interface{}{{
+					"desc": "key-not-provided-empty-menu",
+				}}},
+				{"key": "d", "desc": "duplicated-key", "cmd": "duplicated-key"},
+				{"key": "too-long", "desc": "too-long", "cmd": "too-long"},
+			}}},
+		out: &Item{
 			Desc: "invalid-keys",
 			Items: []*Item{
 				{Key: "key-not-provided", Desc: "key-not-provided-cmd", Cmd: "key-not-provided-cmd"},
-				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
+				{Key: "duplicated-key:d", Desc: "duplicated-key", Cmd: "duplicated-key"},
 				{Key: "key-not-provided", Desc: "key-not-provided-menu",
 					Items: []*Item{{Desc: "key-not-provided-empty-menu"}},
 				},
@@ -69,23 +83,59 @@ var builderTests = []struct {
 				{Key: "invalid-key too-long", Desc: "too-long", Cmd: "too-long"},
 			},
 		},
-		nil,
 	},
-
+	// Type errors
+	{
+		in:  []interface{}{"test", 2},
+		err: &mapstructure.Error{Errors: []string{"'[0]' expected a map, got 'string'", "'[1]' expected a map, got 'int'"}},
+	},
+	{
+		in:  []map[string]interface{}{{"key": []string{}}},
+		err: &mapstructure.Error{Errors: []string{"'[0].Key' expected type 'string', got unconvertible type '[]string'"}},
+	},
+	{
+		in:  []map[string]interface{}{{"desc": []string{}}},
+		err: &mapstructure.Error{Errors: []string{"'[0].Desc' expected type 'string', got unconvertible type '[]string'"}},
+	},
+	{
+		in:  []map[string]interface{}{{"cmd": []string{}}},
+		err: &mapstructure.Error{Errors: []string{"'[0].Cmd' expected type 'string', got unconvertible type '[]string'"}},
+	},
+	{
+		in:  []map[string]interface{}{{"items": []string{"test"}}},
+		err: &mapstructure.Error{Errors: []string{"'[0].Items[0]' expected a map, got 'string'"}},
+	},
 	// Doubly nested menu
 	{
-		[]Ast{{Key: "t", Desc: "test",
-			Items: []Ast{
-				{Key: "f", Desc: "first cmd", Cmd: "echo 'first cmd'"},
-				{Key: "s", Desc: "second cmd", Cmd: "echo 'second cmd'"},
-				{Key: "m", Desc: "submenu",
-					Items: []Ast{
-						{Key: "s", Desc: "submenu cmd", Cmd: "echo 'submenu cmd'"},
+		in: []map[string]interface{}{{
+			"key":  "t",
+			"desc": "test",
+			"items": []map[string]interface{}{
+				{
+					"key":  "f",
+					"desc": "first cmd",
+					"cmd":  "echo 'first cmd'",
+				},
+				{
+					"key":  "s",
+					"desc": "second cmd",
+					"cmd":  "echo 'second cmd'",
+				},
+				{
+					"key":  "m",
+					"desc": "submenu",
+					"items": []map[string]interface{}{
+						{
+							"key":  "s",
+							"desc": "submenu cmd",
+							"cmd":  "echo 'submenu cmd'",
+						},
 					},
 				},
 			},
 		}},
-		&Item{
+		out: &Item{
+			Key:  "t",
 			Desc: "test",
 			Items: []*Item{
 				{Key: "f", Desc: "first cmd", Cmd: "echo 'first cmd'"},
@@ -101,7 +151,6 @@ var builderTests = []struct {
 				},
 			},
 		},
-		nil,
 	},
 }
 

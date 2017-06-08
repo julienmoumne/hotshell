@@ -3,71 +3,54 @@ package item
 import (
 	"errors"
 	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/hs/interpreter"
-	_ "github.com/robertkrimen/otto/underscore"
+	"github.com/mitchellh/mapstructure"
 )
 
 type Builder struct{}
 
-func (b *Builder) Build(ast []interpreter.Ast) (*Item, error) {
-	astLength := len(ast)
-
-	if len(ast) == 0 {
+func (b *Builder) Build(ast interface{}) (*Item, error) {
+	var items []Item
+	if err := mapstructure.WeakDecode(ast, &items); err != nil {
+		return nil, err
+	}
+	rootItemCount := len(items)
+	if rootItemCount == 0 {
 		return nil, errors.New("no items found")
 	}
-	if len(ast) > 1 {
-		return nil, errors.New(fmt.Sprintf("only one top level item is allowed, found %d", astLength))
+	if rootItemCount > 1 {
+		return nil, errors.New(fmt.Sprintf("only one top level item is allowed, found %d", rootItemCount))
 	}
-
-	item := b.recursiveBuild(ast[0], nil)
-	if item.IsCmd() {
+	it := &items[0]
+	if it.IsCmd() {
 		return nil, errors.New("top level item must not be a command")
 	}
-
-	return item, nil
+	b.recursiveSetup(it)
+	return it, nil
 }
 
-func (b *Builder) recursiveBuild(config interpreter.Ast, parent *Item) *Item {
-	item := b.buildItem(config, parent)
-	if parent != nil {
-		parent.AddItem(item)
+func (b *Builder) recursiveSetup(it *Item) {
+	b.adjustKey(it)
+	for _, child := range it.Items {
+		child.Parent = it
+		b.recursiveSetup(child)
 	}
-	return item
 }
 
-func getKey(config interpreter.Ast, parent *Item) string {
-	if parent == nil {
-		return ""
+func (b *Builder) adjustKey(it *Item) {
+	if it.Parent == nil {
+		return
 	}
-
-	key := config.Key
-	if key == "" {
-		if config.Cmd != "" || len(config.Items) > 0 {
-			return "key-not-provided"
+	if it.Key == "" {
+		if it.Cmd != "" || len(it.Items) > 0 {
+			it.Key = "key-not-provided"
 		}
-		return ""
+		return
 	}
-
-	if len(key) > 1 {
-		return fmt.Sprintf("invalid-key %v", key)
+	if len(it.Key) > 1 {
+		it.Key = fmt.Sprintf("invalid-key %v", it.Key)
+		return
 	}
-
-	if _, duplicated := parent.GetItem(MakeKey(key)); duplicated {
-		return fmt.Sprintf("duplicated-key:%v", key)
+	if _, err := it.Parent.GetItem(MakeKey(it.Key)); err != nil {
+		it.Key = fmt.Sprintf("duplicated-key:%v", it.Key)
 	}
-	return key
-}
-
-func (b *Builder) buildItem(config interpreter.Ast, parent *Item) *Item {
-	item := NewItem(getKey(config, parent), config.Desc, config.Cmd)
-
-	if item.IsCmd() {
-		return item
-	}
-
-	for _, subConfig := range config.Items {
-		b.recursiveBuild(subConfig, item)
-	}
-
-	return item
 }

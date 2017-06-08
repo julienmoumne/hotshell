@@ -7,24 +7,24 @@ import (
 )
 
 func TestIsCmd(t *testing.T) {
-	it := item.NewItem("", "", "echo 'test'")
+	it := &item.Item{Cmd: "echo 'test'"}
 	checkIsCmd(t, it, true)
 }
 
 func TestMenuWithItemsIsNotCmd(t *testing.T) {
-	it := item.NewItem("", "", "")
+	it := &item.Item{}
 	it.AddItem(it)
 	checkIsCmd(t, it, false)
 }
 
 func TestMenuWithItemsWithCmdIsNotCmd(t *testing.T) {
-	it := item.NewItem("", "", "echo 'test'")
+	it := &item.Item{Cmd: "echo 'test'"}
 	it.AddItem(it)
 	checkIsCmd(t, it, false)
 }
 
 func TestEmptyMenuIsNotCmd(t *testing.T) {
-	it := item.NewItem("", "", "")
+	it := &item.Item{}
 	checkIsCmd(t, it, false)
 }
 
@@ -78,19 +78,19 @@ func TestDesc(t *testing.T) {
 }
 
 func singleItem(key string, desc string, cmd string) *item.Item {
-	return item.NewItem(key, desc, cmd)
+	return &item.Item{Key: key, Desc: desc, Cmd: cmd}
 }
 
 func itemWithChild(key string, desc string, cmd string) *item.Item {
-	it := item.NewItem(key, desc, cmd)
-	it.AddItem(item.NewItem(key, desc, cmd))
+	it := &item.Item{Key: key, Desc: desc, Cmd: cmd}
+	it.AddItem(&item.Item{Key: key, Desc: desc, Cmd: cmd})
 	return it
 }
 
 func itemWithParentAndChild(key string, desc string, cmd string) *item.Item {
-	it := item.NewItem(key, desc, cmd)
-	child := item.NewItem(key, desc, cmd)
-	child.AddItem(item.NewItem(key, desc, cmd))
+	it := &item.Item{Key: key, Desc: desc, Cmd: cmd}
+	child := &item.Item{Key: key, Desc: desc, Cmd: cmd}
+	child.AddItem(&item.Item{Key: key, Desc: desc, Cmd: cmd})
 	it.AddItem(child)
 	return child
 }

@@ -15,14 +15,14 @@ var (
 )
 
 func init() {
-	emptyDescInNestedMenu := item.NewItem("", "notice", "")
-	emptyDescInNestedMenu.AddItem(item.NewItem("", "notice", ""))
-	cmdWithoutDesc := item.NewItem("", "cmd-without-desc", "")
-	cmdWithoutDesc.AddItem(item.NewItem("k", "", "cmd-without-desc"))
+	emptyDescInNestedMenu := &item.Item{Desc: "notice"}
+	emptyDescInNestedMenu.AddItem(&item.Item{Desc: "notice"})
+	cmdWithoutDesc := &item.Item{Desc: "cmd-without-desc"}
+	cmdWithoutDesc.AddItem(&item.Item{Key: "k", Cmd: "cmd-without-desc"})
 
 	tests = []testCase{
 		{
-			in{item.NewItem("", "empty-menu", "")},
+			in{&item.Item{Desc: "empty-menu"}},
 			out{" empty-menu\n" +
 				"\n" +
 				" no items found\n" +
@@ -31,7 +31,7 @@ func init() {
 				"\n"},
 		},
 		{
-			in{item.NewItem("", "", "")},
+			in{&item.Item{}},
 			out{" missing-desc\n" +
 				"\n" +
 				" no items found\n" +

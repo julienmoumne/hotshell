@@ -13,7 +13,7 @@ import (
 
 type Starter struct {
 	options    options.Options
-	ast        []interpreter.Ast
+	ast        interface{}
 	item       *item.Item
 	osCwd      string
 	definition definitionloader.Definition

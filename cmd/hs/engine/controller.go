@@ -68,7 +68,7 @@ func (c *controller) mainLoop() (bool, error) {
 			c.printKey(item.ReloadKey)
 			return true, nil
 		default:
-			if selectedItem, found := c.activeItem.GetItem(key); found {
+			if selectedItem, err := c.activeItem.GetItem(key); err == nil {
 				c.triggerItem(key, selectedItem)
 			}
 		}

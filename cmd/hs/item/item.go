@@ -1,12 +1,12 @@
 package item
 
 import (
+	"errors"
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
-	"strings"
 )
 
-var BashCmd = NewItem("", "bash", "bash -l")
+var BashCmd = &Item{Key: "", Desc: "bash", Cmd: "bash -l"}
 
 type Item struct {
 	Key    string
@@ -14,14 +14,6 @@ type Item struct {
 	Items  []*Item
 	Cmd    string
 	Parent *Item
-}
-
-func NewItem(key string, desc string, cmd string) *Item {
-	item := Item{}
-	item.Key = key
-	item.Desc = desc
-	item.Cmd = strings.TrimSpace(cmd)
-	return &item
 }
 
 func (i *Item) IsCmd() bool {
@@ -33,13 +25,17 @@ func (i *Item) AddItem(item *Item) {
 	item.Parent = i
 }
 
-func (i *Item) GetItem(key Key) (*Item, bool) {
+func (i *Item) GetItem(key Key) (*Item, error) {
+	var found []*Item
 	for _, item := range i.Items {
 		if MakeKey(item.Key) == key {
-			return item, true
+			found = append(found, item)
 		}
 	}
-	return nil, false
+	if len(found) != 1 {
+		return nil, errors.New(fmt.Sprintf("could not find item for key '%s'", key))
+	}
+	return found[0], nil
 }
 
 func (i *Item) GetDesc() string {

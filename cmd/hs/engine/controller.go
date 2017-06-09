@@ -105,9 +105,9 @@ func (c *controller) triggerItem(key item.Key, it *item.Item) {
 
 	nextMenu := item.Activate(it)
 
-	bashModeActivated := nextMenu == nil
+	menulessCmdActivated := nextMenu == nil
 	cmdActivated := nextMenu == c.activeItem
-	if bashModeActivated || cmdActivated {
+	if menulessCmdActivated || cmdActivated {
 		c.lastActivatedCmd = key
 		item.Activate(c.activeItem)
 	} else {

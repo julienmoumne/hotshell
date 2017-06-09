@@ -6,7 +6,7 @@
 // item.tmpl
 // DO NOT EDIT!
 
-package generator
+package documentor
 
 import (
 	"bytes"

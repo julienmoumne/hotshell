@@ -4,7 +4,7 @@ package engine
 import (
 	"github.com/blang/vfs"
 	"github.com/julienmoumne/hotshell/cmd/hs/definitionloader"
-	"github.com/julienmoumne/hotshell/cmd/hs/generator"
+	"github.com/julienmoumne/hotshell/cmd/hs/documentor"
 	"github.com/julienmoumne/hotshell/cmd/hs/interpreter"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/options"
@@ -66,11 +66,11 @@ func (s *Starter) activateAction() (bool, error) {
 }
 
 func (s *Starter) generateMd() error {
-	return (&generator.Md{}).Generate(s.item, filepath.Base(s.definition.Filename))
+	return (&documentor.Md{}).Generate(s.item, filepath.Base(s.definition.Filename))
 }
 
 func (s *Starter) generateDemo() error {
-	return (&generator.Demo{}).Generate(s.item, filepath.Base(s.definition.Filename))
+	return (&documentor.Demo{}).Generate(s.item, filepath.Base(s.definition.Filename))
 }
 
 func (s *Starter) loadDefinitionFile() error {

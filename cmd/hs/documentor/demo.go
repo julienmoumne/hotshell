@@ -1,5 +1,5 @@
-//go:generate go-bindata -nometadata -ignore \.go$ -pkg generator ./
-package generator
+//go:generate go-bindata -nometadata -ignore \.go$ -pkg documentor ./
+package documentor
 
 import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"

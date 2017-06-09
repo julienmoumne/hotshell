@@ -1,8 +1,7 @@
 package item
 
 const (
-	eofKeyCode      = 4
-	nullKeyCode     = 0
+	eotKeyCode      = 4
 	spacebarKeyCode = 32
 	tabKeyCode      = 9
 	lfKeyCode       = 10
@@ -11,8 +10,7 @@ const (
 
 // todo how to make these vars non reassignable by other packages
 var (
-	EofKey          = Key{eofKeyCode}
-	NullKey         = Key{nullKeyCode}
+	EotKey          = Key{eotKeyCode}
 	BashKey         = Key{tabKeyCode}
 	RepeatKey       = Key{lfKeyCode}
 	PreviousMenuKey = Key{spacebarKeyCode}

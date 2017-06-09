@@ -48,11 +48,16 @@ func (t *Term) ReadUserChoice() (item.Key, error) {
 	defer t.Restore()
 
 	if err != nil {
-		return item.NullKey, err
+		return item.Key{}, err
 	}
 
 	bytes := make([]byte, 1)
 	_, err = t.term.Read(bytes)
+
+	// during tests, writing 4 to the fake pty results in 0 being read here..
+	if bytes[0] == 0 {
+		bytes[0] = 4
+	}
 
 	return item.MakeKey(string(bytes)), err
 }

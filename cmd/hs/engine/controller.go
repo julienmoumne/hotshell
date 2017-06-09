@@ -35,10 +35,9 @@ func (c *controller) Start(root *item.Item) (bool, error) {
 	return c.mainLoop()
 }
 
-func (c *controller) initTerm() error {
-	var err error
+func (c *controller) initTerm() (err error) {
 	c.term, err = term.NewTerm()
-	return err
+	return
 }
 
 func (c *controller) mainLoop() (bool, error) {
@@ -51,9 +50,7 @@ func (c *controller) mainLoop() (bool, error) {
 
 		switch key {
 
-		case item.EofKey:
-			fallthrough
-		case item.NullKey:
+		case item.EotKey:
 			fmt.Print("\n")
 			return false, nil
 		case item.PreviousMenuKey:
@@ -80,7 +77,7 @@ func (c *controller) printPrompt() {
 }
 
 func (c *controller) triggerLastCmd() {
-	if c.lastActivatedCmd == item.NullKey {
+	if c.lastActivatedCmd == (item.Key{}) {
 		return
 	}
 
@@ -106,14 +103,15 @@ func (c *controller) triggerItem(key item.Key, it *item.Item) {
 
 	c.printKey(key)
 
-	c.lastActivatedCmd = item.NullKey
-
 	nextMenu := item.Activate(it)
 
-	if nextMenu == nil || nextMenu == c.activeItem {
+	bashModeActivated := nextMenu == nil
+	cmdActivated := nextMenu == c.activeItem
+	if bashModeActivated || cmdActivated {
 		c.lastActivatedCmd = key
 		item.Activate(c.activeItem)
 	} else {
+		c.lastActivatedCmd = item.Key{}
 		c.activeItem = nextMenu
 	}
 

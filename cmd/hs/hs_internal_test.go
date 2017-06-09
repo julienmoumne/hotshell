@@ -31,7 +31,7 @@ func TestVersion(t *testing.T) {
 func TestDemo(t *testing.T) {
 	a := assert.New(t)
 	driver := term.TestDriver{Main: func() {
-		os.Args = []string{"", "-f", "test/cases/valid-menu-variations/factored-nested-evaled-menu/hs.js", "--generate-demo"}
+		os.Args = []string{"", "-f", "test/cases/factored-nested-evaled-menu/hs.js", "--generate-demo"}
 		main()
 	}}
 	actualStdout, _, err := driver.Run()
@@ -44,7 +44,7 @@ func TestDemo(t *testing.T) {
 func TestMd(t *testing.T) {
 	a := assert.New(t)
 	driver := term.TestDriver{Main: func() {
-		os.Args = []string{"", "-f", "test/cases/valid-menu-variations/factored-nested-evaled-menu/hs.js", "--generate-md"}
+		os.Args = []string{"", "-f", "test/cases/factored-nested-evaled-menu/hs.js", "--generate-md"}
 		main()
 	}}
 	actualStdout, _, err := driver.Run()
@@ -63,37 +63,15 @@ func TestEndToEnd(t *testing.T) {
 	}
 }
 
-func listTestCases(t *testing.T) []string {
-
-	testCases := make([]string, 0)
-
+func listTestCases(t *testing.T) (cases []string) {
 	directories, err := ioutil.ReadDir(test.TestCasesDir)
 	if err != nil {
 		t.Fatal(err)
 	}
-
 	for _, directory := range directories {
-
-		if !directory.IsDir() {
-			continue
-		}
-
-		dirName := directory.Name()
-		files, err := ioutil.ReadDir(test.TestCasesDir + dirName)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		for _, file := range files {
-
-			testCases = append(
-				testCases,
-				fmt.Sprintf("%s/%s", dirName, file.Name()),
-			)
-		}
+		cases = append(cases, directory.Name())
 	}
-
-	return testCases
+	return
 }
 
 func runTest(t *testing.T, testName string) {

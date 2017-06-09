@@ -5,7 +5,7 @@ import (
 	"github.com/blang/vfs"
 	"github.com/julienmoumne/hotshell/cmd/hs/definitionloader"
 	"github.com/julienmoumne/hotshell/cmd/hs/documentor"
-	"github.com/julienmoumne/hotshell/cmd/hs/interpreter"
+	"github.com/julienmoumne/hotshell/cmd/hs/dslrunner"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/options"
 	"path/filepath"
@@ -13,7 +13,6 @@ import (
 
 type Starter struct {
 	options    options.Options
-	ast        interface{}
 	item       *item.Item
 	osCwd      string
 	definition definitionloader.Definition
@@ -35,7 +34,6 @@ func (s *Starter) initBootSeq() {
 	s.bootSeq = []func() error{
 		s.loadDefinitionFile,
 		s.interpretDSL,
-		s.buildMenu,
 	}
 }
 
@@ -82,18 +80,12 @@ func (s *Starter) loadDefinitionFile() error {
 	return err
 }
 
-func (s *Starter) buildMenu() error {
-	var err error
-	s.item, err = (&item.Builder{}).Build(s.ast)
-	return err
-}
-
 func (s *Starter) startController() (bool, error) {
 	return (&controller{}).Start(s.item)
 }
 
 func (s *Starter) interpretDSL() error {
 	var err error
-	s.ast, err = (&interpreter.Interpreter{}).Interpret(s.definition.Dsl)
+	s.item, err = (&dslrunner.DslRunner{}).Run(string(s.definition.Dsl))
 	return err
 }

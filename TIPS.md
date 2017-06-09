@@ -52,13 +52,16 @@ hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html
 > Output the definition object to help debugging :
 
 ```javascript
+var hotshell = require('hotshell')
+var item = hotshell.item
+
 item({desc: 'debug'}, function () {
   item({key: 'r', desc: 'restart apache', cmd: 'sudo service apache2 restart'})
   item({key: 'a', desc: 'access.log', cmd: 'less +F /var/log/apache2/access.log'})
 }) 
 
 // 'items' contains the whole definition
-console.log(JSON.stringify(items, null, ' '))
+console.log(JSON.stringify(hotshell.items, null, ' '))
 ```
 displays
 ```javascript

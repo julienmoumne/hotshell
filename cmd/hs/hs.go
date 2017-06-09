@@ -5,12 +5,14 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/engine"
 	"github.com/julienmoumne/hotshell/cmd/hs/versioning"
 	"github.com/julienmoumne/hotshell/cmd/options"
-	"github.com/robertkrimen/otto"
 	"os"
 )
 
 func main() {
-	handleError((&hs{}).start())
+	if err := (&hs{}).start(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		exit(1)
+	}
 }
 
 type hs struct {
@@ -44,19 +46,6 @@ func (h *hs) printVersion() error {
 	}
 	fmt.Printf("Hotshell version %s\n", version)
 	return nil
-}
-
-func handleError(err error) {
-	if err == nil {
-		return
-	}
-	switch err := err.(type) {
-	case *otto.Error:
-		fmt.Fprint(os.Stderr, err.String())
-	default:
-		fmt.Fprintln(os.Stderr, err)
-	}
-	exit(1)
 }
 
 // var is required to change the definition during tests

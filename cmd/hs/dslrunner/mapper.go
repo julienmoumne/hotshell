@@ -1,15 +1,16 @@
-package item
+package dslrunner
 
 import (
 	"errors"
 	"fmt"
+	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/mitchellh/mapstructure"
 )
 
-type Builder struct{}
+type mapper struct{}
 
-func (b *Builder) Build(ast interface{}) (*Item, error) {
-	var items []Item
+func (b *mapper) mapp(ast interface{}) (*item.Item, error) {
+	var items []item.Item
 	if err := mapstructure.WeakDecode(ast, &items); err != nil {
 		return nil, err
 	}
@@ -28,7 +29,7 @@ func (b *Builder) Build(ast interface{}) (*Item, error) {
 	return it, nil
 }
 
-func (b *Builder) recursiveSetup(it *Item) {
+func (b *mapper) recursiveSetup(it *item.Item) {
 	b.adjustKey(it)
 	for _, child := range it.Items {
 		child.Parent = it
@@ -36,7 +37,7 @@ func (b *Builder) recursiveSetup(it *Item) {
 	}
 }
 
-func (b *Builder) adjustKey(it *Item) {
+func (b *mapper) adjustKey(it *item.Item) {
 	if it.Parent == nil {
 		return
 	}
@@ -50,7 +51,7 @@ func (b *Builder) adjustKey(it *Item) {
 		it.Key = fmt.Sprintf("invalid-key %v", it.Key)
 		return
 	}
-	if _, err := it.Parent.GetItem(MakeKey(it.Key)); err != nil {
+	if _, err := it.Parent.GetItem(item.MakeKey(it.Key)); err != nil {
 		it.Key = fmt.Sprintf("duplicated-key:%v", it.Key)
 	}
 }

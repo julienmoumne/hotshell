@@ -21,24 +21,8 @@ item({desc: 'hotshell-dev'}, function () {
     })
 
     item({key: 't', desc: 'tests'}, function () {
-
         item({key: 't', desc: 'test', cmd: runTests})
-
-        item({key: 'f', desc: 'failed end to end tests'}, function () {
-
-            item({desc: '(reload menu to update failed tests list)\n'})
-
-            failedTestsDir = hsCmdDir + '/test/tmp/failed-cases'
-
-            item({key: 'r', desc: 'run tests', cmd: runTests})
-            item({key: 'o', desc: 'open failed tests directory', cmd: browser + ' ' + failedTestsDir})
-
-            if (exec('if [ -d "' + failedTestsDir + '" ]; then echo true; fi') == '') return
-
-            _(exec('find ' + failedTestsDir + ' -name *.html').split('\n')).each(function (el, ix) {
-                item({key: ix, desc: 'failed test ' + ix, cmd: browser + ' ' + el})
-            })
-        })
+        item({key: 'o', desc: 'failed end2end tests', cmd: browser + ' ' + hsCmdDir + '/test/tmp'})
     })
 
     item({key: 'e', desc: 'examples'}, function () {

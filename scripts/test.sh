@@ -6,6 +6,8 @@ set -oeu pipefail
 
 ./scripts/generate.sh
 
+./scripts/format.sh
+
 ./scripts/vet.sh
 
 #todo find-out if '-cover' low percentages are due to bindata.go files

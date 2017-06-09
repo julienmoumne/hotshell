@@ -1,4 +1,0 @@
-motto: ReferenceError: 'callToUndefinedMethod' is not defined
-    at <unknown>
-    at <anonymous>:2:1
-    at <unknown>

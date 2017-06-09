@@ -1,47 +1,76 @@
-//go:generate go-bindata -nometadata -ignore \.go$ -pkg interpreter ./
-package interpreter
+//go:generate go-bindata -nometadata -ignore \.go$ -pkg dslrunner ./
+package dslrunner
 
 import (
+	"errors"
 	"fmt"
 	"github.com/ddliu/motto"
 	_ "github.com/ddliu/motto/underscore"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
+	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/robertkrimen/otto"
 	"os/exec"
 	"regexp"
 	"strings"
 )
 
-type Interpreter struct {
-	dsl []byte
-	vm  *motto.Motto
+type DslRunner struct {
+	menuDef   string
+	vm        *motto.Motto
+	rawResult interface{}
+	item      *item.Item
 }
 
-func (i *Interpreter) Interpret(dsl []byte) (interface{}, error) {
-	i.dsl = dsl
+func (i *DslRunner) Run(dsl string) (it *item.Item, err error) {
+	defer func() {
+		it = i.item
+		err = convertOttoErrorToError(err)
+	}()
+	i.menuDef = dsl
 	i.vm = motto.New()
-	if err := i.loadHotshellModule(); err != nil {
-		return nil, err
+	if err = i.loadHotshellModule(); err != nil {
+		return
 	}
-	if err := i.exec(); err != nil {
-		return nil, err
+	if err = i.runMenuDef(); err != nil {
+		return
 	}
-	return i.retrieveResult()
+	if err = i.retrieveResult(); err != nil {
+		return
+	}
+	if err = i.mapToItems(); err != nil {
+		return
+	}
+	return
 }
 
-func (i *Interpreter) retrieveResult() (interface{}, error) {
+func convertOttoErrorToError(err error) error {
+	switch err := err.(type) {
+	case *otto.Error:
+		return errors.New(strings.TrimSpace(err.String()))
+	default:
+		return err
+	}
+}
+
+func (i *DslRunner) mapToItems() (err error) {
+	i.item, err = (&mapper{}).mapp(i.rawResult)
+	return
+}
+
+func (i *DslRunner) retrieveResult() error {
 	hsModule, err := i.vm.Require("hotshell", "")
 	if err != nil {
-		return nil, err
+		return err
 	}
 	value, err := hsModule.Object().Get("items")
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return value.Export()
+	i.rawResult, err = value.Export()
+	return err
 }
 
-func (i *Interpreter) loadHotshellModule() error {
+func (i *DslRunner) loadHotshellModule() error {
 	js, err := Asset("dslrunner.js")
 	if err != nil {
 		return err
@@ -59,12 +88,12 @@ func (i *Interpreter) loadHotshellModule() error {
 	return nil
 }
 
-func (i *Interpreter) exec() error {
-	_, err := motto.CreateLoaderFromSource(string(i.dsl), "")(i.vm)
+func (i *DslRunner) runMenuDef() error {
+	_, err := motto.CreateLoaderFromSource(i.menuDef, "")(i.vm)
 	return err
 }
 
-func (i *Interpreter) compileAndRun(filename string, content []byte) error {
+func (i *DslRunner) compileAndRun(filename string, content []byte) error {
 	script, err := i.vm.Otto.Compile(filename, content)
 	if err != nil {
 		return err

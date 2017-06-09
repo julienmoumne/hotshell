@@ -5,10 +5,6 @@ var current = {items: items}
 
 function item(config, callback) {
 
-    function initSubItems() {
-        config.items = []
-    }
-
     function recurse() {
         var prev = current
         current = config
@@ -16,14 +12,15 @@ function item(config, callback) {
         try {
             callback()
         } catch (exception) {
-            initSubItems()
+            delete config.items
             config.desc += ' [Exception caught, ' + exception + ']'.trim()
         }
 
         current = prev
     }
 
-    initSubItems()
+    if (_.isUndefined(current.items))
+        current.items = []
 
     current.items.push(config)
 

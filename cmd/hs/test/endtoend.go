@@ -14,7 +14,7 @@ import (
 
 const (
 	TestCasesDir = "test/cases/"
-	TestTmpDir   = "test/tmp/failed-cases/"
+	TestTmpDir   = "test/tmp/"
 )
 
 type EndToEnd struct {
@@ -138,7 +138,6 @@ func (e *EndToEnd) readFile(file string) (string, error) {
 }
 
 func writeFile(path, data string) error {
-
 	if err := ioutil.WriteFile(path, []byte(data), 0644); err != nil {
 		return err
 	}

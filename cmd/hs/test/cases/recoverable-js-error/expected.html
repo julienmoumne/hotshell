@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Hotshell demo - Factored Menu</title>
+    <title>Hotshell demo - Runtime Error in nested closure</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
@@ -117,59 +117,13 @@ body {
 
 var item = 
 {
-    desc: 'Factored Menu',
-    cmd: '',
-    items: [
-        
-            {key: 'k', item: 
-{
-    desc: 'ls *.js',
-    cmd: 'ls *.js',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: 'l', item: 
-{
-    desc: 'less',
-    cmd: '',
-    items: [
-        
-            {key: '0', item: 
-{
-    desc: '',
-    cmd: 'less +F /etc/hosts',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '1', item: 
-{
-    desc: '',
-    cmd: 'less +F /etc/fstab',
-    items: [
-        
-    ]
-}
-},
-        
-    ]
-}
-},
-        
-            {key: 's', item: 
-{
-    desc: 'factored submenu',
+    desc: 'Runtime Error in nested closure',
     cmd: '',
     items: [
         
             {key: '', item: 
 {
-    desc: 'submenu desc<br/>',
+    desc: 'nested closure [Exception caught, Error: Runtime Error]',
     cmd: '',
     items: [
         
@@ -177,35 +131,11 @@ var item =
 }
 },
         
-            {key: 'e', item: 
+            {key: 'n', item: 
 {
-    desc: 'echo',
-    cmd: '',
+    desc: 'not skipped',
+    cmd: 'echo not skipped',
     items: [
-        
-            {key: '0', item: 
-{
-    desc: '',
-    cmd: 'echo hello',
-    items: [
-        
-    ]
-}
-},
-        
-            {key: '1', item: 
-{
-    desc: '',
-    cmd: 'echo world',
-    items: [
-        
-    ]
-}
-},
-        
-    ]
-}
-},
         
     ]
 }

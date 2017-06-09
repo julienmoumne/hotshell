@@ -19,38 +19,11 @@ func TestVersion(t *testing.T) {
 		os.Args = []string{"", "--version"}
 		main()
 	}}
-	actualStdout, _, err := driver.Run()
-	a.Nil(err)
+	actualStdout, _ := driver.Run()
 	var version []byte
-	version, err = versioning.GetVersion()
+	version, err := versioning.GetVersion()
 	a.Nil(err)
 	a.Equal(fmt.Sprintf("Hotshell version %s\n", version), actualStdout)
-}
-
-// todo generate the demo for all test/cases/* ?
-func TestDemo(t *testing.T) {
-	a := assert.New(t)
-	driver := term.TestDriver{Main: func() {
-		os.Args = []string{"", "-f", "test/cases/factored-nested-evaled-menu/hs.js", "--generate-demo"}
-		main()
-	}}
-	actualStdout, _, err := driver.Run()
-	a.Nil(err)
-	expected, err := ioutil.ReadFile("test/doc/factored-nested-evaled-menu.hs.js.html")
-	a.Equal(string(expected), actualStdout)
-}
-
-// todo generate the markdown for all test/cases/* ?
-func TestMd(t *testing.T) {
-	a := assert.New(t)
-	driver := term.TestDriver{Main: func() {
-		os.Args = []string{"", "-f", "test/cases/factored-nested-evaled-menu/hs.js", "--generate-md"}
-		main()
-	}}
-	actualStdout, _, err := driver.Run()
-	a.Nil(err)
-	expected, err := ioutil.ReadFile("test/doc/factored-nested-evaled-menu.hs.js.md")
-	a.Equal(string(expected), actualStdout)
 }
 
 func TestEndToEnd(t *testing.T) {
@@ -75,14 +48,10 @@ func listTestCases(t *testing.T) (cases []string) {
 }
 
 func runTest(t *testing.T, testName string) {
-	endToEnd := test.EndToEnd{
+	(&test.EndToEnd{
 		SpecDirectory: testName,
 		Testing:       t,
 		Exit:          &exit,
 		Main:          main,
-	}
-
-	if err := endToEnd.Run(); err != nil {
-		t.Fatal(err)
-	}
+	}).Run()
 }

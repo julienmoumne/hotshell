@@ -1,5 +1,4 @@
 Factored Menu
-- ls *.js : `ls *.js`
 - less  
   - `less +F /etc/hosts`
   - `less +F /etc/fstab`

@@ -10,9 +10,8 @@ import (
 
 func TestMan(t *testing.T) {
 	driver := term.TestDriver{Main: main}
-	actualStdout, _, err := driver.Run()
+	actualStdout, _ := driver.Run()
 	a := assert.New(t)
-	a.Nil(err)
 	a.Equal(expectedMan, actualStdout)
 }
 

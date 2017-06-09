@@ -23,33 +23,28 @@ type TestDriver struct {
 	pts      *os.File
 }
 
-func (d *TestDriver) Run() (string, string, error) {
+func (d *TestDriver) Run() (string, string) {
 	d.backupStds()
 	defer d.restoreStds()
 
-	if err := d.setupPty(); err != nil {
-		return "", "", err
-	}
+	d.setupPty()
 	defer d.closePty()
 
-	if err := d.setupPipes(); err != nil {
-		return "", "", err
-	}
+	d.setupPipes()
 	defer d.closePipes()
 
-	if err := d.backupCwd(); err != nil {
-		return "", "", err
-	}
+	d.backupCwd()
+
 	if d.Cwd != "" {
 		if err := os.Chdir(d.Cwd); err != nil {
-			return "", "", err
+			panic(err)
 		}
 	}
 	defer d.restoreCwd()
 
 	d.Main()
 
-	return d.getStds()
+	return fileToBuf(d.readOut, d.writeOut), fileToBuf(d.readErr, d.writeErr)
 }
 
 func (d *TestDriver) restoreCwd() {
@@ -58,69 +53,76 @@ func (d *TestDriver) restoreCwd() {
 	}
 }
 
-func (d *TestDriver) backupCwd() error {
+func (d *TestDriver) backupCwd() {
 	var err error
 	d.osCwd, err = os.Getwd()
-	return err
+	if err != nil {
+		panic(err)
+	}
 }
 
-func (d *TestDriver) setupPty() error {
+func (d *TestDriver) setupPty() {
 	var err error
 	d.ptm, d.pts, err = termios.Pty()
 	if err != nil {
-		return err
+		panic(err)
 	}
 
 	if _, err = d.ptm.Write(d.Input); err != nil {
-		return err
+		panic(err)
 	}
 
 	tty = d.pts.Name()
 	os.Stdin = d.pts
-
-	return err
 }
 
 func (d *TestDriver) closePty() {
-	d.ptm.Close() // ignored returned Error
-	d.pts.Close() // ignored returned Error
+	if err := d.ptm.Close(); err != nil {
+		panic(err)
+	}
+	if err := d.pts.Close(); err != nil {
+		panic(err)
+	}
 }
 
-func (d *TestDriver) setupPipes() error {
-	if err := d.setupOutPipe(); err != nil {
-		return err
-	}
-	if err := d.setupErrPipe(); err != nil {
-		return err
-	}
-	return nil
+func (d *TestDriver) setupPipes() {
+	d.setupOutPipe()
+	d.setupErrPipe()
 }
 
 func (d *TestDriver) closePipes() {
-	d.readOut.Close()  // ignored returned Error
-	d.writeOut.Close() // ignored returned Error
-	d.readErr.Close()  // ignored returned Error
-	d.writeErr.Close() // ignored returned Error
+	if err := d.readOut.Close(); err != nil {
+		panic(err)
+	}
+	// panics with "invalid argument"
+	//if err := d.writeOut.Close(); err != nil {
+	//	panic(err)
+	//}
+	if err := d.readErr.Close(); err != nil {
+		panic(err)
+	}
+	// panics with "invalid argument"
+	//if err := d.writeErr.Close(); err != nil {
+	//	panic(err)
+	//}
 }
 
-func (d *TestDriver) setupOutPipe() error {
+func (d *TestDriver) setupOutPipe() {
 	var err error
 	d.readOut, d.writeOut, err = os.Pipe()
 	if err != nil {
-		return err
+		panic(err)
 	}
 	os.Stdout = d.writeOut
-	return nil
 }
 
-func (d *TestDriver) setupErrPipe() error {
+func (d *TestDriver) setupErrPipe() {
 	var err error
 	d.readErr, d.writeErr, err = os.Pipe()
 	if err != nil {
-		return err
+		panic(err)
 	}
 	os.Stderr = d.writeErr
-	return nil
 }
 
 func (d *TestDriver) backupStds() {
@@ -135,23 +137,12 @@ func (d *TestDriver) restoreStds() {
 	os.Stderr = d.osStderr
 }
 
-func (d *TestDriver) getStds() (string, string, error) {
-	stdout, err := fileToBuf(d.readOut, d.writeOut)
-	if err != nil {
-		return "", "", err
-	}
-	stderr, err := fileToBuf(d.readErr, d.writeErr)
-	if err != nil {
-		return "", "", err
-	}
-	return stdout, stderr, nil
-}
-
-func fileToBuf(read *os.File, write *os.File) (string, error) {
+func fileToBuf(read *os.File, write *os.File) string {
 	write.Close() // failing to close makes io.Copy hangs
 	var buf bytes.Buffer
 	if _, err := io.Copy(&buf, read); err != nil {
-		return "", err
+		panic(err)
+
 	}
-	return string(buf.Bytes()), nil
+	return string(buf.Bytes())
 }

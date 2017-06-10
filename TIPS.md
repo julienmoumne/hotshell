@@ -123,8 +123,9 @@ item({key: 'p', desc: 'python script', cmd: './script.py'})
 > When running out of characters for defining hot keys
 
 ```javascript
-// use capital letters
+// use capital letters and unicode characters
 item({key: 'S', cmd: 'ssh remote-server'})
+item({key: 'Ô', cmd: 'ssh remote-server'})
 
 // or group commands in submenus
 item({key: 'g', desc: 'group of related commands'}, function () {

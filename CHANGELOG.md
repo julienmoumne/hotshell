@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/julienmoumne/hotshell/tree/HEAD)
-
-[Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.3.0...HEAD)
+## [v0.4.0](https://github.com/julienmoumne/hotshell/tree/v0.4.0) (2017-06-10)
+[Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.3.0...v0.4.0)
 
 **Implemented enhancements:**
 
@@ -12,8 +11,8 @@
 
 **Closed issues:**
 
-- \[breaking change\] remove global variables and functions \(item\(\), exec\(\), \_, items, current\) [\#22](https://github.com/julienmoumne/hotshell/issues/22)
 - \[breaking change\] do not autoload ~/.hs/hs.js [\#21](https://github.com/julienmoumne/hotshell/issues/21)
+- \[breaking change\] remove global variables and functions \(item\(\), exec\(\), \_, items, current\) [\#22](https://github.com/julienmoumne/hotshell/issues/22)
 - \[breaking change\] remove ability to load a menu remotely [\#20](https://github.com/julienmoumne/hotshell/issues/20)
 - \[breaking change\] remove ability to specify a directory with the '-f' option [\#19](https://github.com/julienmoumne/hotshell/issues/19)
 - \[breaking change\] delete '--chdir' option [\#18](https://github.com/julienmoumne/hotshell/issues/18)

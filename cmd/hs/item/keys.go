@@ -1,25 +1,48 @@
 package item
 
-// todo understand why these codes are not the same as the ones revealed using `sudo showkey`
 var KeyCodes = struct {
-	Backspace byte
-	Tab       byte
-	Return    byte
-	Space     byte
+	Backspace string
+	Tab       string
+	Return    string
+	Space     string
+	Escape    string
+	Delete    string
+	End       string
+	Home      string
+	PageUp    string
+	PageDown  string
+	Insert    string
 }{
-	127, 9, 10, 32,
+	string(127),
+	string(9),
+	string(10),
+	string(32),
+	string(27),
+	string([]byte{27, 91, 51, 126}),
+	string([]byte{27, 91, 52, 126}),
+	string([]byte{27, 91, 49, 126}),
+	string([]byte{27, 91, 53, 126}),
+	string([]byte{27, 91, 54, 126}),
+	string([]byte{27, 91, 50, 126}),
 }
 
-var labels = map[byte]string{
+var labels = map[string]string{
 	KeyCodes.Backspace: "backspace",
 	KeyCodes.Tab:       "tabulation",
 	KeyCodes.Return:    "return",
 	KeyCodes.Space:     "spacebar",
+	KeyCodes.Escape:    "escape",
+	KeyCodes.Delete:    "delete",
+	KeyCodes.End:       "end",
+	KeyCodes.Home:      "home",
+	KeyCodes.PageUp:    "pageup",
+	KeyCodes.PageDown:  "pagedown",
+	KeyCodes.Insert:    "insert",
 }
 
-func KeyName(key byte) string {
+func KeyName(key string) string {
 	if label, found := labels[key]; found {
 		return label
 	}
-	return string(key)
+	return key
 }

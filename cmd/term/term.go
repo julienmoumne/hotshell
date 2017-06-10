@@ -42,20 +42,23 @@ func (t *Term) Restore() {
 	fmt.Println("Please file a bug report at https://github.com/julienmoumne/hotshell/issues/new")
 }
 
-func (t *Term) ReadUserChoice() (byte, error) {
+func (t *Term) ReadUserChoice() (string, error) {
 	err := pkgterm.CBreakMode(t.term)
 	defer t.Restore()
 	if err != nil {
-		return byte(0), err
+		return "", err
 	}
-	bytes := make([]byte, 1)
-	if _, err := t.term.Read(bytes); err != nil {
-		return byte(0), err
+	bs := make([]byte, 4)
+	n, err := t.term.Read(bs)
+	if err != nil {
+		return "", err
 	}
-	b := bytes[0]
-	// during tests, writing 4 to the fake pty results in 0 being read here
-	if b == 0 {
-		b = 4
+	// hack required for testing (test inputs need to be sent in fixed byte count, ie. 4, as they are sent immediately)
+	for i, b := range bs {
+		if b != 0 {
+			return string(bs[i:n]), nil
+		}
 	}
-	return b, nil
+	// during tests, sending 4 to the fake tty reads 0..
+	return string(4), nil
 }

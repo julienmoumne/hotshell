@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/mitchellh/mapstructure"
+	"unicode/utf8"
 )
 
 type mapper struct{}
@@ -47,11 +48,11 @@ func (b *mapper) adjustKey(it *item.Item) {
 		}
 		return
 	}
-	if len(it.Key) > 1 {
+	if utf8.RuneCount([]byte(it.Key)) > 1 {
 		it.Key = fmt.Sprintf("invalid-key:%v", it.Key)
 		return
 	}
-	if _, err := it.Parent.GetItem(it.Key[0]); err != nil {
+	if _, err := it.Parent.GetItem(it.Key); err != nil {
 		it.Key = fmt.Sprintf("duplicated-key:%v", it.Key)
 	}
 }

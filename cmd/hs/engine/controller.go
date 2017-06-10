@@ -13,7 +13,7 @@ import (
 
 type controller struct {
 	activeItem       *item.Item
-	lastActivatedCmd byte
+	lastActivatedCmd string
 	term             term.Term
 	activeSubprocess bool
 	keys             settings.Keys
@@ -54,7 +54,7 @@ func (c *controller) mainLoop() (bool, error) {
 		switch key {
 
 		// todo test the fact actions are ordered (helps dealing multiple actions having the same key)
-		case 4:
+		case string(4):
 			fmt.Print("\n")
 			return false, nil
 		case c.keys.Reload:
@@ -91,7 +91,7 @@ func (c *controller) printPrompt() {
 }
 
 func (c *controller) triggerLastCmd() {
-	if c.lastActivatedCmd == byte(0) {
+	if c.lastActivatedCmd == "" {
 		return
 	}
 
@@ -105,11 +105,11 @@ func (c *controller) triggerLastCmd() {
 	c.triggerItem(c.lastActivatedCmd, it)
 }
 
-func (c *controller) printKey(key byte) {
+func (c *controller) printKey(key string) {
 	fmt.Print(formatter.KeyActivatedFmt("%s\n\n", item.KeyName(key)))
 }
 
-func (c *controller) triggerItem(key byte, it *item.Item) {
+func (c *controller) triggerItem(key string, it *item.Item) {
 	c.activeSubprocess = true
 	defer func() {
 		c.activeSubprocess = false
@@ -125,7 +125,7 @@ func (c *controller) triggerItem(key byte, it *item.Item) {
 		c.lastActivatedCmd = key
 		item.Activate(c.activeItem)
 	} else {
-		c.lastActivatedCmd = byte(0)
+		c.lastActivatedCmd = ""
 		c.activeItem = nextMenu
 
 	}

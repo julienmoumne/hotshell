@@ -154,7 +154,7 @@ settings.set({
 })
 ```
 
-Only 4 keys are supported for the moment, see [#23](https://github.com/julienmoumne/hotshell/issues/23)
+Supported keys are listed in [Keys.go](cmd/hs/item/keys.go).
 
 ## Project Motives
 

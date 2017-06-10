@@ -25,15 +25,15 @@ func (i *Item) AddItem(item *Item) {
 	item.Parent = i
 }
 
-func (i *Item) GetItem(key byte) (*Item, error) {
+func (i *Item) GetItem(key string) (*Item, error) {
 	var found []*Item
 	for _, item := range i.Items {
-		if item.Key == string(key) {
+		if item.Key == key {
 			found = append(found, item)
 		}
 	}
 	if len(found) != 1 {
-		return nil, errors.New(fmt.Sprintf("could not find item for key '%v'", string(key)))
+		return nil, errors.New(fmt.Sprintf("could not find item for key '%v'", key))
 	}
 	return found[0], nil
 }

@@ -39,11 +39,11 @@ var (
 
 			settings.set({
 			  keys: {
-			    bash: 'i'
+			    bash: 2
 			  }
 			})
 			`},
-			out{err: errMsg("1 error(s) decoding:\n\n* 'Keys.Bash' expected type 'uint8', got unconvertible type 'string'")},
+			out{err: errMsg("1 error(s) decoding:\n\n* 'Keys.Bash' expected type 'string', got unconvertible type 'int64'")},
 		},
 		{
 			in{js: `
@@ -131,6 +131,7 @@ func setupTest(t testCase) {
 func validateTest(t testCase) {
 	cfg, err := loader.Load(fs)
 	if t.out.err != "" {
+		a.NotNil(err)
 		a.Equal(t.out.err, err.Error())
 	} else {
 		a.Nil(err)

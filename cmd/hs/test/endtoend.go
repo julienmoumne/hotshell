@@ -74,11 +74,13 @@ func (e *EndToEnd) getStdinSpec() (inputBytes []byte) {
 	var commentRegexp = regexp.MustCompile(`[\s\/].*$`) // everything on the right that starts with an empty space or a forward slash
 	keys := strings.Split(input, "\n")
 	for _, key := range keys {
-		intValue, err := strconv.Atoi(commentRegexp.ReplaceAllLiteralString(key, ""))
-		if err != nil {
-			e.Testing.Fatal(err)
+		for _, byteChar := range strings.Split(commentRegexp.ReplaceAllLiteralString(key, ""), ",") {
+			intValue, err := strconv.Atoi(byteChar)
+			if err != nil {
+				e.Testing.Fatal(err)
+			}
+			inputBytes = append(inputBytes, byte(intValue))
 		}
-		inputBytes = append(inputBytes, byte(intValue))
 	}
 	return
 }

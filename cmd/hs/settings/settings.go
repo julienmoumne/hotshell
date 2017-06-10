@@ -14,10 +14,10 @@ import (
 )
 
 type Keys struct {
-	Back   byte
-	Bash   byte
-	Repeat byte
-	Reload byte
+	Back   string
+	Bash   string
+	Repeat string
+	Reload string
 }
 
 func Defaults() Settings {

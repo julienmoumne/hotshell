@@ -72,25 +72,23 @@ var tests = []struct {
 		var item = require('hotshell').item
 		item({desc: 'invalid-keys'}, function(){
 			item({Cmd: 'command-without-key'})
-			item({key: 'd'})
+			item({key: 'É'})
 			item({}, function() {
 				item({})
 			})
 			item({})
-			item({key: 'd'})
-			item({key: 'too-long'})
 			item({key: 'É'})
+			item({key: 'too-long'})
 		})`,
 		out: &Item{
 			Desc: "invalid-keys",
 			Items: []*Item{
 				{Key: "key-not-provided", Cmd: "command-without-key"},
-				{Key: "duplicated-key:d"},
+				{Key: "duplicated-key:É"},
 				{Key: "key-not-provided", Items: []*Item{{}}},
 				{},
-				{Key: "d"},
+				{Key: "É"},
 				{Key: "invalid-key:too-long"},
-				{Key: "invalid-key:É"},
 			},
 		},
 	},

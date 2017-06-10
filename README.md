@@ -154,17 +154,7 @@ settings.set({
 })
 ```
 
-Only these 4 key codes are supported for the moment, cf [todos](cmd/hs/item/keys.go).
-
-An unsupported key code working on your system can be specified like so
-
-```javascript
-settings.set({
-  keys: {
-    back: 27, // Escape, Home, End, Delete, and probably others produces code 27 on my system
-  }
-})
-```
+Only 4 keys are supported for the moment, see [#23](https://github.com/julienmoumne/hotshell/issues/23)
 
 ## Project Motives
 

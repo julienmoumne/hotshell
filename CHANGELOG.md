@@ -6,6 +6,7 @@
 
 **Implemented enhancements:**
 
+- Support UTF-8 key codes [\#23](https://github.com/julienmoumne/hotshell/issues/23)
 - Generate a markdown documentation for a menu [\#16](https://github.com/julienmoumne/hotshell/issues/16)
 - As a user I would like to specify my own hotkeys [\#10](https://github.com/julienmoumne/hotshell/issues/10)
 

@@ -2,6 +2,7 @@ package item
 
 // todo these keys are working on most systems and are not likely used for menu items, are there any other?
 // todo Escape, Home, End, Delete all produces code 27, how to name this key?
+// todo understand why these codes are not the same as the ones revealed using `sudo showkey`
 var KeyCodes = struct {
 	Backspace byte
 	Tab       byte

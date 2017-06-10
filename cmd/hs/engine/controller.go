@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
+	"github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/julienmoumne/hotshell/cmd/term"
 	"os"
 	"os/signal"
@@ -12,12 +13,14 @@ import (
 
 type controller struct {
 	activeItem       *item.Item
-	lastActivatedCmd item.Key
+	lastActivatedCmd byte
 	term             term.Term
 	activeSubprocess bool
+	keys             settings.Keys
 }
 
-func (c *controller) Start(root *item.Item) (bool, error) {
+func (c *controller) Start(keySettings settings.Keys, root *item.Item) (bool, error) {
+	c.keys = keySettings
 	if err := c.initTerm(); err != nil {
 		return false, err
 	}
@@ -50,20 +53,21 @@ func (c *controller) mainLoop() (bool, error) {
 
 		switch key {
 
-		case item.EotKey:
+		// todo test the fact actions are ordered (helps dealing multiple actions having the same key)
+		case 4:
 			fmt.Print("\n")
 			return false, nil
-		case item.PreviousMenuKey:
+		case c.keys.Reload:
+			c.printKey(c.keys.Reload)
+			return true, nil
+		case c.keys.Bash:
+			c.triggerItem(key, item.BashCmd)
+		case c.keys.Back:
 			if c.activeItem.Parent != nil {
 				c.triggerItem(key, c.activeItem.Parent)
 			}
-		case item.BashKey:
-			c.triggerItem(key, item.BashCmd)
-		case item.RepeatKey:
+		case c.keys.Repeat:
 			c.triggerLastCmd()
-		case item.ReloadKey:
-			c.printKey(item.ReloadKey)
-			return true, nil
 		default:
 			if selectedItem, err := c.activeItem.GetItem(key); err == nil {
 				c.triggerItem(key, selectedItem)
@@ -73,16 +77,26 @@ func (c *controller) mainLoop() (bool, error) {
 }
 
 func (c *controller) printPrompt() {
+	fmt.Printf(
+		" %v back, %v bash, %v repeat, %v reload, %v quit",
+		formatter.HelpFmt(item.KeyName(c.keys.Back)),
+		formatter.HelpFmt(item.KeyName(c.keys.Bash)),
+		formatter.HelpFmt(item.KeyName(c.keys.Repeat)),
+		formatter.HelpFmt(item.KeyName(c.keys.Reload)),
+		formatter.HelpFmt("^d or ^c"),
+	)
+	fmt.Print("\n")
+	fmt.Print("\n")
 	fmt.Print(formatter.KeyActivatedFmt(" ? "))
 }
 
 func (c *controller) triggerLastCmd() {
-	if c.lastActivatedCmd == (item.Key{}) {
+	if c.lastActivatedCmd == byte(0) {
 		return
 	}
 
 	var it *item.Item
-	if c.lastActivatedCmd == item.BashKey {
+	if c.lastActivatedCmd == c.keys.Bash {
 		it = item.BashCmd
 	} else {
 		it, _ = c.activeItem.GetItem(c.lastActivatedCmd)
@@ -91,11 +105,11 @@ func (c *controller) triggerLastCmd() {
 	c.triggerItem(c.lastActivatedCmd, it)
 }
 
-func (c *controller) printKey(key item.Key) {
-	fmt.Print(formatter.KeyActivatedFmt("%v\n\n", key.String()))
+func (c *controller) printKey(key byte) {
+	fmt.Print(formatter.KeyActivatedFmt("%s\n\n", item.KeyName(key)))
 }
 
-func (c *controller) triggerItem(key item.Key, it *item.Item) {
+func (c *controller) triggerItem(key byte, it *item.Item) {
 	c.activeSubprocess = true
 	defer func() {
 		c.activeSubprocess = false
@@ -106,15 +120,15 @@ func (c *controller) triggerItem(key item.Key, it *item.Item) {
 	nextMenu := item.Activate(it)
 
 	menulessCmdActivated := nextMenu == nil
-	cmdActivated := nextMenu == c.activeItem
-	if menulessCmdActivated || cmdActivated {
+	cmdActivated := menulessCmdActivated || nextMenu == c.activeItem
+	if cmdActivated {
 		c.lastActivatedCmd = key
 		item.Activate(c.activeItem)
 	} else {
-		c.lastActivatedCmd = item.Key{}
+		c.lastActivatedCmd = byte(0)
 		c.activeItem = nextMenu
-	}
 
+	}
 	c.printPrompt()
 }
 

@@ -26,8 +26,6 @@ func init() {
 			out{" empty-menu\n" +
 				"\n" +
 				" no items found\n" +
-				"\n" +
-				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
 				"\n"},
 		},
 		{
@@ -35,8 +33,6 @@ func init() {
 			out{" missing-desc\n" +
 				"\n" +
 				" no items found\n" +
-				"\n" +
-				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
 				"\n"},
 		},
 		{
@@ -44,8 +40,6 @@ func init() {
 			out{" notice\n" +
 				"\n" +
 				" notice\n" +
-				"\n" +
-				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
 				"\n"},
 		},
 		{
@@ -53,8 +47,6 @@ func init() {
 			out{" cmd-without-desc\n" +
 				"\n" +
 				" k cmd-without-desc\n" +
-				"\n" +
-				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
 				"\n"},
 		},
 	}

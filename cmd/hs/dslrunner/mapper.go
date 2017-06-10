@@ -48,10 +48,10 @@ func (b *mapper) adjustKey(it *item.Item) {
 		return
 	}
 	if len(it.Key) > 1 {
-		it.Key = fmt.Sprintf("invalid-key %v", it.Key)
+		it.Key = fmt.Sprintf("invalid-key:%v", it.Key)
 		return
 	}
-	if _, err := it.Parent.GetItem(item.MakeKey(it.Key)); err != nil {
+	if _, err := it.Parent.GetItem(it.Key[0]); err != nil {
 		it.Key = fmt.Sprintf("duplicated-key:%v", it.Key)
 	}
 }

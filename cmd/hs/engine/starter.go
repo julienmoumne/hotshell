@@ -7,6 +7,7 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/documentor"
 	"github.com/julienmoumne/hotshell/cmd/hs/dslrunner"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
+	"github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/julienmoumne/hotshell/cmd/options"
 	"path/filepath"
 )
@@ -17,6 +18,7 @@ type Starter struct {
 	osCwd      string
 	definition definitionloader.Definition
 	bootSeq    []func() error
+	settings   settings.Settings
 }
 
 func (s *Starter) Start(options options.Options) error {
@@ -32,9 +34,15 @@ func (s *Starter) Start(options options.Options) error {
 
 func (s *Starter) initBootSeq() {
 	s.bootSeq = []func() error{
+		s.loadSettings,
 		s.loadDefinitionFile,
 		s.interpretDSL,
 	}
+}
+
+func (s *Starter) loadSettings() (err error) {
+	s.settings, err = (&settings.Loader{}).Load(vfs.ReadOnly(vfs.OS()))
+	return
 }
 
 func (s *Starter) doStart() (bool, error) {
@@ -71,21 +79,19 @@ func (s *Starter) generateDemo() error {
 	return (&documentor.Demo{}).Generate(s.item, filepath.Base(s.definition.Filename))
 }
 
-func (s *Starter) loadDefinitionFile() error {
-	var err error
+func (s *Starter) loadDefinitionFile() (err error) {
 	s.definition, err = (&definitionloader.Loader{}).Load(
 		vfs.ReadOnly(vfs.OS()),
 		s.options.Default, s.options.File,
 	)
-	return err
+	return
 }
 
 func (s *Starter) startController() (bool, error) {
-	return (&controller{}).Start(s.item)
+	return (&controller{}).Start(s.settings.Keys, s.item)
 }
 
-func (s *Starter) interpretDSL() error {
-	var err error
+func (s *Starter) interpretDSL() (err error) {
 	s.item, err = (&dslrunner.DslRunner{}).Run(string(s.definition.Dsl))
-	return err
+	return
 }

@@ -16,6 +16,8 @@ Quick tip : Name your definition file `hs.js` and `hs` will pick it up without h
 
   - [Installation](#installation)
   - [How to define menus](#how-to-define-menus)
+  - [JavaScript Runtime](#javascript-runtime)
+  - [Configuration](#configuration)
   - [Examples](./examples)
   - [Tips](./TIPS.md)
   - [Project Motives](#project-motives)
@@ -97,9 +99,9 @@ and the generated [markdown documentation](./doc/tutorial.hs.js.md) of the resul
 
 Check out [tips](./TIPS.md) and fully-featured [examples](./examples).
 
-### JavaScript Runtime
+## JavaScript Runtime
 
-#### `exec`
+### `exec`
 
 The system can be probed when defining menus using `exec()`
 
@@ -114,7 +116,7 @@ In case of failure, stderr is displayed in the menu without stopping the interpr
 
 See some [examples](./TIPS.md#exec).
 
-#### Underscore.js
+### Underscore.js
 
 [Underscore.js](http://underscorejs.org/) is embedded by default in Hotshell.
 
@@ -123,17 +125,46 @@ var _ = require('underscore')
 
 ```
 
-#### JavaScript Interpreter
+### JavaScript Interpreter
 
 The JavaScript is interpreted using Otto, an embeddable JavaScript interpreter.
-See [Otto](https://github.com/robertkrimen/otto) and
-[Otto Underscore](https://github.com/robertkrimen/otto/tree/master/underscore) 
+See [Otto](https://github.com/robertkrimen/otto) 
 for available JavaScript functions.
 
-#### DSL Interpreter
+### DSL Interpreter
  
 For more information on how the DSL is interpreted see
 [Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
+
+## Configuration
+
+Keybindings for menu actions can be customized in `~/.hsrc.js` :
+
+```javascript
+var settings = require('hotshell-settings')
+var keys = settings.keys
+
+settings.set({
+  keys: {
+    back: keys.Space,
+    bash: keys.Tab,
+    repeat: keys.Return,
+    reload: keys.Backspace
+  }
+})
+```
+
+Only these 4 key codes are supported for the moment, cf [todos](cmd/hs/item/keys.go).
+
+An unsupported key code working on your system can be specified like so
+
+```javascript
+settings.set({
+  keys: {
+    back: 27, // Escape, Home, End, Delete, ..
+  }
+})
+```
 
 ## Project Motives
 

@@ -1,3 +1,4 @@
+Error while reading the menu definition
 ReferenceError: 'callToUndefinedMethod' is not defined
     at <anonymous>:3:13
     at <unknown>

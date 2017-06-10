@@ -1,11 +1,16 @@
 package dslrunner_test
 
 import (
+	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/dslrunner"
 	. "github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
+
+func errMsg(msg string) string {
+	return fmt.Sprintf("Error while reading the menu definition\n%s", msg)
+}
 
 var tests = []struct {
 	in  string
@@ -15,7 +20,7 @@ var tests = []struct {
 	// empty values
 	{
 		in:  ``,
-		err: "no items found",
+		err: errMsg("no items found"),
 	},
 	{
 		in:  `require('hotshell').item({})`,
@@ -27,7 +32,7 @@ var tests = []struct {
 		item({})
 		item({})
 		`,
-		err: "only one top level item is allowed, found 2",
+		err: errMsg("only one top level item is allowed, found 2"),
 	},
 	{
 		in:  `require('hotshell').item({ignoredKey: ['test']})`,
@@ -45,7 +50,7 @@ var tests = []struct {
 	// invalid root item
 	{
 		in:  `require('hotshell').item({cmd: "echo 'test'"})`,
-		err: "top level item must not be a command",
+		err: errMsg("top level item must not be a command"),
 	},
 	// missing desc
 	{
@@ -84,15 +89,15 @@ var tests = []struct {
 					Items: []*Item{{Desc: "key-not-provided-empty-menu"}},
 				},
 				{Desc: "key-not-provided-empty-menu"},
-				{Key: "duplicated-key:d", Desc: "duplicated-key", Cmd: "duplicated-key"},
-				{Key: "invalid-key too-long", Desc: "too-long", Cmd: "too-long"},
+				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
+				{Key: "invalid-key:too-long", Desc: "too-long", Cmd: "too-long"},
 			},
 		},
 	},
 	// JS runtime errors
 	{
 		in:  `item()`,
-		err: "ReferenceError: 'item' is not defined\n    at <anonymous>:2:1\n    at <unknown>",
+		err: errMsg("ReferenceError: 'item' is not defined\n    at <anonymous>:2:1\n    at <unknown>"),
 	},
 	{
 		in: `
@@ -104,7 +109,7 @@ var tests = []struct {
 	},
 	{
 		in:  `invalidStatement{}`,
-		err: "(anonymous): Line 2:17 Unexpected token { (and 2 more errors)",
+		err: errMsg("(anonymous): Line 2:17 Unexpected token { (and 2 more errors)"),
 	},
 	{
 		in: `
@@ -128,7 +133,7 @@ var tests = []struct {
 		var exec = require('hotshell').exec
 		item({desc: exec('eco "1"')})
 		`,
-		err: "\"/bin/bash -c 'eco \"1\"'\" failed with exit status 127 \"bash: eco: command not found\"\n    at <unknown>\n    at <anonymous>:5:15\n    at <unknown>",
+		err: errMsg("\"/bin/bash -c 'eco \"1\"'\" failed with exit status 127 \"bash: eco: command not found\"\n    at <unknown>\n    at <anonymous>:5:15\n    at <unknown>"),
 	},
 	{
 		in: `
@@ -143,23 +148,23 @@ var tests = []struct {
 	// type errors
 	{
 		in:  `require('hotshell').items = ['test', 2]`,
-		err: "2 error(s) decoding:\n\n* '[0]' expected a map, got 'string'\n* '[1]' expected a map, got 'int64'",
+		err: errMsg("2 error(s) decoding:\n\n* '[0]' expected a map, got 'string'\n* '[1]' expected a map, got 'int64'"),
 	},
 	{
 		in:  `require('hotshell').item({key: []})`,
-		err: "1 error(s) decoding:\n\n* '[0].Key' expected type 'string', got unconvertible type '[]interface {}'",
+		err: errMsg("1 error(s) decoding:\n\n* '[0].Key' expected type 'string', got unconvertible type '[]interface {}'"),
 	},
 	{
 		in:  `require('hotshell').item({desc: []})`,
-		err: "1 error(s) decoding:\n\n* '[0].Desc' expected type 'string', got unconvertible type '[]interface {}'",
+		err: errMsg("1 error(s) decoding:\n\n* '[0].Desc' expected type 'string', got unconvertible type '[]interface {}'"),
 	},
 	{
 		in:  `require('hotshell').item({cmd: []})`,
-		err: "1 error(s) decoding:\n\n* '[0].Cmd' expected type 'string', got unconvertible type '[]interface {}'",
+		err: errMsg("1 error(s) decoding:\n\n* '[0].Cmd' expected type 'string', got unconvertible type '[]interface {}'"),
 	},
 	{
 		in:  `require('hotshell').items = [{items: ["test"]}]`,
-		err: "1 error(s) decoding:\n\n* '[0].Items[0]' expected a map, got 'string'",
+		err: errMsg("1 error(s) decoding:\n\n* '[0].Items[0]' expected a map, got 'string'"),
 	},
 	// doubly nested menu
 	{

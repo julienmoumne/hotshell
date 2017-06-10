@@ -15,21 +15,7 @@ func (m *MenuActivator) Activate(item *Item) *Item {
 	m.item = item
 	m.printBreadcrumb()
 	m.printItems()
-	m.printHelp()
 	return m.item
-}
-
-func (m *MenuActivator) printHelp() {
-	m.printf(
-		" %v back, %v bash, %v repeat, %v reload, %v quit",
-		formatter.HelpFmt(PreviousMenuKey.String()),
-		formatter.HelpFmt(BashKey.String()),
-		formatter.HelpFmt(RepeatKey.String()),
-		formatter.HelpFmt(ReloadKey.String()),
-		formatter.HelpFmt("^d or ^c"),
-	)
-	m.print("\n")
-	m.print("\n")
 }
 
 func (m *MenuActivator) printItems() {

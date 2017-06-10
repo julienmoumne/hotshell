@@ -2,7 +2,6 @@ package term
 
 import (
 	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	pkgterm "github.com/pkg/term"
 )
 
@@ -43,21 +42,20 @@ func (t *Term) Restore() {
 	fmt.Println("Please file a bug report at https://github.com/julienmoumne/hotshell/issues/new")
 }
 
-func (t *Term) ReadUserChoice() (item.Key, error) {
+func (t *Term) ReadUserChoice() (byte, error) {
 	err := pkgterm.CBreakMode(t.term)
 	defer t.Restore()
-
 	if err != nil {
-		return item.Key{}, err
+		return byte(0), err
 	}
-
 	bytes := make([]byte, 1)
-	_, err = t.term.Read(bytes)
-
-	// during tests, writing 4 to the fake pty results in 0 being read here..
-	if bytes[0] == 0 {
-		bytes[0] = 4
+	if _, err := t.term.Read(bytes); err != nil {
+		return byte(0), err
 	}
-
-	return item.MakeKey(string(bytes)), err
+	b := bytes[0]
+	// during tests, writing 4 to the fake pty results in 0 being read here
+	if b == 0 {
+		b = 4
+	}
+	return b, nil
 }

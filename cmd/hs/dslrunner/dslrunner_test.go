@@ -71,26 +71,26 @@ var tests = []struct {
 		in: `
 		var item = require('hotshell').item
 		item({desc: 'invalid-keys'}, function(){
-			item({desc: 'key-not-provided-cmd', cmd: 'key-not-provided-cmd'})
-			item({key: 'd', desc: 'duplicated-key', cmd: 'duplicated-key'})
-			item({desc: 'key-not-provided-menu'}, function() {
-				item({desc: 'key-not-provided-empty-menu'})
+			item({Cmd: 'command-without-key'})
+			item({key: 'd'})
+			item({}, function() {
+				item({})
 			})
-			item({desc: 'key-not-provided-empty-menu'})
-			item({key: 'd', desc: 'duplicated-key', cmd: 'duplicated-key'})
-			item({key: 'too-long', desc: 'too-long', cmd: 'too-long'})
+			item({})
+			item({key: 'd'})
+			item({key: 'too-long'})
+			item({key: 'É'})
 		})`,
 		out: &Item{
 			Desc: "invalid-keys",
 			Items: []*Item{
-				{Key: "key-not-provided", Desc: "key-not-provided-cmd", Cmd: "key-not-provided-cmd"},
-				{Key: "duplicated-key:d", Desc: "duplicated-key", Cmd: "duplicated-key"},
-				{Key: "key-not-provided", Desc: "key-not-provided-menu",
-					Items: []*Item{{Desc: "key-not-provided-empty-menu"}},
-				},
-				{Desc: "key-not-provided-empty-menu"},
-				{Key: "d", Desc: "duplicated-key", Cmd: "duplicated-key"},
-				{Key: "invalid-key:too-long", Desc: "too-long", Cmd: "too-long"},
+				{Key: "key-not-provided", Cmd: "command-without-key"},
+				{Key: "duplicated-key:d"},
+				{Key: "key-not-provided", Items: []*Item{{}}},
+				{},
+				{Key: "d"},
+				{Key: "invalid-key:too-long"},
+				{Key: "invalid-key:É"},
 			},
 		},
 	},

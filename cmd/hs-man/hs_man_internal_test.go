@@ -27,8 +27,8 @@ Hotshell is a command-line application to efficiently recall and share commands.
 \fB\fB\-\-default\fR\fP
 Load the default menu to get to know Hotshell
 .TP
-\fB\fB\-f\fR, \fB\-\-file\fR \fIFILE|DIR\fR\fP
-Specify an alternate definition file (defaults: ./hs.js, ~/.hs/hs.js)
+\fB\fB\-f\fR, \fB\-\-file\fR \fIFILE\fR\fP
+Specify an alternate definition file (default: ./hs.js)
 .TP
 \fB\fB\-\-generate-demo\fR\fP
 Generate an interactive HTML demo to stdout

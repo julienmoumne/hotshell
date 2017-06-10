@@ -161,7 +161,7 @@ An unsupported key code working on your system can be specified like so
 ```javascript
 settings.set({
   keys: {
-    back: 27, // Escape, Home, End, Delete, ..
+    back: 27, // Escape, Home, End, Delete, .., all produces code 27
   }
 })
 ```

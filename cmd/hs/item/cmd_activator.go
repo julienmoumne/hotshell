@@ -3,17 +3,15 @@ package item
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
-	"io"
 	"os"
 	"os/exec"
 )
 
 type CmdActivator struct {
 	item *Item
-	Out  io.Writer
 }
 
-func (c *CmdActivator) Activate(item *Item) *Item {
+func (c *CmdActivator) Activate(item *Item) {
 	c.item = item
 	command := exec.Command("bash", "-c", c.item.Cmd)
 
@@ -32,13 +30,12 @@ func (c *CmdActivator) Activate(item *Item) *Item {
 	}
 
 	c.print("\n")
-	return c.item.Parent
 }
 
 func (c *CmdActivator) printf(format string, a ...interface{}) (n int, err error) {
-	return fmt.Fprintf(c.Out, format, a...)
+	return fmt.Fprintf(os.Stdout, format, a...)
 }
 
 func (c *CmdActivator) print(a ...interface{}) (n int, err error) {
-	return fmt.Fprint(c.Out, a...)
+	return fmt.Fprint(os.Stdout, a...)
 }

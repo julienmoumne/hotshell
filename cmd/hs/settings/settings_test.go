@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/blang/vfs"
 	"github.com/blang/vfs/memfs"
-	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	. "github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/mitchellh/go-homedir"
 	"github.com/stretchr/testify/assert"
@@ -60,10 +59,10 @@ var (
 			})
 			`},
 			out{cfg: Settings{Keys: Keys{
-				Back:   item.KeyCodes.Return,
-				Bash:   item.KeyCodes.Backspace,
-				Repeat: item.KeyCodes.Tab,
-				Reload: item.KeyCodes.Space,
+				Back:   KeyCodes.Return,
+				Bash:   KeyCodes.Backspace,
+				Repeat: KeyCodes.Tab,
+				Reload: KeyCodes.Space,
 			}}},
 		},
 		{
@@ -78,10 +77,10 @@ var (
 			})
 			`},
 			out{cfg: Settings{Keys: Keys{
-				Back:   item.KeyCodes.Space,
-				Bash:   item.KeyCodes.Tab,
-				Repeat: item.KeyCodes.Tab,
-				Reload: item.KeyCodes.Backspace,
+				Back:   KeyCodes.Space,
+				Bash:   KeyCodes.Tab,
+				Repeat: KeyCodes.Tab,
+				Reload: KeyCodes.Backspace,
 			}}},
 		},
 	}

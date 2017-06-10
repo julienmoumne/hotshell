@@ -2,6 +2,7 @@ package engine
 
 // todo unit test me
 import (
+	"fmt"
 	"github.com/blang/vfs"
 	"github.com/julienmoumne/hotshell/cmd/hs/definitionloader"
 	"github.com/julienmoumne/hotshell/cmd/hs/documentor"
@@ -9,6 +10,7 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/julienmoumne/hotshell/cmd/options"
+	"github.com/julienmoumne/hotshell/cmd/term"
 	"path/filepath"
 )
 
@@ -88,7 +90,16 @@ func (s *Starter) loadDefinitionFile() (err error) {
 }
 
 func (s *Starter) startController() (bool, error) {
-	return (&controller{}).Start(s.settings.Keys, s.item)
+	t, err := term.NewTerm()
+	if err != nil {
+		return false, err
+	}
+	defer func() {
+		if err := t.Close(); err != nil {
+			fmt.Println(err)
+		}
+	}()
+	return (&controller{}).Start(s.settings.Keys, s.item, t)
 }
 
 func (s *Starter) interpretDSL() (err error) {

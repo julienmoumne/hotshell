@@ -1,4 +1,4 @@
-package item
+package settings
 
 var KeyCodes = struct {
 	Backspace string

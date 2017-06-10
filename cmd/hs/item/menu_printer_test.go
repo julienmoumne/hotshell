@@ -3,15 +3,16 @@ package item_test
 import (
 	"bytes"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
+	"github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 var (
-	a         *assert.Assertions
-	buf       *bytes.Buffer
-	activator item.MenuActivator
-	tests     []testCase
+	a       *assert.Assertions
+	buf     *bytes.Buffer
+	printer item.MenuPrinter
+	tests   []testCase
 )
 
 func init() {
@@ -26,28 +27,36 @@ func init() {
 			out{" empty-menu\n" +
 				"\n" +
 				" no items found\n" +
-				"\n"},
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n ? "},
 		},
 		{
 			in{&item.Item{}},
 			out{" missing-desc\n" +
 				"\n" +
 				" no items found\n" +
-				"\n"},
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n ? "},
 		},
 		{
 			in{emptyDescInNestedMenu},
 			out{" notice\n" +
 				"\n" +
 				" notice\n" +
-				"\n"},
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n ? "},
 		},
 		{
 			in{cmdWithoutDesc},
 			out{" cmd-without-desc\n" +
 				"\n" +
 				" k cmd-without-desc\n" +
-				"\n"},
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n ? "},
 		},
 	}
 }
@@ -65,7 +74,7 @@ type (
 	}
 )
 
-func TestMenuActivator(t *testing.T) {
+func TestMenuPrinter(t *testing.T) {
 	a = assert.New(t)
 	for _, test := range tests {
 		runTest(test)
@@ -79,10 +88,10 @@ func runTest(t testCase) {
 
 func setupTest() {
 	buf = &bytes.Buffer{}
-	activator = item.MenuActivator{Out: buf}
+	printer = item.MenuPrinter{Out: buf}
 }
 
 func validateTest(t testCase) {
-	activator.Activate(t.in.item)
+	printer.Print(t.in.item, settings.Defaults().Keys)
 	a.Equal(t.out.str, buf.String())
 }

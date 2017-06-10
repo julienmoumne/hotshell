@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/blang/vfs"
 	"github.com/ddliu/motto"
-	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	. "github.com/julienmoumne/hotshell/cmd/hs/jsinterpreter"
 	"github.com/mitchellh/go-homedir"
 	"github.com/mitchellh/mapstructure"
@@ -23,10 +22,10 @@ type Keys struct {
 func Defaults() Settings {
 	return Settings{
 		Keys: Keys{
-			Back:   item.KeyCodes.Space,
-			Bash:   item.KeyCodes.Tab,
-			Repeat: item.KeyCodes.Return,
-			Reload: item.KeyCodes.Backspace,
+			Back:   KeyCodes.Space,
+			Bash:   KeyCodes.Tab,
+			Repeat: KeyCodes.Return,
+			Reload: KeyCodes.Backspace,
 		},
 	}
 }
@@ -92,7 +91,7 @@ func (l *Loader) createSettingsModule() (JsModule, error) {
 			if err != nil {
 				return otto.Value{}, err
 			}
-			if err := module.Object().Set("keys", item.KeyCodes); err != nil {
+			if err := module.Object().Set("keys", KeyCodes); err != nil {
 				return otto.Value{}, err
 			}
 			return module, nil

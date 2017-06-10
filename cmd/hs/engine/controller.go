@@ -12,45 +12,31 @@ import (
 )
 
 type controller struct {
-	activeItem       *item.Item
-	lastActivatedCmd string
-	term             term.Term
-	activeSubprocess bool
-	keys             settings.Keys
+	activeMenu        *item.Item
+	lastActivatedItem *item.Item
+	term              term.Term
+	activeSubprocess  bool
+	keys              settings.Keys
 }
 
-func (c *controller) Start(keySettings settings.Keys, root *item.Item) (bool, error) {
+func (c *controller) Start(keySettings settings.Keys, root *item.Item, term term.Term) (bool, error) {
+	c.term = term
 	c.keys = keySettings
-	if err := c.initTerm(); err != nil {
-		return false, err
-	}
-	defer func() {
-		if err := c.term.Close(); err != nil {
-			fmt.Println(err)
-		}
-	}()
-
+	c.activeMenu = root
+	c.lastActivatedItem = root
 	c.initSignals()
 	defer c.resetSignals()
-
-	fmt.Print("\n")
-	c.activeItem = item.Activate(root)
 	return c.mainLoop()
 }
 
-func (c *controller) initTerm() (err error) {
-	c.term, err = term.NewTerm()
-	return
-}
-
 func (c *controller) mainLoop() (bool, error) {
-	c.printPrompt()
+	fmt.Print("\n")
+	c.displayMenu(c.activeMenu)
 	for {
 		key, err := c.term.ReadUserChoice()
 		if err != nil {
 			return false, err
 		}
-
 		switch key {
 
 		// todo test the fact actions are ordered (helps dealing multiple actions having the same key)
@@ -58,78 +44,49 @@ func (c *controller) mainLoop() (bool, error) {
 			fmt.Print("\n")
 			return false, nil
 		case c.keys.Reload:
-			c.printKey(c.keys.Reload)
+			c.printKey(key)
 			return true, nil
 		case c.keys.Bash:
-			c.triggerItem(key, item.BashCmd)
+			c.triggerItem(key, item.BashCmd(c.keys.Bash))
 		case c.keys.Back:
-			if c.activeItem.Parent != nil {
-				c.triggerItem(key, c.activeItem.Parent)
+			if c.activeMenu.Parent != nil {
+				c.triggerItem(key, c.activeMenu.Parent)
+			} else {
+				c.triggerItem(key, c.activeMenu)
 			}
 		case c.keys.Repeat:
-			c.triggerLastCmd()
+			c.triggerItem(key, c.lastActivatedItem)
 		default:
-			if selectedItem, err := c.activeItem.GetItem(key); err == nil {
-				c.triggerItem(key, selectedItem)
+			if it, err := c.activeMenu.GetItem(key); err == nil {
+				c.triggerItem(key, it)
 			}
 		}
 	}
 }
 
-func (c *controller) printPrompt() {
-	fmt.Printf(
-		" %v back, %v bash, %v repeat, %v reload, %v quit",
-		formatter.HelpFmt(item.KeyName(c.keys.Back)),
-		formatter.HelpFmt(item.KeyName(c.keys.Bash)),
-		formatter.HelpFmt(item.KeyName(c.keys.Repeat)),
-		formatter.HelpFmt(item.KeyName(c.keys.Reload)),
-		formatter.HelpFmt("^d or ^c"),
-	)
-	fmt.Print("\n")
-	fmt.Print("\n")
-	fmt.Print(formatter.KeyActivatedFmt(" ? "))
+func (c *controller) triggerItem(key string, it *item.Item) {
+	c.printKey(key)
+	c.lastActivatedItem = it
+	if it.IsCmd() {
+		c.triggerCmd(it)
+	} else {
+		c.activeMenu = it
+	}
+	c.displayMenu(c.activeMenu)
 }
 
-func (c *controller) triggerLastCmd() {
-	if c.lastActivatedCmd == "" {
-		return
-	}
+func (c *controller) triggerCmd(cmd *item.Item) {
+	c.activeSubprocess = true
+	(&item.CmdActivator{}).Activate(cmd)
+	c.activeSubprocess = false
+}
 
-	var it *item.Item
-	if c.lastActivatedCmd == c.keys.Bash {
-		it = item.BashCmd
-	} else {
-		it, _ = c.activeItem.GetItem(c.lastActivatedCmd)
-	}
-
-	c.triggerItem(c.lastActivatedCmd, it)
+func (c *controller) displayMenu(menu *item.Item) {
+	(&item.MenuPrinter{Out: os.Stdout}).Print(c.activeMenu, c.keys)
 }
 
 func (c *controller) printKey(key string) {
-	fmt.Print(formatter.KeyActivatedFmt("%s\n\n", item.KeyName(key)))
-}
-
-func (c *controller) triggerItem(key string, it *item.Item) {
-	c.activeSubprocess = true
-	defer func() {
-		c.activeSubprocess = false
-	}()
-
-	c.printKey(key)
-
-	nextMenu := item.Activate(it)
-
-	menulessCmdActivated := nextMenu == nil
-	cmdActivated := menulessCmdActivated || nextMenu == c.activeItem
-	if cmdActivated {
-		c.lastActivatedCmd = key
-		item.Activate(c.activeItem)
-	} else {
-		c.lastActivatedCmd = ""
-		c.activeItem = nextMenu
-
-	}
-	c.printPrompt()
+	fmt.Print(formatter.KeyActivatedFmt("%s\n\n", settings.KeyName(key)))
 }
 
 func (c *controller) initSignals() {

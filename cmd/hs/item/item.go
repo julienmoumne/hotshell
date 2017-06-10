@@ -6,7 +6,9 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
 )
 
-var BashCmd = &Item{Key: "", Desc: "bash", Cmd: "bash -l"}
+func BashCmd(key string) *Item {
+	return &Item{Key: key, Desc: "bash", Cmd: "bash -l"}
+}
 
 type Item struct {
 	Key    string

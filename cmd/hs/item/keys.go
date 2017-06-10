@@ -7,11 +7,6 @@ var KeyCodes = struct {
 	Space     string
 	Escape    string
 	Delete    string
-	End       string
-	Home      string
-	PageUp    string
-	PageDown  string
-	Insert    string
 }{
 	string(127),
 	string(9),
@@ -19,11 +14,6 @@ var KeyCodes = struct {
 	string(32),
 	string(27),
 	string([]byte{27, 91, 51, 126}),
-	string([]byte{27, 91, 52, 126}),
-	string([]byte{27, 91, 49, 126}),
-	string([]byte{27, 91, 53, 126}),
-	string([]byte{27, 91, 54, 126}),
-	string([]byte{27, 91, 50, 126}),
 }
 
 var labels = map[string]string{
@@ -33,11 +23,6 @@ var labels = map[string]string{
 	KeyCodes.Space:     "spacebar",
 	KeyCodes.Escape:    "escape",
 	KeyCodes.Delete:    "delete",
-	KeyCodes.End:       "end",
-	KeyCodes.Home:      "home",
-	KeyCodes.PageUp:    "pageup",
-	KeyCodes.PageDown:  "pagedown",
-	KeyCodes.Insert:    "insert",
 }
 
 func KeyName(key string) string {

@@ -6,13 +6,16 @@
 
 **Implemented enhancements:**
 
-- Deprecate global variables and functions \(item\(\), exec\(\), \_, items, current\) [\#22](https://github.com/julienmoumne/hotshell/issues/22)
-- Deprecate autoload of ~/.hs/hs.js [\#21](https://github.com/julienmoumne/hotshell/issues/21)
-- Deprecate ability to load a menu remotely [\#20](https://github.com/julienmoumne/hotshell/issues/20)
-- Deprecate ability to specify a directory with the '-f' option [\#19](https://github.com/julienmoumne/hotshell/issues/19)
-- Deprecate '--chdir' option [\#18](https://github.com/julienmoumne/hotshell/issues/18)
-- Ability to generate a markdown documentation of a menu [\#16](https://github.com/julienmoumne/hotshell/issues/16)
+- Generate a markdown documentation for a menu [\#16](https://github.com/julienmoumne/hotshell/issues/16)
 - As a user I would like to specify my own hotkeys [\#10](https://github.com/julienmoumne/hotshell/issues/10)
+
+**Closed issues:**
+
+- \[breaking change\] remove global variables and functions \(item\(\), exec\(\), \_, items, current\) [\#22](https://github.com/julienmoumne/hotshell/issues/22)
+- \[breaking change\] do not autoload ~/.hs/hs.js [\#21](https://github.com/julienmoumne/hotshell/issues/21)
+- \[breaking change\] remove ability to load a menu remotely [\#20](https://github.com/julienmoumne/hotshell/issues/20)
+- \[breaking change\] remove ability to specify a directory with the '-f' option [\#19](https://github.com/julienmoumne/hotshell/issues/19)
+- \[breaking change\] delete '--chdir' option [\#18](https://github.com/julienmoumne/hotshell/issues/18)
 
 ## [v0.3.0](https://github.com/julienmoumne/hotshell/tree/v0.3.0) (2016-08-07)
 [Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.2.0...v0.3.0)
@@ -26,7 +29,7 @@
 
 **Implemented enhancements:**
 
-- \[API Change\] Improve syntax when specifying reusable items and menus [\#6](https://github.com/julienmoumne/hotshell/issues/6)
+- \[breaking change\] improve syntax when specifying reusable items and menus [\#6](https://github.com/julienmoumne/hotshell/issues/6)
 - Automated changelog using skywinder/github-changelog-generator [\#5](https://github.com/julienmoumne/hotshell/issues/5)
 - New example : How to factor group of commands [\#3](https://github.com/julienmoumne/hotshell/issues/3)
 - Automated installation on OSX using Howebrew [\#2](https://github.com/julienmoumne/hotshell/issues/2)

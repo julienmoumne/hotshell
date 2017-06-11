@@ -30,7 +30,6 @@ func (c *controller) Start(keySettings settings.Keys, root *item.Item, term term
 }
 
 func (c *controller) mainLoop() (bool, error) {
-	fmt.Print("\n")
 	c.displayMenu(c.activeMenu)
 	for {
 		key, err := c.term.ReadUserChoice()

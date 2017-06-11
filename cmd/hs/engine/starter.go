@@ -26,10 +26,24 @@ type Starter struct {
 func (s *Starter) Start(options options.Options) error {
 	s.options = options
 	s.initBootSeq()
-	for reload, err := s.doStart(); err != nil || reload; reload, err = s.doStart() {
-		if err != nil {
-			return err
-		}
+	if s.options.GenerateDemo {
+		return s.bootAndStart(s.generateDemo)
+	} else if s.options.GenerateMd {
+		return s.bootAndStart(s.generateMd)
+	}
+	return s.startControllerWithAutoReload()
+}
+
+func (s *Starter) startControllerWithAutoReload() error {
+	var reload bool
+	if err := s.bootAndStart(func() (err error) {
+		reload, err = s.startController()
+		return
+	}); err != nil {
+		return err
+	}
+	if reload {
+		return s.startControllerWithAutoReload()
 	}
 	return nil
 }
@@ -47,11 +61,11 @@ func (s *Starter) loadSettings() (err error) {
 	return
 }
 
-func (s *Starter) doStart() (bool, error) {
+func (s *Starter) bootAndStart(f func() error) error {
 	if err := s.executeBootSeq(); err != nil {
-		return false, err
+		return err
 	}
-	return s.activateAction()
+	return f()
 }
 
 func (s *Starter) executeBootSeq() error {
@@ -63,21 +77,12 @@ func (s *Starter) executeBootSeq() error {
 	return nil
 }
 
-func (s *Starter) activateAction() (bool, error) {
-	if s.options.GenerateDemo {
-		return false, s.generateDemo()
-	} else if s.options.GenerateMd {
-		return false, s.generateMd()
-	} else {
-		return s.startController()
-	}
-}
-
 func (s *Starter) generateMd() error {
 	return (&documentor.Md{}).Generate(s.item, filepath.Base(s.definition.Filename))
 }
 
 func (s *Starter) generateDemo() error {
+
 	return (&documentor.Demo{}).Generate(s.item, filepath.Base(s.definition.Filename))
 }
 
@@ -99,7 +104,9 @@ func (s *Starter) startController() (bool, error) {
 			fmt.Println(err)
 		}
 	}()
+	fmt.Print("\n")
 	return (&controller{}).Start(s.settings.Keys, s.item, t)
+
 }
 
 func (s *Starter) interpretDSL() (err error) {

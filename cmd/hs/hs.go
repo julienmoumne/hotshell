@@ -26,10 +26,6 @@ func (h *hs) start() error {
 	if h.options.Version {
 		return h.printVersion()
 	}
-	return h.startHotshell()
-}
-
-func (h *hs) startHotshell() error {
 	return (&engine.Starter{}).Start(h.options)
 }
 

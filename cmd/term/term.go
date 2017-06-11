@@ -13,12 +13,12 @@ type Term struct {
 	term *pkgterm.Term
 }
 
-func NewTerm() (Term, error) {
+func NewTerm() (*Term, error) {
 	t, err := pkgterm.Open(tty)
 	if err != nil {
-		return Term{}, err
+		return nil, err
 	}
-	return Term{t}, err
+	return &Term{t}, err
 }
 
 func (t *Term) Close() error {
@@ -42,7 +42,7 @@ func (t *Term) Restore() {
 	fmt.Println("Please file a bug report at https://github.com/julienmoumne/hotshell/issues/new")
 }
 
-func (t *Term) ReadUserChoice() (string, error) {
+func (t *Term) ReadUserInput() (string, error) {
 	err := pkgterm.CBreakMode(t.term)
 	defer t.Restore()
 	if err != nil {

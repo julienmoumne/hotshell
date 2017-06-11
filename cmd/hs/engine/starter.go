@@ -10,7 +10,6 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/julienmoumne/hotshell/cmd/options"
-	"github.com/julienmoumne/hotshell/cmd/term"
 	"path/filepath"
 )
 
@@ -21,6 +20,7 @@ type Starter struct {
 	definition definitionloader.Definition
 	bootSeq    []func() error
 	settings   settings.Settings
+	dispatcher *dispatcher
 }
 
 func (s *Starter) Start(options options.Options) error {
@@ -94,18 +94,15 @@ func (s *Starter) loadDefinitionFile() (err error) {
 	return
 }
 
-func (s *Starter) startController() (bool, error) {
-	t, err := term.NewTerm()
+func (s *Starter) startController() (reload bool, err error) {
+	s.dispatcher, err = newDispatcher(s.settings.Keys)
 	if err != nil {
-		return false, err
+		return
 	}
-	defer func() {
-		if err := t.Close(); err != nil {
-			fmt.Println(err)
-		}
-	}()
+	defer s.dispatcher.cleanup()
 	fmt.Print("\n")
-	return (&controller{}).Start(s.settings.Keys, s.item, t)
+	reload, err = (&controller{}).Start(s.settings.Keys, s.item, s.dispatcher)
+	return
 
 }
 

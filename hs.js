@@ -22,7 +22,7 @@ item({desc: 'hotshell-dev'}, function () {
 
     item({key: 't', desc: 'tests'}, function () {
         item({key: 't', desc: 'test', cmd: runTests})
-        item({key: 'o', desc: 'failed end2end tests', cmd: browser + ' ' + hsCmdDir + '/test/tmp'})
+        item({key: 'o', desc: 'failed end2end tests', cmd: browser + ' ' + hsCmdDir + '/test/tmp &'})
     })
 
     item({key: 'e', desc: 'examples'}, function () {

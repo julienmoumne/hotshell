@@ -2,37 +2,44 @@ package engine
 
 // todo unit test me
 import (
-	"fmt"
-	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/julienmoumne/hotshell/cmd/term"
-	"os"
-	"os/signal"
 )
 
 type controller struct {
 	activeMenu        *item.Item
 	lastActivatedItem *item.Item
 	term              term.Term
-	activeSubprocess  bool
 	keys              settings.Keys
+	dispatcher        *dispatcher
 }
 
-func (c *controller) Start(keySettings settings.Keys, root *item.Item, term term.Term) (bool, error) {
-	c.term = term
+type validKeyEvent struct {
+	key string
+}
+type itemEvent struct {
+	item *item.Item
+}
+type cmdEvent struct {
+	itemEvent
+}
+type menuEvent struct {
+	itemEvent
+}
+
+func (c *controller) Start(keySettings settings.Keys, root *item.Item, dispatcher *dispatcher) (bool, error) {
+	c.dispatcher = dispatcher
 	c.keys = keySettings
 	c.activeMenu = root
 	c.lastActivatedItem = root
-	c.initSignals()
-	defer c.resetSignals()
 	return c.mainLoop()
 }
 
 func (c *controller) mainLoop() (bool, error) {
-	c.displayMenu(c.activeMenu)
+	c.sendMenuEvent(c.activeMenu)
 	for {
-		key, err := c.term.ReadUserChoice()
+		key, err := c.dispatcher.readUserInput()
 		if err != nil {
 			return false, err
 		}
@@ -42,7 +49,7 @@ func (c *controller) mainLoop() (bool, error) {
 		case string(4):
 			return false, nil
 		case c.keys.Reload:
-			c.printKey(key)
+			c.sendKeyEvent(key)
 			return true, nil
 		case c.keys.Bash:
 			c.triggerItem(key, item.BashCmd(c.keys.Bash))
@@ -63,45 +70,24 @@ func (c *controller) mainLoop() (bool, error) {
 }
 
 func (c *controller) triggerItem(key string, it *item.Item) {
-	c.printKey(key)
+	c.sendKeyEvent(key)
 	c.lastActivatedItem = it
 	if it.IsCmd() {
-		c.triggerCmd(it)
+		c.sendCmdEvent(it)
 	} else {
 		c.activeMenu = it
 	}
-	c.displayMenu(c.activeMenu)
+	c.sendMenuEvent(c.activeMenu)
 }
 
-func (c *controller) triggerCmd(cmd *item.Item) {
-	c.activeSubprocess = true
-	(&item.CmdActivator{}).Activate(cmd)
-	c.activeSubprocess = false
+func (c *controller) sendCmdEvent(cmd *item.Item) {
+	c.dispatcher.dispatchEvent(cmdEvent{itemEvent{item: cmd}})
 }
 
-func (c *controller) displayMenu(menu *item.Item) {
-	(&item.MenuPrinter{Out: os.Stdout}).Print(c.activeMenu, c.keys)
+func (c *controller) sendMenuEvent(menu *item.Item) {
+	c.dispatcher.dispatchEvent(menuEvent{itemEvent{item: menu}})
 }
 
-func (c *controller) printKey(key string) {
-	fmt.Print(formatter.KeyActivatedFmt("%s\n\n", settings.KeyName(key)))
-}
-
-func (c *controller) initSignals() {
-	channel := make(chan os.Signal, 1)
-	signal.Notify(channel, os.Interrupt)
-	go func() {
-		for _ = range channel {
-			if c.activeSubprocess {
-				continue
-			}
-			c.term.Restore()
-			fmt.Print("\n")
-			os.Exit(0)
-		}
-	}()
-}
-
-func (c *controller) resetSignals() {
-	signal.Reset()
+func (c *controller) sendKeyEvent(key string) {
+	c.dispatcher.dispatchEvent(validKeyEvent{key: key})
 }

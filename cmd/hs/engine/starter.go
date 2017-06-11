@@ -35,17 +35,16 @@ func (s *Starter) Start(options options.Options) error {
 }
 
 func (s *Starter) startControllerWithAutoReload() error {
-	var reload bool
-	if err := s.bootAndStart(func() (err error) {
-		reload, err = s.startController()
-		return
-	}); err != nil {
-		return err
-	}
-	if reload {
-		return s.startControllerWithAutoReload()
-	}
-	return nil
+	return s.bootAndStart(func() error {
+		reload, err := s.startController()
+		if err != nil {
+			return err
+		}
+		if reload {
+			return s.startControllerWithAutoReload()
+		}
+		return nil
+	})
 }
 
 func (s *Starter) initBootSeq() {

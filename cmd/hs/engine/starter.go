@@ -43,6 +43,7 @@ func (s *Starter) startControllerWithAutoReload() error {
 		if reload {
 			return s.startControllerWithAutoReload()
 		}
+		fmt.Print("\n")
 		return nil
 	})
 }

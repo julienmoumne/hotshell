@@ -40,7 +40,6 @@ func (c *controller) mainLoop() (bool, error) {
 
 		// todo test the fact actions are ordered (helps dealing multiple actions having the same key)
 		case string(4):
-			fmt.Print("\n")
 			return false, nil
 		case c.keys.Reload:
 			c.printKey(key)

@@ -1,5 +1,6 @@
 package engine
 
+// todo unit test
 import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
@@ -10,58 +11,64 @@ import (
 	"os/signal"
 )
 
-type dispatcher struct {
+type Dispatcher interface {
+	DispatchEvent(rawEvent interface{})
+	ReadUserInput() (string, error)
+	Cleanup()
+}
+
+func DefaultDispatcher(keys settings.Keys)(Dispatcher, error) {
+	d := &sysDispatcher{keys: keys}
+	d.initSignals()
+	return d, d.initTerm()
+}
+
+type sysDispatcher struct {
 	keys             settings.Keys
 	activeSubprocess bool
 	term             *term.Term
 }
 
-func newDispatcher(keys settings.Keys) (*dispatcher, error) {
-	d := &dispatcher{keys: keys}
-	d.initSignals()
-	return d, d.initTerm()
-}
-
-func (d *dispatcher) dispatchEvent(rawEvent interface{}) {
+func (d *sysDispatcher) DispatchEvent(rawEvent interface{}) {
 	switch e := rawEvent.(type) {
-	case cmdEvent:
+	case CmdEvent:
 		d.triggerCmd(e)
-	case menuEvent:
+	case MenuEvent:
 		d.displayMenu(e)
-	case validKeyEvent:
+	case ValidKeyEvent:
 		d.printKey(e)
 	}
 }
 
-func (d *dispatcher) printKey(e validKeyEvent) {
-	fmt.Print(formatter.KeyActivatedFmt("%s\n\n", settings.KeyName(e.key)))
+func (d *sysDispatcher) printKey(e ValidKeyEvent) {
+	fmt.Print(formatter.KeyActivatedFmt("%s\n\n", settings.KeyName(e.Key)))
 }
 
-func (d *dispatcher) triggerCmd(e cmdEvent) {
+func (d *sysDispatcher) triggerCmd(e CmdEvent) {
 	d.activeSubprocess = true
-	(&item.CmdActivator{}).Activate(e.item)
+	(&item.CmdActivator{}).Activate(e.Item)
 	d.activeSubprocess = false
 }
 
-func (d *dispatcher) displayMenu(e menuEvent) {
-	(&item.MenuPrinter{Out: os.Stdout}).Print(e.item, d.keys)
+func (d *sysDispatcher) displayMenu(e MenuEvent) {
+	(&item.MenuPrinter{Out: os.Stdout}).Print(e.Item, d.keys)
 }
 
-func (d *dispatcher) readUserInput() (string, error) {
+func (d *sysDispatcher) ReadUserInput() (string, error) {
 	return d.term.ReadUserInput()
 }
 
-func (d *dispatcher) initTerm() (err error) {
+func (d *sysDispatcher) initTerm() (err error) {
 	d.term, err = term.NewTerm()
 	return
 }
 
-func (d *dispatcher) cleanup() {
+func (d *sysDispatcher) Cleanup() {
 	defer d.closeTerm()
 	defer signal.Reset()
 }
 
-func (d *dispatcher) closeTerm() {
+func (d *sysDispatcher) closeTerm() {
 	if d.term == nil {
 		return
 	}
@@ -70,7 +77,7 @@ func (d *dispatcher) closeTerm() {
 	}
 }
 
-func (d *dispatcher) initSignals() {
+func (d *sysDispatcher) initSignals() {
 	channel := make(chan os.Signal, 1)
 	signal.Notify(channel, os.Interrupt)
 	go func() {

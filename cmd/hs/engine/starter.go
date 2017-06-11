@@ -20,7 +20,7 @@ type Starter struct {
 	definition definitionloader.Definition
 	bootSeq    []func() error
 	settings   settings.Settings
-	dispatcher *dispatcher
+	dispatcher Dispatcher
 }
 
 func (s *Starter) Start(options options.Options) error {
@@ -95,13 +95,13 @@ func (s *Starter) loadDefinitionFile() (err error) {
 }
 
 func (s *Starter) startController() (reload bool, err error) {
-	s.dispatcher, err = newDispatcher(s.settings.Keys)
+	s.dispatcher, err = DefaultDispatcher(s.settings.Keys)
 	if err != nil {
 		return
 	}
-	defer s.dispatcher.cleanup()
+	defer s.dispatcher.Cleanup()
 	fmt.Print("\n")
-	reload, err = (&controller{}).Start(s.settings.Keys, s.item, s.dispatcher)
+	reload, err = (&Controller{}).Start(s.settings.Keys, s.item, s.dispatcher)
 	return
 
 }

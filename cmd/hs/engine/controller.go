@@ -1,34 +1,30 @@
 package engine
 
-// todo unit test me
 import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/julienmoumne/hotshell/cmd/hs/settings"
 	"github.com/julienmoumne/hotshell/cmd/term"
 )
 
-type controller struct {
+type Controller struct {
 	activeMenu        *item.Item
 	lastActivatedItem *item.Item
 	term              term.Term
 	keys              settings.Keys
-	dispatcher        *dispatcher
+	dispatcher        Dispatcher
 }
 
-type validKeyEvent struct {
-	key string
+type ValidKeyEvent struct {
+	Key string
 }
-type itemEvent struct {
-	item *item.Item
+type CmdEvent struct {
+	Item *item.Item
 }
-type cmdEvent struct {
-	itemEvent
-}
-type menuEvent struct {
-	itemEvent
+type MenuEvent struct {
+	Item *item.Item
 }
 
-func (c *controller) Start(keySettings settings.Keys, root *item.Item, dispatcher *dispatcher) (bool, error) {
+func (c *Controller) Start(keySettings settings.Keys, root *item.Item, dispatcher Dispatcher) (bool, error) {
 	c.dispatcher = dispatcher
 	c.keys = keySettings
 	c.activeMenu = root
@@ -36,10 +32,10 @@ func (c *controller) Start(keySettings settings.Keys, root *item.Item, dispatche
 	return c.mainLoop()
 }
 
-func (c *controller) mainLoop() (bool, error) {
+func (c *Controller) mainLoop() (bool, error) {
 	c.sendMenuEvent(c.activeMenu)
 	for {
-		key, err := c.dispatcher.readUserInput()
+		key, err := c.dispatcher.ReadUserInput()
 		if err != nil {
 			return false, err
 		}
@@ -69,7 +65,7 @@ func (c *controller) mainLoop() (bool, error) {
 	}
 }
 
-func (c *controller) triggerItem(key string, it *item.Item) {
+func (c *Controller) triggerItem(key string, it *item.Item) {
 	c.sendKeyEvent(key)
 	c.lastActivatedItem = it
 	if it.IsCmd() {
@@ -80,14 +76,14 @@ func (c *controller) triggerItem(key string, it *item.Item) {
 	c.sendMenuEvent(c.activeMenu)
 }
 
-func (c *controller) sendCmdEvent(cmd *item.Item) {
-	c.dispatcher.dispatchEvent(cmdEvent{itemEvent{item: cmd}})
+func (c *Controller) sendCmdEvent(cmd *item.Item) {
+	c.dispatcher.DispatchEvent(CmdEvent{Item: cmd})
 }
 
-func (c *controller) sendMenuEvent(menu *item.Item) {
-	c.dispatcher.dispatchEvent(menuEvent{itemEvent{item: menu}})
+func (c *Controller) sendMenuEvent(menu *item.Item) {
+	c.dispatcher.DispatchEvent(MenuEvent{Item: menu})
 }
 
-func (c *controller) sendKeyEvent(key string) {
-	c.dispatcher.dispatchEvent(validKeyEvent{key: key})
+func (c *Controller) sendKeyEvent(key string) {
+	c.dispatcher.DispatchEvent(ValidKeyEvent{Key: key})
 }

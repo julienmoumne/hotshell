@@ -5,18 +5,11 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/dslrunner"
 	. "github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
-func errMsg(msg string) string {
-	return fmt.Sprintf("Error while reading the menu definition\n%s", msg)
-}
-
-var tests = []struct {
-	in  string
-	out *Item
-	err string
-}{
+var tests = []testCase{
 	// empty values
 	{
 		in:  ``,
@@ -206,9 +199,9 @@ var tests = []struct {
 		in: `
 		var item = require('hotshell').item
 		var exec = require('hotshell').exec
-		item({key: exec('echo "1"')})
+		item({key: exec('pwd')})
 		`,
-		out: &Item{Key: "1"},
+		out: &Item{Key: cwd()},
 	},
 	{
 		in: `
@@ -230,17 +223,50 @@ var tests = []struct {
 	},
 }
 
+var a *assert.Assertions
+
+type testCase struct {
+	in  string
+	out *Item
+	err string
+}
+
+func errMsg(msg string) string {
+	return fmt.Sprintf("Error while reading the menu definition\n%s", msg)
+}
+
+func cwd() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	return dir
+}
+
 func TestDslRunner(t *testing.T) {
+	a = assert.New(t)
 	for _, tt := range tests {
-		adjustParentLinks(tt.out, nil)
-		actualOut, err := (&dslrunner.DslRunner{}).Run(tt.in)
-		a := assert.New(t)
-		if tt.err != "" {
-			a.Equal(tt.err, err.Error())
-		} else {
-			a.Nil(err)
-			a.Equal(tt.out, actualOut)
-		}
+		runTest(tt)
+	}
+}
+
+func runTest(t testCase) {
+	setupTest(t)
+	validateTest(t)
+}
+
+func setupTest(t testCase) {
+	adjustParentLinks(t.out, nil)
+}
+
+func validateTest(t testCase) {
+	actualOut, err := (&dslrunner.DslRunner{}).Run(t.in)
+	if t.err != "" {
+		a.NotNil(err)
+		a.Equal(t.err, err.Error())
+	} else {
+		a.Nil(err)
+		a.Equal(t.out, actualOut)
 	}
 }
 

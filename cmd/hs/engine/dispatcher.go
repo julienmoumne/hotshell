@@ -17,7 +17,7 @@ type Dispatcher interface {
 	Cleanup()
 }
 
-func DefaultDispatcher(keys settings.Keys)(Dispatcher, error) {
+func DefaultDispatcher(keys settings.Keys) (Dispatcher, error) {
 	d := &sysDispatcher{keys: keys}
 	d.initSignals()
 	return d, d.initTerm()

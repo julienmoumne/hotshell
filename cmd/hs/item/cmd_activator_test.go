@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+	"strings"
 )
 
 var (
@@ -27,8 +28,8 @@ var (
 		},
 		{
 			cmd:    "pwd",
-			wd:     "././/./test//",
-			stdout: fmt.Sprintf(" /bin/bash -c 'pwd'\n\n%s/test\n\n", cwd()),
+			wd:     "././/./..///",
+			stdout: fmt.Sprintf(" /bin/bash -c 'pwd'\n\n%s\n\n", strings.Replace(cwd(), "/item", "", 1)),
 		},
 	}
 )

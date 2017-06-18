@@ -218,7 +218,7 @@ var tests = []testCase{
 	{
 		in: `
 		var item = require('hotshell').item
-		var submenu = require('./test/submodule_test.js')
+		var submenu = require('./test/subdir/submodule_test.js')
 		item({}, function () {
 		    submenu()
 		})
@@ -274,7 +274,7 @@ var tests = []testCase{
 		in: `
 		var item = require('hotshell').item
 		var exec = require('hotshell').exec
-		var moduleItem = require('./test/submodule_test.js')
+		var moduleItem = require('./test/subdir/submodule_test.js')
 
 		item({desc: exec('pwd'), wd: './'}, function() {
 			item({wd: './test/', key: 'k'}, function () {

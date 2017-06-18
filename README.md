@@ -94,6 +94,17 @@ item({desc: 'top level menu'}, function () {
 
 See a [simulated demo](http://julienmoumne.github.io/hotshell/demos/tutorial.hs.js.html)
 and the generated [markdown documentation](./doc/tutorial.hs.js.md) of the resulting menu.
+
+> Item properties
+
+```javascript
+item({
+  key: 'd', // key used to activate the menu item
+  desc: 'directory listing', // description displayed when the item is shown in a menu
+  cmd: 'ls -al', // command to execute when the item is activated, only used when not defining a menu (a group of items)
+  wd: './subproject', // working directory (relative path) set prior to executing a command or 'exec()'
+})
+```
  
 ### Tips & Examples
 

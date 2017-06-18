@@ -10,6 +10,7 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/item"
 	. "github.com/julienmoumne/hotshell/cmd/hs/jsinterpreter"
 	"github.com/robertkrimen/otto"
+	"os"
 	"os/exec"
 	"regexp"
 	"strings"
@@ -43,29 +44,51 @@ func (i *DslRunner) createHotshellModule() (JsModule, error) {
 	}
 	return JsModule{
 		Name: "hotshell",
-		Loader: func(vm *motto.Motto) (otto.Value, error) {
-			module, err := motto.CreateLoaderFromSource(string(js), "")(vm)
-			if err != nil {
-				return otto.Value{}, err
+		Factory: func(jsInt *JsInterpreter) motto.ModuleLoader {
+			return func(vm *motto.Motto) (otto.Value, error) {
+				module, err := motto.CreateLoaderFromSource(string(js), "")(vm)
+				if err != nil {
+					return otto.Value{}, err
+				}
+				if err := module.Object().Set("exec", i.nativeExec(jsInt)); err != nil {
+					return otto.Value{}, err
+				}
+				return module, nil
 			}
-			if err := module.Object().Set("exec", nativeExec); err != nil {
-				return otto.Value{}, err
-			}
-			return module, nil
 		},
 	}, nil
 }
 
-func nativeExec(call otto.FunctionCall) otto.Value {
-	cmd := exec.Command("bash", "-c", call.Argument(0).String())
-	outBytes, execErr := cmd.CombinedOutput()
-	out := strings.TrimSpace(string(outBytes))
-	handleErrorInNative(call.Otto, cmd, execErr, out)
-	outOtto, errConv := call.Otto.ToValue(out)
-	if errConv != nil {
-		panic(errConv) // not sure what to do in this case
+func (d *DslRunner) nativeExec(jsInt *JsInterpreter) func(call otto.FunctionCall) otto.Value {
+	return func(call otto.FunctionCall) otto.Value {
+		cmd := exec.Command("bash", "-c", call.Argument(0).String())
+		cmd.Dir = getWD(jsInt)
+		outBytes, execErr := cmd.CombinedOutput()
+		out := strings.TrimSpace(string(outBytes))
+		handleErrorInNative(call.Otto, cmd, execErr, out)
+		outOtto, errConv := call.Otto.ToValue(out)
+		if errConv != nil {
+			panic(errConv) // not sure what to do in this case
+		}
+		return outOtto
 	}
-	return outOtto
+}
+
+func getWD(jsInt *JsInterpreter) string {
+	currItem, err := jsInt.RetrieveValueFromModule("hotshell", "current")
+	if err != nil {
+		panic(err)
+	}
+	wdRaw, err := currItem.Object().Get("wd")
+	if err != nil {
+		panic(err)
+	}
+	wd, _ := wdRaw.Export()
+	osCwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	return fmt.Sprintf("%s/%s", osCwd, wd.(string))
 }
 
 func handleErrorInNative(vm *otto.Otto, cmd *exec.Cmd, err error, out string) {

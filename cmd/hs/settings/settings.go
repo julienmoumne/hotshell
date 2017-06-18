@@ -86,15 +86,17 @@ func (l *Loader) createSettingsModule() (JsModule, error) {
 	}
 	return JsModule{
 		Name: "hotshell-settings",
-		Loader: func(vm *motto.Motto) (otto.Value, error) {
-			module, err := motto.CreateLoaderFromSource(string(js), "")(vm)
-			if err != nil {
-				return otto.Value{}, err
+		Factory: func(jsInt *JsInterpreter) motto.ModuleLoader {
+			return func(vm *motto.Motto) (otto.Value, error) {
+				module, err := motto.CreateLoaderFromSource(string(js), "")(vm)
+				if err != nil {
+					return otto.Value{}, err
+				}
+				if err := module.Object().Set("keys", KeyCodes); err != nil {
+					return otto.Value{}, err
+				}
+				return module, nil
 			}
-			if err := module.Object().Set("keys", KeyCodes); err != nil {
-				return otto.Value{}, err
-			}
-			return module, nil
 		},
 	}, nil
 }

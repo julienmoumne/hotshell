@@ -29,7 +29,7 @@ item({desc: 'hotshell-dev'}, function () {
 
         _(exec('ls examples/**/*.js').split('\n')).each(function (el, ix) {
             hsFile = basename(el)
-            item({key: ix, desc: hsFile, cmd: 'cd ' + dirname(el) + '; $GOPATH/bin/hs -f ' + hsFile})
+            item({key: ix, desc: hsFile, wd: dirname(el), cmd: '$GOPATH/bin/hs -f ' + hsFile})
         })
     })
 

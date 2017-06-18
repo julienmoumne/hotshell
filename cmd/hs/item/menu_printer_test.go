@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	a       *assert.Assertions
-	buf     *bytes.Buffer
-	printer item.MenuPrinter
-	tests   []testCase
+	menuPrinterAssert *assert.Assertions
+	menuPrinterBuf    *bytes.Buffer
+	printer           item.MenuPrinter
+	menuPrinterTests  []menuPrinterTestCase
 )
 
 func init() {
@@ -21,7 +21,7 @@ func init() {
 	cmdWithoutDesc := &item.Item{Desc: "cmd-without-desc"}
 	cmdWithoutDesc.AddItem(&item.Item{Key: "k", Cmd: "cmd-without-desc"})
 
-	tests = []testCase{
+	menuPrinterTests = []menuPrinterTestCase{
 		{
 			in{&item.Item{Desc: "empty-menu"}},
 			out{" empty-menu\n" +
@@ -68,30 +68,30 @@ type (
 	out struct {
 		str string
 	}
-	testCase struct {
+	menuPrinterTestCase struct {
 		in
 		out
 	}
 )
 
 func TestMenuPrinter(t *testing.T) {
-	a = assert.New(t)
-	for _, test := range tests {
-		runTest(test)
+	menuPrinterAssert = assert.New(t)
+	for _, test := range menuPrinterTests {
+		runMenuPrinterTest(test)
 	}
 }
 
-func runTest(t testCase) {
-	setupTest()
-	validateTest(t)
+func runMenuPrinterTest(t menuPrinterTestCase) {
+	setupMenuPrinterTest()
+	validateMenuPrinterTest(t)
 }
 
-func setupTest() {
-	buf = &bytes.Buffer{}
-	printer = item.MenuPrinter{Out: buf}
+func setupMenuPrinterTest() {
+	menuPrinterBuf = &bytes.Buffer{}
+	printer = item.MenuPrinter{Out: menuPrinterBuf}
 }
 
-func validateTest(t testCase) {
+func validateMenuPrinterTest(t menuPrinterTestCase) {
 	printer.Print(t.in.item, settings.Defaults().Keys)
-	a.Equal(t.out.str, buf.String())
+	menuPrinterAssert.Equal(t.out.str, menuPrinterBuf.String())
 }

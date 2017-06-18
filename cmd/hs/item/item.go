@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
+	"path"
 )
 
 func BashCmd(key string) *Item {
@@ -16,6 +17,7 @@ type Item struct {
 	Items  []*Item
 	Cmd    string
 	Parent *Item
+	Wd     string
 }
 
 func (i *Item) IsCmd() bool {
@@ -45,6 +47,10 @@ func (i *Item) GetDesc() string {
 	if i.IsCmd() {
 		if desc != "" {
 			desc += " "
+		}
+		cleanPath := path.Clean(i.Wd)
+		if cleanPath != "." {
+			desc += formatter.WdFmt("%s ", cleanPath)
 		}
 		postfix := formatter.CmdDefFmt(i.Cmd)
 		if postfix != "" {

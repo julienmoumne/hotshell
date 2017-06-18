@@ -1,32 +1,41 @@
 var _ = require('underscore')
-
 var items = []
-var current = {items: items}
+module.exports.current = {items: items, wd: './'}
+module.exports.item = item
+module.exports.items = items
 
 function item(config, callback) {
+    var current = module.exports.current
 
-    function recurse() {
-        var prev = current
-        current = config
+    function executeCallback() {
+        if (!_.isFunction(callback))
+            return
 
+        module.exports.current = config
         try {
             callback()
         } catch (exception) {
             delete config.items
             config.desc += ' [Exception caught, ' + exception + ']'.trim()
         }
-
-        current = prev
+        module.exports.current = current
     }
 
-    if (_.isUndefined(current.items))
-        current.items = []
+    function adjustWd() {
+        config.wd = current.wd + (_.isUndefined(config.wd) ? '' : config.wd + '/')
+    }
 
-    current.items.push(config)
+    function initChildArray() {
+        if (_.isUndefined(current.items))
+            current.items = []
+    }
 
-    if (_.isFunction(callback))
-        recurse()
+    function addItemToParent() {
+        current.items.push(config)
+    }
+
+    adjustWd()
+    initChildArray()
+    addItemToParent()
+    executeCallback()
 }
-
-module.exports.item = item
-module.exports.items = items

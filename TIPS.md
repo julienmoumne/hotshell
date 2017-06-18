@@ -49,41 +49,57 @@ hs --generate-demo -f ~/projects/web/hs.js > hotshell-web-demo.html
 
 ## Menu and item definition
 
-> Output the definition object to help debugging :
+> Output the definition objects to help debugging :
 
 ```javascript
 var hotshell = require('hotshell')
 var item = hotshell.item
 
+function log(val) { console.log(JSON.stringify(val, null, ' ')) }
+
 item({desc: 'debug'}, function () {
   item({key: 'r', desc: 'restart apache', cmd: 'sudo service apache2 restart'})
+  // 'current' contains the item currently built
+  // in this case the root menu named 'debug' with only one item so far
+  log(hotshell.current)
   item({key: 'a', desc: 'access.log', cmd: 'less +F /var/log/apache2/access.log'})
 }) 
 
 // 'items' contains the whole definition
-console.log(JSON.stringify(hotshell.items, null, ' '))
+log(hotshell.items)
 ```
 displays
 ```javascript
+{
+ "desc": "debug",
+ "items": [
+  {
+   "cmd": "sudo service apache2 restart",
+   "desc": "restart apache",
+   "key": "r",
+   "wd": "./"
+  }
+ ],
+ "wd": "./"
+}
 [
  {
-  "cmd": null,
   "desc": "debug",
   "items": [
    {
     "cmd": "sudo service apache2 restart",
     "desc": "restart apache",
-    "items": [],
-    "key": "r"
+    "key": "r",
+    "wd": "./"
    },
    {
     "cmd": "less +F /var/log/apache2/access.log",
     "desc": "access.log",
-    "items": [],
-    "key": "a"
+    "key": "a",
+    "wd": "./"
    }
   ],
-  "key": null
+  "wd": "./"
  }
 ]
 ```

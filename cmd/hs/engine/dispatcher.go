@@ -46,7 +46,7 @@ func (d *sysDispatcher) printKey(e ValidKeyEvent) {
 
 func (d *sysDispatcher) triggerCmd(e CmdEvent) {
 	d.activeSubprocess = true
-	(&item.CmdActivator{}).Activate(e.Item)
+	(&item.CmdActivator{Out: os.Stdout}).Activate(e.Item)
 	d.activeSubprocess = false
 }
 

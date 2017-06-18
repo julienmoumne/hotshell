@@ -18,6 +18,7 @@ var KeyActivatedFmt = newColorSprinter(color.FgYellow)
 var ParentMenuFmt = newColorSprinter(color.FgYellow)
 var ActiveMenuFmt = newColorSprinter(color.FgYellow, color.Underline)
 var HelpFmt = newColorSprinter(color.FgGreen)
+var WdFmt = newColorSprinter(color.FgYellow)
 
 func FormatCommand(cmd *exec.Cmd) string {
 	return fmt.Sprintf(

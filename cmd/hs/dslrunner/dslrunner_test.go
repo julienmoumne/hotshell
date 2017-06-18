@@ -1,7 +1,7 @@
 package dslrunner_test
 
 import (
-	"fmt"
+	. "fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/dslrunner"
 	. "github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/stretchr/testify/assert"
@@ -17,7 +17,7 @@ var tests = []testCase{
 	},
 	{
 		in:  `require('hotshell').item({})`,
-		out: &Item{},
+		out: &Item{Wd: "./"},
 	},
 	{
 		in: `
@@ -29,16 +29,16 @@ var tests = []testCase{
 	},
 	{
 		in:  `require('hotshell').item({ignoredKey: ['test']})`,
-		out: &Item{},
+		out: &Item{Wd: "./"},
 	},
 	// numerical values
 	{
 		in:  `require('hotshell').item({key: '1', desc: 1})`,
-		out: &Item{Key: "1", Desc: "1"},
+		out: &Item{Key: "1", Desc: "1", Wd: "./"},
 	},
 	{
 		in:  `require('hotshell').item({desc: 1.0})`,
-		out: &Item{Desc: "1"},
+		out: &Item{Desc: "1", Wd: "./"},
 	},
 	// invalid root item
 	{
@@ -52,12 +52,12 @@ var tests = []testCase{
 		item({}, function() {
 			item({key: 'k', cmd: 'missing-desc'})
 		})`,
-		out: &Item{Items: []*Item{{Key: "k", Cmd: "missing-desc"}}},
+		out: &Item{Items: []*Item{{Key: "k", Cmd: "missing-desc", Wd: "./"}}, Wd: "./"},
 	},
 	// empty menu
 	{
 		in:  `require('hotshell').item({desc: 'top-level-no-items'})`,
-		out: &Item{Desc: "top-level-no-items"},
+		out: &Item{Desc: "top-level-no-items", Wd: "./"},
 	},
 	// invalid keys
 	{
@@ -76,13 +76,14 @@ var tests = []testCase{
 		out: &Item{
 			Desc: "invalid-keys",
 			Items: []*Item{
-				{Key: "key-not-provided", Cmd: "command-without-key"},
-				{Key: "duplicated-key:É"},
-				{Key: "key-not-provided", Items: []*Item{{}}},
-				{},
-				{Key: "É"},
-				{Key: "invalid-key:too-long"},
+				{Key: "key-not-provided", Cmd: "command-without-key", Wd: "./"},
+				{Key: "duplicated-key:É", Wd: "./"},
+				{Key: "key-not-provided", Items: []*Item{{Wd: "./"}}, Wd: "./"},
+				{Wd: "./"},
+				{Key: "É", Wd: "./"},
+				{Key: "invalid-key:too-long", Wd: "./"},
 			},
+			Wd: "./",
 		},
 	},
 	// JS runtime errors
@@ -96,7 +97,7 @@ var tests = []testCase{
 		item({desc: 'ref err in closure'}, function () {
 		    undefinedMethod()
 		}) `,
-		out: &Item{Desc: "ref err in closure [Exception caught, ReferenceError: 'undefinedMethod' is not defined]"},
+		out: &Item{Desc: "ref err in closure [Exception caught, ReferenceError: 'undefinedMethod' is not defined]", Wd: "./"},
 	},
 	{
 		in:  `invalidStatement{}`,
@@ -114,9 +115,9 @@ var tests = []testCase{
 		})
 		`,
 		out: &Item{Items: []*Item{
-			{Desc: "nested closure [Exception caught, Error: Runtime Error]"},
-			{Key: "n", Desc: "not skipped", Cmd: "echo not skipped"},
-		}},
+			{Desc: "nested closure [Exception caught, Error: Runtime Error]", Wd: "./"},
+			{Key: "n", Desc: "not skipped", Cmd: "echo not skipped", Wd: "./"},
+		}, Wd: "./"},
 	},
 	{
 		in: `
@@ -134,7 +135,7 @@ var tests = []testCase{
 			exec('eco "1"')
 		})
 		`,
-		out: &Item{Desc: "exec error [Exception caught, Error: \"/bin/bash -c 'eco \"1\"'\" failed with exit status 127 \"bash: eco: command not found\"]"},
+		out: &Item{Desc: "exec error [Exception caught, Error: \"/bin/bash -c 'eco \"1\"'\" failed with exit status 127 \"bash: eco: command not found\"]", Wd: "./"},
 	},
 	// type errors
 	{
@@ -160,26 +161,29 @@ var tests = []testCase{
 	// doubly nested menu
 	{
 		in: `
-		var item = require('hotshell').item
+		var hotshell = require('hotshell')
+		var item = hotshell.item
 		item({key: 't', desc: 'test'}, function() {
-			item({key: 'f', desc: 'first cmd', cmd: "echo 'first cmd'"})
+			item({key: 'f', desc: hotshell.current.desc + ' > first cmd', cmd: "echo 'first cmd'"})
 			item({key: 's', desc: 'second cmd', cmd: "echo 'second cmd'"})
 			item({key: 'm', desc: 'submenu'}, function() {
-				item({key: 's', desc: 'submenu cmd', cmd: "echo 'submenu cmd'"})
+				item({key: 's', desc: hotshell.current.desc + ' > cmd', cmd: "echo 'submenu cmd'"})
 			})
 		})`,
 		out: &Item{
 			Key:  "t",
 			Desc: "test",
+			Wd:   "./",
 			Items: []*Item{
-				{Key: "f", Desc: "first cmd", Cmd: "echo 'first cmd'"},
-				{Key: "s", Desc: "second cmd", Cmd: "echo 'second cmd'"},
-				{Key: "m", Desc: "submenu",
+				{Key: "f", Desc: "test > first cmd", Cmd: "echo 'first cmd'", Wd: "./"},
+				{Key: "s", Desc: "second cmd", Cmd: "echo 'second cmd'", Wd: "./"},
+				{Key: "m", Desc: "submenu", Wd: "./",
 					Items: []*Item{
 						{
 							Key:  "s",
-							Desc: "submenu cmd",
+							Desc: "submenu > cmd",
 							Cmd:  "echo 'submenu cmd'",
+							Wd:   "./",
 						},
 					},
 				},
@@ -193,7 +197,7 @@ var tests = []testCase{
 		var _ = require('underscore')
 		item({desc: _.min([2, 1])})
 		`,
-		out: &Item{Desc: "1"},
+		out: &Item{Desc: "1", Wd: "./"},
 	},
 	{
 		in: `
@@ -201,25 +205,110 @@ var tests = []testCase{
 		var exec = require('hotshell').exec
 		item({key: exec('pwd')})
 		`,
-		out: &Item{Key: cwd()},
+		out: &Item{Key: cwd(), Wd: "./"},
 	},
 	{
 		in: `
 		var item = require('hotshell').item
 		eval("item({desc: 'evaled menu'})")
 		`,
-		out: &Item{Desc: "evaled menu"},
+		out: &Item{Desc: "evaled menu", Wd: "./"},
 	},
 	// submodule
 	{
 		in: `
 		var item = require('hotshell').item
-		var submenu = require('./submodule_test.js')
+		var submenu = require('./test/submodule_test.js')
 		item({}, function () {
 		    submenu()
 		})
 		`,
-		out: &Item{Items: []*Item{{Key: "e", Cmd: "echo submodule"}}},
+		out: &Item{Items: []*Item{{Key: "e", Cmd: Sprintf("%s", cwd()), Wd: "./"}}, Wd: "./"},
+	},
+	// working directory
+	{
+		in: `
+		var item = require('hotshell').item
+		var exec = require('hotshell').exec
+
+		item({desc: exec('pwd')}, function() {
+			item({desc: exec('pwd'), wd: './'})
+			item({desc: exec('pwd'), wd: '.'})
+			item({desc: exec('pwd'), wd: ''})
+			item({desc: exec('pwd')})
+			item({desc: exec('pwd'), wd: './test/'})
+		})
+		`,
+		out: &Item{
+			Desc: cwd(),
+			Wd:   "./",
+			Items: []*Item{
+				{Desc: cwd(), Wd: "././/"},
+				{Desc: cwd(), Wd: "././"},
+				{Desc: cwd(), Wd: ".//"},
+				{Desc: cwd(), Wd: "./"},
+				{Desc: cwd(), Wd: "././test//"},
+			},
+		},
+	},
+	{
+		in: `
+		var item = require('hotshell').item
+		item({wd: './test/'})
+		`,
+		out: &Item{Wd: "././test//"},
+	},
+	{
+		in: `
+		var item = require('hotshell').item
+		item({wd: './unknown-directory/'}, function() {
+		    item({desc: require('hotshell').exec('pwd')})
+		})
+		`,
+		out: &Item{
+			Desc: "undefined [Exception caught, Error: \"/bin/bash -c 'pwd'\" failed with chdir /home/ju/work/go/src/github.com/julienmoumne/hotshell/cmd/hs/dslrunner/././unknown-directory//: no such file or directory \"\"]",
+			Wd:   "././unknown-directory//",
+		},
+	},
+	{
+		in: `
+		var item = require('hotshell').item
+		var exec = require('hotshell').exec
+		var moduleItem = require('./test/submodule_test.js')
+
+		item({desc: exec('pwd'), wd: './'}, function() {
+			item({wd: './test/', key: 'k'}, function () {
+			    item({desc: exec('pwd')})
+			    moduleItem()
+			    item({wd: './subdir/', key: 'k'}, function () {
+			        item({desc: exec('pwd')})
+			    })
+			    item({key: 'q'}, function () {
+			        item({desc: exec('pwd')})
+			    })
+			})
+			item({desc: exec('pwd')})
+		})
+		`,
+		out: &Item{
+			Desc: cwd(),
+			Wd:   "././/",
+			Items: []*Item{
+				{Key: "k",
+					Wd: "././/./test//",
+					Items: []*Item{
+						{Wd: "././/./test//", Desc: Sprintf("%s/test", cwd())},
+						{Wd: "././/./test//", Key: "e", Cmd: Sprintf("%s/test", cwd())},
+						{Wd: "././/./test//./subdir//", Key: "k", Items: []*Item{
+							{Wd: "././/./test//./subdir//", Desc: Sprintf("%s/test/subdir", cwd())},
+						}},
+						{Wd: "././/./test//", Key: "q", Items: []*Item{
+							{Wd: "././/./test//", Desc: Sprintf("%s/test", cwd())},
+						}},
+					}},
+				{Wd: "././/", Desc: cwd()},
+			},
+		},
 	},
 }
 
@@ -232,7 +321,7 @@ type testCase struct {
 }
 
 func errMsg(msg string) string {
-	return fmt.Sprintf("Error while reading the menu definition\n%s", msg)
+	return Sprintf("Error while reading the menu definition\n%s", msg)
 }
 
 func cwd() string {

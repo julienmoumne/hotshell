@@ -12,8 +12,8 @@ type JsInterpreter struct {
 }
 
 type JsModule struct {
-	Name   string
-	Loader motto.ModuleLoader
+	Name    string
+	Factory func(jsInt *JsInterpreter) motto.ModuleLoader
 }
 
 func (i *JsInterpreter) Run(modules []JsModule, js string, resultModule string, resultProperty string) (res interface{}, err error) {
@@ -25,7 +25,12 @@ func (i *JsInterpreter) Run(modules []JsModule, js string, resultModule string, 
 	if err = i.runJs(js); err != nil {
 		return
 	}
-	return i.retrieveResult(resultModule, resultProperty)
+	var resRaw otto.Value
+	resRaw, err = i.RetrieveValueFromModule(resultModule, resultProperty)
+	if err != nil {
+		return
+	}
+	return resRaw.Export()
 }
 
 func convertOttoErrorToError(err error) error {
@@ -37,21 +42,17 @@ func convertOttoErrorToError(err error) error {
 	}
 }
 
-func (i *JsInterpreter) retrieveResult(module string, prop string) (interface{}, error) {
+func (i *JsInterpreter) RetrieveValueFromModule(module string, prop string) (otto.Value, error) {
 	hsModule, err := i.vm.Require(module, "")
 	if err != nil {
-		return nil, err
+		return otto.Value{}, err
 	}
-	value, err := hsModule.Object().Get(prop)
-	if err != nil {
-		return nil, err
-	}
-	return value.Export()
+	return hsModule.Object().Get(prop)
 }
 
 func (i *JsInterpreter) loadModules(modules []JsModule) {
 	for _, mod := range modules {
-		i.vm.AddModule(mod.Name, mod.Loader)
+		i.vm.AddModule(mod.Name, mod.Factory(i))
 	}
 }
 

@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// todo migrate to table based tests
 func TestIsCmd(t *testing.T) {
 	it := &item.Item{Cmd: "echo 'test'"}
 	checkIsCmd(t, it, true)
@@ -38,15 +39,25 @@ var descTests = []struct {
 	inMenuDesc string
 }{
 
-	// Without children
-	{singleItem("", "", ""), "missing-desc", "missing-desc"},
-	{singleItem("k", "", ""), "missing-desc", "k missing-desc"},
-	{singleItem("", "desc", ""), "desc", "desc"},
-	{singleItem("", "", "cmd"), "cmd", "cmd"},
-	{singleItem("k", "desc", ""), "desc", "k desc"},
-	{singleItem("k", "", "cmd"), "cmd", "k cmd"},
-	{singleItem("", "desc", "cmd"), "desc cmd", "desc cmd"},
-	{singleItem("k", "desc", "cmd"), "desc cmd", "k desc cmd"},
+	// without children
+	{singleItem("", "", "", ""), "missing-desc", "missing-desc"},
+	{singleItem("k", "", "", ""), "missing-desc", "k missing-desc"},
+	{singleItem("", "desc", "", ""), "desc", "desc"},
+	{singleItem("", "", "cmd", ""), "cmd", "cmd"},
+	{singleItem("k", "desc", "", ""), "desc", "k desc"},
+	{singleItem("k", "", "cmd", ""), "cmd", "k cmd"},
+	{singleItem("", "desc", "cmd", ""), "desc cmd", "desc cmd"},
+	{singleItem("k", "desc", "cmd", ""), "desc cmd", "k desc cmd"},
+
+	// without children, with working directory
+	{singleItem("", "", "", ".//./path//"), "missing-desc", "missing-desc"},
+	{singleItem("k", "", "", ".//./path//"), "missing-desc", "k missing-desc"},
+	{singleItem("", "desc", "", ".//./path//"), "desc", "desc"},
+	{singleItem("", "", "cmd", ".//./path//"), "path cmd", "path cmd"},
+	{singleItem("k", "desc", "", ".//./path//"), "desc", "k desc"},
+	{singleItem("k", "", "cmd", ".//./path//"), "path cmd", "k path cmd"},
+	{singleItem("", "desc", "cmd", ".//./path//"), "desc path cmd", "desc path cmd"},
+	{singleItem("k", "desc", "cmd", ".//./path//"), "desc path cmd", "k desc path cmd"},
 
 	// With children
 	{itemWithChild("", "", ""), "missing-desc", "missing-desc"},
@@ -77,8 +88,8 @@ func TestDesc(t *testing.T) {
 	}
 }
 
-func singleItem(key string, desc string, cmd string) *item.Item {
-	return &item.Item{Key: key, Desc: desc, Cmd: cmd}
+func singleItem(key string, desc string, cmd string, wd string) *item.Item {
+	return &item.Item{Key: key, Desc: desc, Cmd: cmd, Wd: wd}
 }
 
 func itemWithChild(key string, desc string, cmd string) *item.Item {

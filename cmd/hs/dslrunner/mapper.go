@@ -10,6 +10,7 @@ import (
 
 type mapper struct{}
 
+// todo use the mapper to remove scattered path.Clean(item.Wd) calls?
 func (b *mapper) mapp(ast interface{}) (*item.Item, error) {
 	var items []item.Item
 	if err := mapstructure.WeakDecode(ast, &items); err != nil {

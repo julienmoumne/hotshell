@@ -12,6 +12,7 @@ import (
 	"github.com/robertkrimen/otto"
 	"os"
 	"os/exec"
+	"path"
 	"regexp"
 	"strings"
 )
@@ -88,7 +89,7 @@ func getWD(jsInt *JsInterpreter) string {
 	if err != nil {
 		panic(err)
 	}
-	return fmt.Sprintf("%s/%s", osCwd, wd.(string))
+	return path.Clean(fmt.Sprintf("%s/%s", osCwd, wd.(string)))
 }
 
 func handleErrorInNative(vm *otto.Otto, cmd *exec.Cmd, err error, out string) {

@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"path"
 )
 
 type CmdActivator struct {
@@ -31,7 +32,7 @@ func (c *CmdActivator) runCmd() {
 	c.cmd.Stdin = os.Stdin
 	c.cmd.Stdout = c.Out
 	c.cmd.Stderr = os.Stderr
-	c.cmd.Dir = fmt.Sprintf("%s/%s", c.osCwd, c.item.Wd)
+	c.cmd.Dir = path.Clean(fmt.Sprintf("%s/%s", c.osCwd, c.item.Wd))
 	c.displayErrIfNotNil(c.cmd.Start())
 	c.displayErrIfNotNil(c.cmd.Wait())
 }

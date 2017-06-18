@@ -23,7 +23,7 @@ var (
 		{
 			cmd:    "pwd",
 			wd:     "./unknown-directory",
-			stdout: fmt.Sprintf(" /bin/bash -c 'pwd'\n\n\nchdir %s/./unknown-directory: no such file or directory\n\nexec: not started\n\n", cwd()),
+			stdout: fmt.Sprintf(" /bin/bash -c 'pwd'\n\n\nchdir %s/unknown-directory: no such file or directory\n\nexec: not started\n\n", cwd()),
 		},
 		{
 			cmd:    "pwd",

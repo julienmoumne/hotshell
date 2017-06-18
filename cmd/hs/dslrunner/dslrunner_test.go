@@ -266,7 +266,7 @@ var tests = []testCase{
 		})
 		`,
 		out: &Item{
-			Desc: "undefined [Exception caught, Error: \"/bin/bash -c 'pwd'\" failed with chdir /home/ju/work/go/src/github.com/julienmoumne/hotshell/cmd/hs/dslrunner/unknown-directory: no such file or directory \"\"]",
+			Desc: Sprintf("undefined [Exception caught, Error: \"/bin/bash -c 'pwd'\" failed with chdir %s/unknown-directory: no such file or directory \"\"]", cwd()),
 			Wd:   "././unknown-directory//",
 		},
 	},

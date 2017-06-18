@@ -165,7 +165,7 @@ settings.set({
 })
 ```
 
-Supported keys are listed in [Keys.go](cmd/hs/item/keys.go).
+Supported keys are listed in [Keys.go](cmd/hs/settings/keys.go).
 
 ## Project Motives
 

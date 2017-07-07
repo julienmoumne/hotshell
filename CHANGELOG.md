@@ -1,5 +1,14 @@
 # Change Log
 
+## [Unreleased](https://github.com/julienmoumne/hotshell/tree/HEAD)
+
+[Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.4.0...HEAD)
+
+**Implemented enhancements:**
+
+- Allow a definition file to be used both as a library and as a standalone menu [\#24](https://github.com/julienmoumne/hotshell/issues/24)
+- Ability to specify the current working directory per item [\#15](https://github.com/julienmoumne/hotshell/issues/15)
+
 ## [v0.4.0](https://github.com/julienmoumne/hotshell/tree/v0.4.0) (2017-06-10)
 [Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.3.0...v0.4.0)
 
@@ -11,8 +20,8 @@
 
 **Closed issues:**
 
-- \[breaking change\] do not autoload ~/.hs/hs.js [\#21](https://github.com/julienmoumne/hotshell/issues/21)
 - \[breaking change\] remove global variables and functions \(item\(\), exec\(\), \_, items, current\) [\#22](https://github.com/julienmoumne/hotshell/issues/22)
+- \[breaking change\] do not autoload ~/.hs/hs.js [\#21](https://github.com/julienmoumne/hotshell/issues/21)
 - \[breaking change\] remove ability to load a menu remotely [\#20](https://github.com/julienmoumne/hotshell/issues/20)
 - \[breaking change\] remove ability to specify a directory with the '-f' option [\#19](https://github.com/julienmoumne/hotshell/issues/19)
 - \[breaking change\] delete '--chdir' option [\#18](https://github.com/julienmoumne/hotshell/issues/18)

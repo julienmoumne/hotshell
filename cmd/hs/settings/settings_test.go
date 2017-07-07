@@ -29,7 +29,7 @@ var (
 		},
 		{
 			in{js: `invalidStatement{}`},
-			out{err: errMsg("(anonymous): Line 2:17 Unexpected token { (and 2 more errors)")},
+			out{err: errMsg("(anonymous): Line 3:17 Unexpected token { (and 2 more errors)")},
 		},
 		{
 			in{js: `

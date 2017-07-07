@@ -5,6 +5,7 @@ import (
 	"github.com/julienmoumne/hotshell/cmd/hs/dslrunner"
 	. "github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/stretchr/testify/assert"
+	"io/ioutil"
 	"os"
 	"testing"
 )
@@ -89,7 +90,7 @@ var tests = []testCase{
 	// JS runtime errors
 	{
 		in:  `item()`,
-		err: errMsg("ReferenceError: 'item' is not defined\n    at <anonymous>:2:1\n    at <unknown>"),
+		err: errMsg("ReferenceError: 'item' is not defined\n    at <anonymous>:3:1\n    at <unknown>"),
 	},
 	{
 		in: `
@@ -101,7 +102,7 @@ var tests = []testCase{
 	},
 	{
 		in:  `invalidStatement{}`,
-		err: errMsg("(anonymous): Line 2:17 Unexpected token { (and 2 more errors)"),
+		err: errMsg("(anonymous): Line 3:17 Unexpected token { (and 2 more errors)"),
 	},
 	{
 		in: `
@@ -125,7 +126,7 @@ var tests = []testCase{
 		var exec = require('hotshell').exec
 		item({desc: exec('eco "1"')})
 		`,
-		err: errMsg("\"/bin/bash -c 'eco \"1\"'\" failed with exit status 127 \"bash: eco: command not found\"\n    at <unknown>\n    at <anonymous>:5:15\n    at <unknown>"),
+		err: errMsg("\"/bin/bash -c 'eco \"1\"'\" failed with exit status 127 \"bash: eco: command not found\"\n    at <unknown>\n    at <anonymous>:6:15\n    at <unknown>"),
 	},
 	{
 		in: `
@@ -225,6 +226,10 @@ var tests = []testCase{
 		`,
 		out: &Item{Items: []*Item{{Key: "e", Cmd: Sprintf("%s", cwd()), Wd: "./"}}, Wd: "./"},
 	},
+	{
+		in:  string(submodule),
+		out: &Item{Desc: "menu", Items: []*Item{{Key: "e", Cmd: Sprintf("%s", cwd()), Wd: "./"}}, Wd: "./"},
+	},
 	// working directory
 	{
 		in: `
@@ -313,6 +318,7 @@ var tests = []testCase{
 }
 
 var a *assert.Assertions
+var submodule, _ = ioutil.ReadFile("./test/subdir/submodule_test.js")
 
 type testCase struct {
 	in  string

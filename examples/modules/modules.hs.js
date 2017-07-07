@@ -1,8 +1,8 @@
 var item = require('hotshell').item
-var submenu1 = require('./lib/submenu1.hs.js')
-var submenu2 = require('./lib/submenu2.hs.js')
+var submenu = require('./lib/submenu.hs.js')
+var randNumberGenerator = require('./lib/commons.hs.js').randNumberGenerator
 
 item({desc: 'modules'}, function () {
-    item({key: 'f', desc: 'First submenu'}, submenu1)
-    item({key: 's', desc: 'Second submenu'}, submenu2)
+    item({key: 'f', desc: 'submenu'}, submenu)
+    item({key: 's', desc: 'echo number', cmd: 'echo ' + randNumberGenerator()})
 })

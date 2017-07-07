@@ -57,6 +57,7 @@ func (i *JsInterpreter) loadModules(modules []JsModule) {
 }
 
 func (i *JsInterpreter) runJs(js string) error {
+	js = "require.main = module\n" + js
 	_, err := motto.CreateLoaderFromSource(js, "")(i.vm)
 	return err
 }

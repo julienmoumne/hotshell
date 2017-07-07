@@ -8,8 +8,8 @@ import (
 	. "github.com/julienmoumne/hotshell/cmd/hs/item"
 	"github.com/stretchr/testify/assert"
 	"os"
-	"testing"
 	"strings"
+	"testing"
 )
 
 var (

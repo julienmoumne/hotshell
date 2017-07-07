@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/julienmoumne/hotshell/tree/HEAD)
-
-[Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.4.0...HEAD)
+## [v0.5.0](https://github.com/julienmoumne/hotshell/tree/v0.5.0) (2017-07-07)
+[Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.4.0...v0.5.0)
 
 **Implemented enhancements:**
 

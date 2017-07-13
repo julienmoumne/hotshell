@@ -8,8 +8,7 @@
 
  ? Ô
 
- Factored Menu
- factored submenu
+ Factored Menu > factored submenu
 
  submenu desc
 
@@ -19,9 +18,7 @@
 
  ? e
 
- Factored Menu
- factored submenu
- echo
+ Factored Menu > factored submenu > echo
 
  0 echo hello
  1 echo world
@@ -34,9 +31,7 @@
 
 hello
 
- Factored Menu
- factored submenu
- echo
+ Factored Menu > factored submenu > echo
 
  0 echo hello
  1 echo world

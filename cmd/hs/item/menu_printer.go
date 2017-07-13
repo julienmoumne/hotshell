@@ -48,11 +48,10 @@ func (m *MenuPrinter) printItems() {
 func (m *MenuPrinter) printBreadcrumb() {
 	var bc string
 	for curMenu := m.item.Parent; curMenu != nil; curMenu = curMenu.Parent {
-		bc = fmt.Sprintf(" %s\n%s", curMenu.GetDesc(), bc)
+		bc = fmt.Sprintf("%s > %s", curMenu.GetDesc(), bc)
 	}
-	m.print(formatter.ParentMenuFmt("%s", bc))
-
-	m.printf(" %s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
+	m.print(formatter.ParentMenuFmt(" %s", bc))
+	m.printf("%s", formatter.ActiveMenuFmt("%s", m.item.GetDesc()))
 	m.print("\n")
 	m.print("\n")
 }

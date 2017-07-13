@@ -16,7 +16,7 @@ var CmdDefFmt = newColorSprinter(color.FgGreen)
 var KeyHintFmt = newColorSprinter(color.FgGreen)
 var KeyActivatedFmt = newColorSprinter(color.FgYellow)
 var ParentMenuFmt = newColorSprinter(color.FgYellow)
-var ActiveMenuFmt = newColorSprinter(color.FgYellow, color.Underline)
+var ActiveMenuFmt = newColorSprinter(color.FgGreen)
 var HelpFmt = newColorSprinter(color.FgGreen)
 var WdFmt = newColorSprinter(color.FgYellow)
 

@@ -16,21 +16,14 @@ var (
 )
 
 func init() {
-	emptyDescInNestedMenu := &item.Item{Desc: "notice"}
-	emptyDescInNestedMenu.AddItem(&item.Item{Desc: "notice"})
+	twoLevelMenu := &item.Item{Desc: "lvl1"}
+	subMenu := &item.Item{Desc: "lvl2"}
+	twoLevelMenu.AddItem(subMenu)
 	cmdWithoutDesc := &item.Item{Desc: "cmd-without-desc"}
 	cmdWithoutDesc.AddItem(&item.Item{Key: "k", Cmd: "cmd-without-desc"})
 
 	menuPrinterTests = []menuPrinterTestCase{
-		{
-			in{&item.Item{Desc: "empty-menu"}},
-			out{" empty-menu\n" +
-				"\n" +
-				" no items found\n" +
-				"\n" +
-				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
-				"\n ? "},
-		},
+		// empty menu
 		{
 			in{&item.Item{}},
 			out{" missing-desc\n" +
@@ -40,15 +33,37 @@ func init() {
 				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
 				"\n ? "},
 		},
+		// empty menu with description
 		{
-			in{emptyDescInNestedMenu},
-			out{" notice\n" +
+			in{&item.Item{Desc: "empty-menu"}},
+			out{" empty-menu\n" +
 				"\n" +
-				" notice\n" +
+				" no items found\n" +
 				"\n" +
 				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
 				"\n ? "},
 		},
+		// two level menu - lvl 1
+		{
+			in{twoLevelMenu},
+			out{" lvl1\n" +
+				"\n" +
+				" lvl2\n" +
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n ? "},
+		},
+		// two level menu - lvl 2
+		{
+			in{subMenu},
+			out{" lvl1 > lvl2\n" +
+				"\n" +
+				" no items found\n" +
+				"\n" +
+				" spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit\n" +
+				"\n ? "},
+		},
+		// menu with desc-less command
 		{
 			in{cmdWithoutDesc},
 			out{" cmd-without-desc\n" +

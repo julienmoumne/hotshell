@@ -1,5 +1,13 @@
 # Change Log
 
+## [Unreleased](https://github.com/julienmoumne/hotshell/tree/HEAD)
+
+[Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.5.0...HEAD)
+
+**Implemented enhancements:**
+
+- Horizontal menu breadcrumb [\#9](https://github.com/julienmoumne/hotshell/issues/9)
+
 ## [v0.5.0](https://github.com/julienmoumne/hotshell/tree/v0.5.0) (2017-07-07)
 [Full Changelog](https://github.com/julienmoumne/hotshell/compare/v0.4.0...v0.5.0)
 

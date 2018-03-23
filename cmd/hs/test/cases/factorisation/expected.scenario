@@ -20,8 +20,8 @@
 
  Factored Menu > factored submenu > echo
 
- 0 echo hello
- 1 echo world
+ 0 module echo hello
+ 1 world module echo world
 
  spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
 
@@ -33,8 +33,36 @@ hello
 
  Factored Menu > factored submenu > echo
 
- 0 echo hello
- 1 echo world
+ 0 module echo hello
+ 1 world module echo world
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? spacebar
+
+ Factored Menu > factored submenu
+
+ submenu desc
+
+ e echo >
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? spacebar
+
+ Factored Menu
+
+ l less >
+ Ô factored submenu >
+
+ spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
+
+ ? l
+
+ Factored Menu > less
+
+ 0 less +F /etc/hosts
+ 1 /etc/fstab less +F /etc/fstab
 
  spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
 

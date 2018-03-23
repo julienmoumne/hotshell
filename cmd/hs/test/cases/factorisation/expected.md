@@ -1,10 +1,10 @@
 Factored Menu
 - less  
   - `less +F /etc/hosts`
-  - `less +F /etc/fstab`
+  - /etc/fstab : `less +F /etc/fstab`
 - factored submenu  
   - echo  
     - `echo hello`
-    - `echo world`
+    - world : `echo world`
 
 \* *generated using [hotshell](https://github.com/julienmoumne/hotshell)*

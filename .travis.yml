@@ -1,5 +1,5 @@
+dist: precise
 language: go
-
 go:
   - 1.9
 

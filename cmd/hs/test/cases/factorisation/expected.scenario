@@ -20,8 +20,8 @@
 
  Factored Menu > factored submenu > echo
 
- 0 module echo hello
- 1 world module echo world
+ 0 ./module echo hello
+ 1 world ./module echo world
 
  spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
 
@@ -33,8 +33,8 @@ hello
 
  Factored Menu > factored submenu > echo
 
- 0 module echo hello
- 1 world module echo world
+ 0 ./module echo hello
+ 1 world ./module echo world
 
  spacebar back, tabulation bash, return repeat, backspace reload, ^d or ^c quit
 

@@ -53,11 +53,11 @@ var descTests = []struct {
 	{singleItem("", "", "", ".//./path//"), "missing-desc", "missing-desc"},
 	{singleItem("k", "", "", ".//./path//"), "missing-desc", "k missing-desc"},
 	{singleItem("", "desc", "", ".//./path//"), "desc", "desc"},
-	{singleItem("", "", "cmd", ".//./path//"), "path cmd", "path cmd"},
+	{singleItem("", "", "cmd", ".//./path//"), "./path cmd", "./path cmd"},
 	{singleItem("k", "desc", "", ".//./path//"), "desc", "k desc"},
-	{singleItem("k", "", "cmd", ".//./path//"), "path cmd", "k path cmd"},
-	{singleItem("", "desc", "cmd", ".//./path//"), "desc path cmd", "desc path cmd"},
-	{singleItem("k", "desc", "cmd", ".//./path//"), "desc path cmd", "k desc path cmd"},
+	{singleItem("k", "", "cmd", ".//./path//"), "./path cmd", "k ./path cmd"},
+	{singleItem("", "desc", "cmd", ".//./path//"), "desc ./path cmd", "desc ./path cmd"},
+	{singleItem("k", "desc", "cmd", ".//./path//"), "desc ./path cmd", "k desc ./path cmd"},
 
 	// With children
 	{itemWithChild("", "", ""), "missing-desc", "missing-desc"},

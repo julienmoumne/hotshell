@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/julienmoumne/hotshell/cmd/hs/formatter"
 	"path"
+	"strings"
 )
 
 func BashCmd(key string) *Item {
@@ -42,14 +43,25 @@ func (i *Item) GetItem(key string) (*Item, error) {
 	return found[0], nil
 }
 
+func (i *Item) CleanWd() string {
+	cleanPath := path.Clean(i.Wd)
+	if cleanPath == "." {
+		return ""
+	}
+	if !strings.HasPrefix(cleanPath, ".") {
+		cleanPath = "./" + cleanPath
+	}
+	return cleanPath
+}
+
 func (i *Item) GetDesc() string {
 	var desc = i.Desc
 	if i.IsCmd() {
 		if desc != "" {
 			desc += " "
 		}
-		cleanPath := path.Clean(i.Wd)
-		if cleanPath != "." {
+		cleanPath := i.CleanWd()
+		if cleanPath != "" {
 			desc += formatter.WdFmt("%s ", cleanPath)
 		}
 		postfix := formatter.CmdDefFmt(i.Cmd)

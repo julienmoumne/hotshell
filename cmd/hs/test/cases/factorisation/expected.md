@@ -4,7 +4,7 @@ Factored Menu
   - /etc/fstab : `less +F /etc/fstab`
 - factored submenu  
   - echo  
-    - `echo hello`
-    - world : `echo world`
+    - *./module* `echo hello`
+    - world : *./module* `echo world`
 
 \* *generated using [hotshell](https://github.com/julienmoumne/hotshell)*

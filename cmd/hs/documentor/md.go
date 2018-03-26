@@ -27,7 +27,7 @@ func (g *Md) Generate(item *item.Item, filename string) error {
 
 func (g *Md) parseTemplate() error {
 	var err error
-	var tmpl = "- {{if .Desc}}{{.Desc}} {{if not .Items}}:{{end}} {{end}}{{if .Cmd}}`{{.Cmd}}`{{end}}\n"
+	var tmpl = "- {{if .Desc}}{{.Desc}} {{if not .Items}}:{{end}} {{end}}{{if not .Items}}{{if .CleanWd}}*{{.CleanWd}}* {{end}}{{end}}{{if .Cmd}}`{{.Cmd}}`{{end}}\n"
 	g.itemTmpl, err = template.New("itemTmpl").Parse(tmpl)
 	return err
 }

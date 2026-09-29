@@ -145,7 +145,7 @@ for available JavaScript functions.
 ### DSL Interpreter
  
 For more information on how the DSL is interpreted see
-[Building Trees using a JavaScript DSL](http://moumne.com/2016/07/30/building-trees-using-a-javascript-dsl).
+[Building Trees using a JavaScript DSL](http://julienmoumne.github.io/2016/07/30/building-trees-using-a-javascript-dsl).
 
 ## Configuration
 
